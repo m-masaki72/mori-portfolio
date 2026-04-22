@@ -1,0 +1,30 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { SOCIALS } from "@/consts";
+
+const links = SOCIALS.map((s) => ({ label: s.NAME, url: s.HREF }));
+---
+
+<Layout title="Links" description="各種リンク">
+    <section class="container mx-auto px-6 pt-18">
+        <h2 class="heading text-5xl md:text-9xl uppercase my-8">links</h2>
+        <ul class="flex flex-col gap-4 max-w-2xl">
+            {
+                links.map((link) => (
+                    <li>
+                        <a
+                            href={link.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="flex items-baseline gap-6 border border-dashed border-secondary/30 rounded-lg px-6 py-4 hover:border-secondary transition-colors"
+                        >
+                            <span class="font-plex font-bold text-xl">
+                                {link.label}
+                            </span>
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+    </section>
+</Layout>

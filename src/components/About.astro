@@ -1,0 +1,40 @@
+<section id="About" class="container mx-auto mb-28 p-6">
+    <h2 class="heading text-5xl md:text-9xl uppercase">About me</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 items-center md:p-0 gap-8">
+        <div class="space-y-6">
+            <div
+                class="w-full aspect-[668/516] md:max-w-[668px] overflow-hidden rounded-3xl"
+            >
+                <img
+                    src="/portrait.webp"
+                    alt="About Me Image"
+                    class="w-full h-full object-cover"
+                />
+            </div>
+        </div>
+
+        <div>
+            <div class="text-lg md:text-2xl text-secondary space-y-4">
+                <p>
+                    音響・ゲーム・プラグイン開発が好きなエンジニア。
+                    C++ を軸に VST プラグインやゲーム、Web ツールなど
+                    ジャンルを問わずものづくりを続けています。
+                </p>
+            </div>
+            <div>
+                <h3 class="heading text-2xl uppercase my-8 text-secondary">
+                    Skills
+                </h3>
+                <div class="flex flex-wrap gap-4 mt-8">
+                    {["C++", "C#", "JavaScript", "TypeScript", "JUCE", "Web Audio API"].map((skill) => (
+                        <span
+                            class="inline-flex items-center justify-center rounded-4xl py-4 px-8 outline-1 outline-dashed outline-secondary"
+                        >
+                            {skill}
+                        </span>
+                    ))}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
