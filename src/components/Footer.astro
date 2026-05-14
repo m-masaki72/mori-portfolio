@@ -13,26 +13,26 @@ const Projects: CollectionEntry<"projects">[] = (
   >
     <h2 class="text-5xl lg:text-9xl uppercase">{SITE.TITLE}</h2>
     <p class="text-2xl lg:text-3xl max-w-[760px]">
-      Simplicity is the ultimate sophistication — especially in code.
+      シンプルさこそ究極の洗練である——コードにおいても。
     </p>
   </div>
   <div class="flex flex-col sm:flex-row sm:flex-wrap justify-between gap-10">
     <div>
-      <h3 class="mb-2 text-xl">Contact</h3>
+      <h3 class="mb-2 text-xl">連絡先</h3>
       <ul>
-        <li><a href="mailto:someone@example.com">{SITE.EMAIL}</a></li>
+        <li><a href={`mailto:${SITE.EMAIL}`}>{SITE.EMAIL}</a></li>
       </ul>
     </div>
     <div>
-      <h3 class="mb-2 text-xl">Navigation</h3>
+      <h3 class="mb-2 text-xl">ナビゲーション</h3>
       <ul class="space-y-1 text-secondary">
-        <li><a href="/about">About</a></li>
-        <li><a href="/projects">Works</a></li>
-        <li><a href="/links">Links</a></li>
+        <li><a href="/about">自己紹介</a></li>
+        <li><a href="/projects">制作物</a></li>
+        <li><a href="/links">リンク</a></li>
       </ul>
     </div>
     <div>
-      <h3 class="mb-2 text-xl">Socials</h3>
+      <h3 class="mb-2 text-xl">SNS</h3>
       <ul class="space-y-1 text-secondary">
         {
           SOCIALS.map((link) => (
@@ -44,7 +44,7 @@ const Projects: CollectionEntry<"projects">[] = (
       </ul>
     </div>
     <div>
-      <h3 class="mb-2 text-xl">Projects</h3>
+      <h3 class="mb-2 text-xl">プロジェクト</h3>
       <ul class="space-y-1 text-secondary">
         {
           Projects.map((project) => (
@@ -57,6 +57,6 @@ const Projects: CollectionEntry<"projects">[] = (
     </div>
   </div>
   <span class="block text-center text-sm opacity-70">
-    © {SITE.TITLE}. Built with Astro
+    © {SITE.TITLE}. Astroで制作
   </span>
 </footer>

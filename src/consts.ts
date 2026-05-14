@@ -1,27 +1,24 @@
 export const SITE = {
   URL: "https://morilab-garage.com",
-  TITLE: "Mono Lume",
+  TITLE: "Mori Lab",
   DESCRIPTION:
-    "A full-stack developer with a strong focus on building fast, accessible, and maintainable web applications.",
-  EMAIL: "hi@monolume.com",
+    "音響・ゲーム・プラグイン開発が好きなエンジニア。C++を軸にVSTプラグインやゲーム、Webツールなどを作っています。",
+  EMAIL: "mementomori7272@gmail.com",
 };
 
 export const HOME = {
-  TITLE: "Home",
-  DESCRIPTION:
-    "A personal blog about coding, building projects, and figuring things out",
+  TITLE: "ホーム",
+  DESCRIPTION: "コーディング、プロジェクト制作、日々の試行錯誤についての個人ブログ",
 };
 
 export const BLOG = {
-  TITLE: "Blog",
-  DESCRIPTION:
-    "A collection of articles on programming, projects and other stuff",
+  TITLE: "ブログ",
+  DESCRIPTION: "プログラミング、プロジェクト、その他についての記事集",
 };
 
 export const PROJECTS = {
-  TITLE: "Projects",
-  DESCRIPTION:
-    "A collection of my projects with links to repositories and live demos.",
+  TITLE: "プロジェクト",
+  DESCRIPTION: "リポジトリとライブデモへのリンクを含む制作物の一覧",
 };
 
 export const SOCIALS = [

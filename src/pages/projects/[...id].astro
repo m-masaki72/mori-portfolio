@@ -38,7 +38,7 @@ const { Content } = await render(project);
                 class="lucide lucide-move-left-icon lucide-move-left"
                 ><path d="M6 8L2 12L6 16"></path><path d="M2 12H22"></path></svg
             >
-            <span>Back</span>
+            <span>戻る</span>
         </button>
         <div
             class="flex justify-between md:items-center pb-4 border-b border-dashed border-secondary gap-4 flex-col md:flex-row"
@@ -55,13 +55,13 @@ const { Content } = await render(project);
                     href={project.data.githubUrl}
                     class="w-full sm:w-auto flex items-center justify-center bg-primary rounded-2xl py-3 px-6 sm:py-4 sm:px-10 cursor-pointer hover:bg-background hover:outline hover:outline-1 hover:outline-dashed hover:outline-secondary hover:text-foreground transition"
                 >
-                    Source
+                    ソースコード
                 </a>
                 <a
                     href={project.data.liveUrl}
                     class="w-full sm:w-auto flex items-center justify-center bg-foreground text-background rounded-2xl py-3 px-6 sm:py-4 sm:px-10 cursor-pointer hover:bg-background hover:outline hover:outline-1 hover:outline-dashed hover:outline-secondary hover:text-foreground transition"
                 >
-                    Live Demo
+                    デモを見る
                 </a>
             </div>
         </div>
