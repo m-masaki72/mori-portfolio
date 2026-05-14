@@ -4,7 +4,7 @@ description: "インストール不要のブラウザ完結インターバルタ
 liveUrl: https://m-masaki72.github.io/WebIntervalTimer/
 githubUrl: https://github.com/m-masaki72/WebIntervalTimer
 image: {
-url: "/projects/web-interval-timer.webp",
+url: "/screenshots/web-interval-timer.png",
 alt: "Web Interval Timer"
 }
 ---

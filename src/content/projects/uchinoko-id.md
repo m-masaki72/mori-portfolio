@@ -4,7 +4,7 @@ description: "ペットやキャラクターの証明写真風画像を作れる
 liveUrl: https://uchinoko-id.morilab-garage.com/
 githubUrl: https://github.com/m-masaki72/IdPhotoGenerator
 image: {
-url: "/projects/uchinoko-id.webp",
+url: "/screenshots/uchinoko-id.png",
 alt: "うちの子ID写真メーカー"
 }
 ---

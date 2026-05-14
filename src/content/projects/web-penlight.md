@@ -4,7 +4,7 @@ description: "スマホをサイリウムに変えるWebアプリ。色・テキ
 liveUrl: https://m-masaki72.github.io/WebPenlight/
 githubUrl: https://github.com/m-masaki72/WebPenlight
 image: {
-url: "/projects/web-penlight.webp",
+url: "/screenshots/web-penlight.png",
 alt: "Web Penlight"
 }
 ---

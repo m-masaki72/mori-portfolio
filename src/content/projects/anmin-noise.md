@@ -3,7 +3,7 @@ title: "安眠ノイズ (Alexa Skill)"
 description: "9種類のアンビエントサウンドで睡眠をサポートするAlexaスキル。15分後に自動停止。"
 liveUrl: https://www.amazon.co.jp/dp/B0GRHVNCBN
 image: {
-url: "/projects/anmin-noise.webp",
+url: "/screenshots/anmin-noise.png",
 alt: "安眠ノイズ"
 }
 ---

@@ -4,7 +4,7 @@ description: "描いた円の真円度をスコアリングするWebゲーム。
 liveUrl: https://m-masaki72.github.io/Circle-Master-Momoko/
 githubUrl: https://github.com/m-masaki72/Circle-Master-Momoko
 image: {
-url: "/projects/circle-master-momoko.webp",
+url: "/screenshots/circle-master-momoko.png",
 alt: "Circle M@ster Momoko"
 }
 ---
