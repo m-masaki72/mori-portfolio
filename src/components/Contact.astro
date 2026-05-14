@@ -10,12 +10,15 @@ import { SITE, SOCIALS } from "@/consts";
             アイデアや相談、感想など、お気軽にどうぞ。
         </p>
 
-        <a
-            href={`mailto:${SITE.EMAIL}`}
-            class="inline-flex items-center justify-center bg-primary rounded-2xl py-3 px-6 sm:py-4 sm:px-10 cursor-pointer hover:bg-background hover:outline hover:outline-1 hover:outline-dashed hover:outline-secondary hover:text-foreground transition text-xl"
-        >
-            メールを送る
-        </a>
+        <div class="space-y-2">
+            <a
+                href={`mailto:${SITE.EMAIL}`}
+                class="inline-flex items-center justify-center bg-primary rounded-2xl py-3 px-6 sm:py-4 sm:px-10 cursor-pointer hover:bg-background hover:outline hover:outline-1 hover:outline-dashed hover:outline-secondary hover:text-foreground transition text-xl"
+            >
+                メールを送る
+            </a>
+            <p class="text-secondary text-lg">{SITE.EMAIL}</p>
+        </div>
 
         <div class="text-xl space-y-2">
             {
