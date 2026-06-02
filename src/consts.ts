@@ -29,4 +29,5 @@ export const SOCIALS = [
   { NAME: "はてなブログ", HREF: "https://mementomori7272.hatenablog.com/" },
   { NAME: "SoundCloud", HREF: "https://soundcloud.com/morimoririnn" },
   { NAME: "YouTube", HREF: "https://www.youtube.com/@masakimori2508" },
+  { NAME: "OFUSE (投げ銭)", HREF: "https://ofuse.me/801de8c8" },
 ];
