@@ -21,6 +21,12 @@ export const PROJECTS = {
   DESCRIPTION: "リポジトリとライブデモへのリンクを含む制作物の一覧",
 };
 
+export const NAV_LINKS = [
+  { name: "自己紹介", href: "/about" },
+  { name: "制作物", href: "/projects" },
+  { name: "リンク", href: "/links" },
+];
+
 export const SOCIALS = [
   { NAME: "GitHub", HREF: "https://github.com/m-masaki72" },
   { NAME: "X (Twitter)", HREF: "https://x.com/mementomori72" },

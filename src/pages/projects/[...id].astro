@@ -51,18 +51,22 @@ const { Content } = await render(project);
             </div>
 
             <div class="flex flex-col sm:flex-row gap-4">
-                <a
-                    href={project.data.githubUrl}
-                    class="w-full sm:w-auto flex items-center justify-center bg-primary rounded-2xl py-3 px-6 sm:py-4 sm:px-10 cursor-pointer hover:bg-background hover:outline hover:outline-1 hover:outline-dashed hover:outline-secondary hover:text-foreground transition"
-                >
-                    ソースコード
-                </a>
-                <a
-                    href={project.data.liveUrl}
-                    class="w-full sm:w-auto flex items-center justify-center bg-foreground text-background rounded-2xl py-3 px-6 sm:py-4 sm:px-10 cursor-pointer hover:bg-background hover:outline hover:outline-1 hover:outline-dashed hover:outline-secondary hover:text-foreground transition"
-                >
-                    デモを見る
-                </a>
+                {project.data.githubUrl && (
+                    <a
+                        href={project.data.githubUrl}
+                        class="w-full sm:w-auto flex items-center justify-center bg-primary rounded-2xl py-3 px-6 sm:py-4 sm:px-10 cursor-pointer hover:bg-background hover:outline hover:outline-1 hover:outline-dashed hover:outline-secondary hover:text-foreground transition"
+                    >
+                        ソースコード
+                    </a>
+                )}
+                {project.data.liveUrl && (
+                    <a
+                        href={project.data.liveUrl}
+                        class="w-full sm:w-auto flex items-center justify-center bg-foreground text-background rounded-2xl py-3 px-6 sm:py-4 sm:px-10 cursor-pointer hover:bg-background hover:outline hover:outline-1 hover:outline-dashed hover:outline-secondary hover:text-foreground transition"
+                    >
+                        デモを見る
+                    </a>
+                )}
             </div>
         </div>
 

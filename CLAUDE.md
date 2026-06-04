@@ -13,18 +13,30 @@ npm run astro ... # Astro CLI (e.g. astro add, astro check)
 
 ## Architecture
 
-Astro 6 blog/portfolio starter. No framework components (React/Vue/etc.) — pure `.astro` files.
+Astro portfolio site. No framework components (React/Vue/etc.) — pure `.astro` files. Styling via Tailwind CSS v4.
 
-**Routing**: File-based. `src/pages/` maps directly to URL routes. `src/pages/blog/[...slug].astro` handles dynamic blog post routes.
+**Routing**: File-based. `src/pages/` maps directly to URL routes.
+- `src/pages/projects/[...id].astro` — project detail pages
+- `src/pages/blog/[...id].astro` — blog post detail pages
 
-**Content**: Blog posts live in `src/content/blog/` as `.md` or `.mdx` files. The collection schema is defined in `src/content.config.ts` — frontmatter must include `title`, `description`, `pubDate`; `updatedDate` and `heroImage` are optional.
+**Content collections** (`src/content.config.ts`):
+- `projects` — `src/content/projects/*.md`. Required: `title`, `description`, `image { url, alt }`. Optional: `liveUrl`, `githubUrl`.
+- `blog` — `src/content/blog/*.md`. Required: `title`, `description`, `date`. Optional: `draft`, `tags`, `series`, `image { url, alt }`.
 
-**Global constants**: `src/consts.ts` exports `SITE_TITLE` and `SITE_DESCRIPTION` used across the site.
+**Global constants** (`src/consts.ts`):
+- `SITE` — `URL`, `TITLE`, `DESCRIPTION`, `EMAIL`
+- `NAV_LINKS` — shared nav items used by Header and Footer
+- `SOCIALS` — social link list used by Contact, Footer, Links pages
+- `HOME`, `BLOG`, `PROJECTS` — page-level title/description
 
-**Fonts**: Local Atkinson font (regular + bold) served from `src/assets/fonts/`, configured in `astro.config.mjs` via `fontProviders.local()`.
+**Fonts**: IBM Plex Mono (`--font-plex`) and Geist (`--font-geist`), loaded via `astro:assets` Font API.
 
-**Key integrations**: `@astrojs/mdx`, `@astrojs/sitemap`, `@astrojs/rss` (RSS feed at `src/pages/rss.xml.js`).
+**Key integrations**: `@astrojs/mdx`, `@astrojs/sitemap`, `@astrojs/rss`.
 
-**Styles**: Single global stylesheet at `src/styles/global.css`. No CSS framework.
+**Styles**: `src/styles/global.css` — imported once via `Head.astro`. Tailwind CSS v4.
 
-**`astro.config.mjs`**: Set `site` URL here before deploying — currently placeholder `https://example.com`.
+**OGP**: `Head.astro` outputs `og:*` and `twitter:*` meta tags. Pass `image` prop to `<Layout>` to set a custom OGP image per page.
+
+**Screenshots**: `public/screenshots/` — referenced from project `.md` frontmatter as `image.url`.
+
+**Deployment**: GitHub Pages via GitHub Actions. Site URL: `https://morilab-garage.com` (set in `astro.config.mjs` and `SITE.URL`).

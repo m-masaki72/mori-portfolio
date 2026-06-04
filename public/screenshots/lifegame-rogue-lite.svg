@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f1115"/>
+      <stop offset="100%" style="stop-color:#1a1d24"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#5DCAA5;stop-opacity:0"/>
+      <stop offset="50%" style="stop-color:#5DCAA5;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#5DCAA5;stop-opacity:0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- Grid pattern (ライフゲーム風の背景) -->
+  <g opacity="0.06" stroke="#5DCAA5" stroke-width="1">
+    <!-- vertical lines -->
+    <line x1="60" y1="0" x2="60" y2="630"/>
+    <line x1="120" y1="0" x2="120" y2="630"/>
+    <line x1="180" y1="0" x2="180" y2="630"/>
+    <line x1="240" y1="0" x2="240" y2="630"/>
+    <line x1="300" y1="0" x2="300" y2="630"/>
+    <line x1="360" y1="0" x2="360" y2="630"/>
+    <line x1="420" y1="0" x2="420" y2="630"/>
+    <line x1="480" y1="0" x2="480" y2="630"/>
+    <line x1="540" y1="0" x2="540" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="660" y1="0" x2="660" y2="630"/>
+    <line x1="720" y1="0" x2="720" y2="630"/>
+    <line x1="780" y1="0" x2="780" y2="630"/>
+    <line x1="840" y1="0" x2="840" y2="630"/>
+    <line x1="900" y1="0" x2="900" y2="630"/>
+    <line x1="960" y1="0" x2="960" y2="630"/>
+    <line x1="1020" y1="0" x2="1020" y2="630"/>
+    <line x1="1080" y1="0" x2="1080" y2="630"/>
+    <line x1="1140" y1="0" x2="1140" y2="630"/>
+    <!-- horizontal lines -->
+    <line x1="0" y1="60" x2="1200" y2="60"/>
+    <line x1="0" y1="120" x2="1200" y2="120"/>
+    <line x1="0" y1="180" x2="1200" y2="180"/>
+    <line x1="0" y1="240" x2="1200" y2="240"/>
+    <line x1="0" y1="300" x2="1200" y2="300"/>
+    <line x1="0" y1="360" x2="1200" y2="360"/>
+    <line x1="0" y1="420" x2="1200" y2="420"/>
+    <line x1="0" y1="480" x2="1200" y2="480"/>
+    <line x1="0" y1="540" x2="1200" y2="540"/>
+    <line x1="0" y1="600" x2="1200" y2="600"/>
+  </g>
+
+  <!-- Decorative cells (グライダー風) -->
+  <g fill="#5DCAA5" opacity="0.5">
+    <rect x="900" y="120" width="52" height="52" rx="4"/>
+    <rect x="960" y="180" width="52" height="52" rx="4"/>
+    <rect x="840" y="240" width="52" height="52" rx="4"/>
+    <rect x="900" y="240" width="52" height="52" rx="4"/>
+    <rect x="960" y="240" width="52" height="52" rx="4"/>
+  </g>
+  <g fill="#85B7EB" opacity="0.4">
+    <rect x="960" y="360" width="52" height="52" rx="4"/>
+    <rect x="1020" y="360" width="52" height="52" rx="4"/>
+    <rect x="960" y="420" width="52" height="52" rx="4"/>
+    <rect x="1020" y="420" width="52" height="52" rx="4"/>
+  </g>
+  <g fill="#E24B4A" opacity="0.35">
+    <rect x="1080" y="480" width="52" height="52" rx="4"/>
+    <rect x="1080" y="540" width="52" height="52" rx="4"/>
+    <rect x="1140" y="480" width="52" height="52" rx="4"/>
+  </g>
+
+  <!-- Title -->
+  <text x="80" y="240" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="80" font-weight="700" fill="#ffffff" letter-spacing="-1">Life Game</text>
+  <text x="80" y="340" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="80" font-weight="700" fill="#5DCAA5" letter-spacing="-1">Roguelike</text>
+
+  <!-- Subtitle -->
+  <text x="82" y="400" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="28" fill="#9aa0a6" letter-spacing="1">育てる。崩れる。また育てる。</text>
+
+  <!-- Tags -->
+  <rect x="80" y="450" width="130" height="36" rx="6" fill="#1e3a52"/>
+  <text x="145" y="474" font-family="sans-serif" font-size="16" fill="#7fb8d8" text-anchor="middle">ローグライク</text>
+
+  <rect x="222" y="450" width="160" height="36" rx="6" fill="#1e3a52"/>
+  <text x="302" y="474" font-family="sans-serif" font-size="16" fill="#7fb8d8" text-anchor="middle">ライフゲーム</text>
+
+  <rect x="394" y="450" width="180" height="36" rx="6" fill="#1e3a52"/>
+  <text x="484" y="474" font-family="sans-serif" font-size="16" fill="#7fb8d8" text-anchor="middle">ブラウザで無料</text>
+
+  <!-- URL -->
+  <text x="80" y="570" font-family="monospace" font-size="22" fill="#3a3f4b">
+    m-masaki72.github.io/lifegame-rogue-lite
+  </text>
+</svg>

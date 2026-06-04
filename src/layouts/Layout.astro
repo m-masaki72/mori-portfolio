@@ -4,20 +4,18 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import { SITE } from "@/consts";
 
-import "../styles/global.css";
-
 type Props = {
     title: string;
     description: string;
     image?: string;
 };
 
-const { title, description } = Astro.props;
+const { title, description, image } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="ja">
-    <Head title={`${title} | ${SITE.TITLE}`} description={description} />
+    <Head title={`${title} | ${SITE.TITLE}`} description={description} image={image} />
     <body>
         <Header />
         <div class="min-h-screen w-full relative">

@@ -15,9 +15,10 @@ const { entry } = Astro.props as {
         .querySelectorAll<HTMLElement>(".group")
         .forEach((card: HTMLElement) => {
             const cardElement: HTMLElement = card;
-            const circle: HTMLElement = cardElement.querySelector(
-                "#cursor-circle",
-            ) as HTMLElement;
+            const circle = cardElement.querySelector<HTMLElement>(
+                ".cursor-circle",
+            );
+            if (!circle) return;
 
             let targetX: number = 0;
             let targetY: number = 0;
@@ -75,8 +76,7 @@ const { entry } = Astro.props as {
     href={`/${entry.collection}/${entry.id}`}
 >
     <div
-        id="cursor-circle"
-        class="absolute w-[75px] h-[75px] bg-primary border border-dashed border-secondary rounded-full pointer-events-none hidden group-hover:grid place-items-center transform -translate-x-1/2 -translate-y-1/2"
+        class="cursor-circle absolute w-[75px] h-[75px] bg-primary border border-dashed border-secondary rounded-full pointer-events-none hidden group-hover:grid place-items-center transform -translate-x-1/2 -translate-y-1/2"
     >
         <svg
             xmlns="http://www.w3.org/2000/svg"

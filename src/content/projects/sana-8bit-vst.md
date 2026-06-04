@@ -4,7 +4,7 @@ description: "チップチューン制作向けのシンプルなVSTシンセサ
 liveUrl: https://on.soundcloud.com/zqhGPZCbai1zX2Dq5
 githubUrl: https://github.com/m-masaki72/SANA_8BIT_VST
 image: {
-url: "/screenshots/sana-8bit-vst.png",
+url: "/screenshots/sana-8bit-vst.jpg",
 alt: "SANA 8BIT VST"
 }
 ---

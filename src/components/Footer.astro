@@ -1,5 +1,5 @@
 ---
-import { SITE, SOCIALS } from "@/consts";
+import { SITE, SOCIALS, NAV_LINKS } from "@/consts";
 import { getCollection, type CollectionEntry } from "astro:content";
 
 const Projects: CollectionEntry<"projects">[] = (
@@ -26,9 +26,9 @@ const Projects: CollectionEntry<"projects">[] = (
     <div>
       <h3 class="mb-2 text-xl">ナビゲーション</h3>
       <ul class="space-y-1 text-secondary">
-        <li><a href="/about">自己紹介</a></li>
-        <li><a href="/projects">制作物</a></li>
-        <li><a href="/links">リンク</a></li>
+        {NAV_LINKS.map((link) => (
+          <li><a href={link.href}>{link.name}</a></li>
+        ))}
       </ul>
     </div>
     <div>
