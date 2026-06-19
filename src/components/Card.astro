@@ -98,7 +98,7 @@ const { entry } = Astro.props as {
     >
         <img
             src={entry.data.image?.url ||
-                `https://placehold.co/600x400?text=${entry.data.title}`}
+                `https://placehold.co/600x400?text=${encodeURIComponent(entry.data.title)}`}
             alt={entry.data.image?.alt || entry.data.title}
             class="w-full h-full object-cover"
         />

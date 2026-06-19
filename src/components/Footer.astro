@@ -49,7 +49,7 @@ const Projects: CollectionEntry<"projects">[] = (
         {
           Projects.map((project) => (
             <li>
-                <a href=`/projects/${project.id}`>{project.data.title}</a>
+                <a href={`/projects/${project.id}`}>{project.data.title}</a>
             </li>
           ))
         }

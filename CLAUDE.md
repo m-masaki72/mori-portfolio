@@ -31,9 +31,9 @@ Astro portfolio site. No framework components (React/Vue/etc.) — pure `.astro`
 
 **Fonts**: IBM Plex Mono (`--font-plex`) and Geist (`--font-geist`), loaded via `astro:assets` Font API.
 
-**Key integrations**: `@astrojs/mdx`, `@astrojs/sitemap`, `@astrojs/rss`.
+**Key integrations**: `@astrojs/sitemap`.
 
-**Styles**: `src/styles/global.css` — imported once via `Head.astro`. Tailwind CSS v4.
+**Styles**: `src/styles/global.css` — imported once via `Layout.astro`. Tailwind CSS v4.
 
 **OGP**: `Head.astro` outputs `og:*` and `twitter:*` meta tags. Pass `image` prop to `<Layout>` to set a custom OGP image per page.
 

@@ -2,7 +2,7 @@ import sharp from 'sharp';
 import { readdirSync, existsSync } from 'fs';
 import { join, basename, extname } from 'path';
 
-const dir = 'public/projects';
+const dir = 'public/screenshots';
 
 if (!existsSync(dir)) process.exit(0);
 

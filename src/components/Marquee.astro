@@ -1,0 +1,46 @@
+---
+interface Props {
+  text: string;
+  duration?: string;
+}
+
+const { text, duration = "15s" } = Astro.props;
+---
+
+<div class="overflow-hidden mb-12">
+  <div class="flex animate-scroll">
+    <div class="flex shrink-0 whitespace-nowrap">
+      {
+        Array.from({ length: 10 }).map((_) => (
+          <h2 class="heading text-5xl md:text-9xl uppercase mr-4 md:mr-8 -mb-2">
+            {text}
+          </h2>
+        ))
+      }
+    </div>
+    <div class="flex shrink-0 whitespace-nowrap" aria-hidden="true">
+      {
+        Array.from({ length: 10 }).map((_) => (
+          <h2 class="heading text-5xl md:text-9xl uppercase mr-4 md:mr-8 -mb-2">
+            {text}
+          </h2>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<style define:vars={{ duration }}>
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-scroll {
+    animation: scroll var(--duration) linear infinite;
+  }
+</style>
