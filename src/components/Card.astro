@@ -10,84 +10,10 @@ const { entry } = Astro.props as {
 };
 ---
 
-<script>
-    document
-        .querySelectorAll<HTMLElement>(".group")
-        .forEach((card: HTMLElement) => {
-            const cardElement: HTMLElement = card;
-            const circle = cardElement.querySelector<HTMLElement>(
-                ".cursor-circle",
-            );
-            if (!circle) return;
-
-            let targetX: number = 0;
-            let targetY: number = 0;
-            let currentX: number = 0;
-            let currentY: number = 0;
-            let isHovering: boolean = false;
-            let animationFrameId: number | null = null;
-
-            cardElement.addEventListener("mouseenter", (e: MouseEvent) => {
-                const rect: DOMRect = cardElement.getBoundingClientRect();
-                targetX = e.clientX - rect.left;
-                targetY = e.clientY - rect.top;
-                currentX = targetX;
-                currentY = targetY;
-                circle.style.left = `${currentX}px`;
-                circle.style.top = `${currentY}px`;
-                circle.style.opacity = "1";
-                circle.style.transform =
-                    "translate(-50%, -50%) scale(1)";
-                isHovering = true;
-                if (!animationFrameId) {
-                    animateCursor();
-                }
-            });
-
-            cardElement.addEventListener("mousemove", (e: MouseEvent) => {
-                const rect: DOMRect = cardElement.getBoundingClientRect();
-                targetX = e.clientX - rect.left;
-                targetY = e.clientY - rect.top;
-            });
-
-            cardElement.addEventListener("mouseleave", () => {
-                isHovering = false;
-                circle.style.opacity = "0";
-                circle.style.transform =
-                    "translate(-50%, -50%) scale(0.75)";
-                if (animationFrameId) {
-                    cancelAnimationFrame(animationFrameId);
-                    animationFrameId = null;
-                }
-            });
-
-            function animateCursor(): void {
-                if (!isHovering) return;
-                const speed: number = 0.1;
-                currentX += (targetX - currentX) * speed;
-                currentY += (targetY - currentY) * speed;
-
-                circle.style.left = `${currentX}px`;
-                circle.style.top = `${currentY}px`;
-
-                animationFrameId = requestAnimationFrame(animateCursor);
-            }
-        });
-</script>
-
 <a
     class="group relative flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 mb-8 pb-8 border-dashed border-b border-b-secondary cursor-pointer"
     href={`/${entry.collection}/${entry.id}`}
 >
-    <div
-        class="cursor-circle absolute w-[90px] h-[90px] bg-foreground rounded-full pointer-events-none hidden group-hover:grid place-items-center transform -translate-x-1/2 -translate-y-1/2 scale-75 opacity-0 transition-[opacity,transform] duration-200"
-    >
-        <span
-            class="font-plex text-background text-xs uppercase tracking-widest"
-            >View</span
-        >
-    </div>
-
     <div
         class="w-full md:max-w-[610px] aspect-[610/400] overflow-hidden border-dashed border-secondary rounded-3xl"
     >
