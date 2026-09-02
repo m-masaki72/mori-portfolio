@@ -2,6 +2,8 @@
 dist/
 # generated types
 .astro/
+# convert-images.mjs generated webp files
+public/screenshots/*.webp
 
 # dependencies
 node_modules/

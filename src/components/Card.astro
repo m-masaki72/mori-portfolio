@@ -36,6 +36,8 @@ const { entry } = Astro.props as {
                 circle.style.left = `${currentX}px`;
                 circle.style.top = `${currentY}px`;
                 circle.style.opacity = "1";
+                circle.style.transform =
+                    "translate(-50%, -50%) scale(1)";
                 isHovering = true;
                 if (!animationFrameId) {
                     animateCursor();
@@ -51,6 +53,8 @@ const { entry } = Astro.props as {
             cardElement.addEventListener("mouseleave", () => {
                 isHovering = false;
                 circle.style.opacity = "0";
+                circle.style.transform =
+                    "translate(-50%, -50%) scale(0.75)";
                 if (animationFrameId) {
                     cancelAnimationFrame(animationFrameId);
                     animationFrameId = null;
@@ -76,21 +80,12 @@ const { entry } = Astro.props as {
     href={`/${entry.collection}/${entry.id}`}
 >
     <div
-        class="cursor-circle absolute w-[75px] h-[75px] bg-primary border border-dashed border-secondary rounded-full pointer-events-none hidden group-hover:grid place-items-center transform -translate-x-1/2 -translate-y-1/2"
+        class="cursor-circle absolute w-[90px] h-[90px] bg-foreground rounded-full pointer-events-none hidden group-hover:grid place-items-center transform -translate-x-1/2 -translate-y-1/2 scale-75 opacity-0 transition-[opacity,transform] duration-200"
     >
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            class="w-10 h-10 text-accent"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+        <span
+            class="font-plex text-background text-xs uppercase tracking-widest"
+            >View</span
         >
-            <path d="M7 7h10v10"></path>
-            <path d="M7 17 17 7"></path>
-        </svg>
     </div>
 
     <div
