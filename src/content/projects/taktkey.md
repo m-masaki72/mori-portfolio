@@ -1,7 +1,7 @@
 ---
 title: "TaktKey"
 description: "全アプリのキー入力に打鍵音を付与するWindows常駐タスクトレイアプリ。8音色の物理DSPを搭載。"
-liveUrl: https://taktkey.pages.dev/
+liveUrl: https://taktkey.morilab-garage.com/
 image: {
 url: "/screenshots/taktkey.png",
 alt: "TaktKey"

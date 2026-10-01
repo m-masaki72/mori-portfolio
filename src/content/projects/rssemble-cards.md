@@ -1,7 +1,7 @@
 ---
 title: "Rssemble Cards for RSS Feeds"
 description: "複数RSSフィードをOGP画像付きカードグリッドで表示するWordPressプラグイン。外部サービス依存なし。"
-liveUrl: https://rssemble-cards-for-rss-feeds.pages.dev/
+liveUrl: https://rssemble.morilab-garage.com/
 githubUrl: https://github.com/m-masaki72/rssemble-cards-for-rss-feeds
 image: {
 url: "https://opengraph.githubassets.com/3563586d1c35e72a9880be8fcdd69d6355f23aaca6931c78d6088e5d82e82a66/m-masaki72/rssemble-cards-for-rss-feeds",

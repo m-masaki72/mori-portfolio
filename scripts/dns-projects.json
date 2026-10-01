@@ -38,5 +38,25 @@
     "subdomain": "penlight",
     "target": "m-masaki72.github.io",
     "proxied": false
+  },
+  {
+    "subdomain": "nothing-to-do",
+    "target": "nothing-to-do-app.pages.dev",
+    "proxied": true
+  },
+  {
+    "subdomain": "rssemble",
+    "target": "rssemble-cards-for-rss-feeds.pages.dev",
+    "proxied": true
+  },
+  {
+    "subdomain": "taktkey",
+    "target": "taktkey.pages.dev",
+    "proxied": true
+  },
+  {
+    "subdomain": "temanui",
+    "target": "temanuibookgenerator.pages.dev",
+    "proxied": true
   }
 ]

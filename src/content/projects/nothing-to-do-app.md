@@ -1,7 +1,7 @@
 ---
 title: "Nothing To Do App"
 description: "タスクを入力した瞬間AIが叱咤し、5秒カウントダウンで即行動を強制するアンチToDoアプリ。"
-liveUrl: https://nothing-to-do-app.pages.dev/
+liveUrl: https://nothing-to-do.morilab-garage.com/
 githubUrl: https://github.com/m-masaki72/nothing-to-do-app
 image: {
 url: "/screenshots/nothing-to-do-app.png",

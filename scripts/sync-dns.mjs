@@ -1,5 +1,5 @@
 // Cloudflare DNS を scripts/dns-projects.json の内容に同期する。
-// CLOUDFLARE_API_TOKEN, CLOUDFLARE_ZONE_ID を .env に書くか環境変数で指定する。
+// CLOUDFLARE_API_TOKEN, CLOUDFLARE_ZONE_ID（Pages 連携時は CLOUDFLARE_ACCOUNT_ID も）を .env に書くか環境変数で指定する。
 // 使い方: npm run sync-dns [-- --dry-run]（.env を自動で読み込む）
 
 import { readFileSync } from 'fs';
@@ -10,6 +10,7 @@ const API_BASE = 'https://api.cloudflare.com/client/v4';
 
 const token = process.env.CLOUDFLARE_API_TOKEN;
 const zoneId = process.env.CLOUDFLARE_ZONE_ID;
+const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
 const dryRun = process.argv.includes('--dry-run');
 
 if (!token || !zoneId) {
@@ -92,6 +93,43 @@ async function upsertRecord(existing, entry) {
   });
 }
 
+// target が *.pages.dev のエントリは、Cloudflare Pages プロジェクト側にもカスタムドメインを登録する
+// （CNAME だけでは Pages がホスト名を受け付けず 522 になる）。CLOUDFLARE_ACCOUNT_ID 未指定ならスキップ。
+async function ensurePagesDomains(entries) {
+  const pagesEntries = entries.filter((e) => e.target.endsWith('.pages.dev'));
+  if (pagesEntries.length === 0) return;
+  if (!accountId) {
+    console.warn('! CLOUDFLARE_ACCOUNT_ID 未指定のため Pages カスタムドメインの登録をスキップ');
+    return;
+  }
+
+  const projects = [];
+  for (let page = 1; ; page += 1) {
+    const res = await fetch(`${API_BASE}/accounts/${accountId}/pages/projects?page=${page}`, { headers });
+    const body = await res.json();
+    if (!body.success) throw new Error(`Cloudflare API error: ${JSON.stringify(body.errors)}`);
+    projects.push(...body.result);
+    if (body.result.length === 0 || page >= (body.result_info?.total_pages ?? 1)) break;
+  }
+  for (const entry of pagesEntries) {
+    const name = `${entry.subdomain}.${ROOT_DOMAIN}`;
+    const project = projects.find((p) => p.subdomain === entry.target);
+    if (!project) {
+      throw new Error(`Pages プロジェクトが見つかりません: ${entry.target}`);
+    }
+    const domains = await cf(`/accounts/${accountId}/pages/projects/${project.name}/domains`);
+    if (domains.some((d) => d.name === name)) {
+      console.log(`= Pages 登録済み: ${name} (${project.name})`);
+      continue;
+    }
+    console.log(`+ Pages 登録: ${name} → ${project.name}`);
+    if (!dryRun) await cf(`/accounts/${accountId}/pages/projects/${project.name}/domains`, {
+      method: 'POST',
+      body: JSON.stringify({ name }),
+    });
+  }
+}
+
 const entries = JSON.parse(readFileSync(CONFIG_PATH, 'utf-8'));
 
 for (const entry of entries) {
@@ -105,6 +143,8 @@ for (const entry of entries) {
 }
 
 if (dryRun) console.log('--- dry-run モード: 実際の変更は行いません ---');
+
+await ensurePagesDomains(entries);
 
 const existing = await listRecords();
 for (const entry of entries) {

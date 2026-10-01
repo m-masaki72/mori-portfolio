@@ -1,7 +1,7 @@
 ---
 title: "てまぬい図鑑ジェネレーター"
 description: "写真をアップロードするだけでてまぬい図鑑カードを作れるWebアプリ。AI背景除去・フォント選択・PNG書き出し対応。"
-liveUrl: https://temanuibookgenerator.pages.dev/
+liveUrl: https://temanui.morilab-garage.com/
 githubUrl: https://github.com/m-masaki72/TemanuiBookGenerator
 image: {
 url: "/screenshots/temanui-book-generator.jpg",
