@@ -11,4 +11,4 @@
 - [ ] Cloudflare Web Analytics のトークン発行（ダッシュボード）→ ポートフォリオと各アプリに埋め込み
 
 ## SEO
-- [ ] morse・loudness-meter・nothing-to-do: 静的HTMLに `<h1>` が無い（JS描画のみ）。静的に h1 を出すか検討
+- [x] morse・loudness-meter・nothing-to-do: 静的HTMLに `<h1>` を追加（2026-10-01）
