@@ -1,6 +1,6 @@
 ---
 import { Font } from "astro:assets";
-import { SITE } from "@/consts";
+import { ADSENSE_CLIENT, SITE } from "@/consts";
 import { buildGraph, type JsonLdNode } from "@/lib/jsonld";
 
 interface Props {
@@ -14,7 +14,7 @@ interface Props {
 const {
     title,
     description,
-    image = "/portrait.jpg",
+    image = "/og-default.png",
     ogType = "website",
     jsonLd = [],
 } = Astro.props;
@@ -53,6 +53,17 @@ const imageURL = new URL(image, SITE.URL).href;
 <!-- Structured Data -->
 <script type="application/ld+json" is:inline set:html={buildGraph(jsonLd)} />
 <link rel="sitemap" href="/sitemap-index.xml" />
+
+{
+    ADSENSE_CLIENT && (
+        <script
+            is:inline
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
+            crossorigin="anonymous"
+        />
+    )
+}
 
 <!-- fonts -->
 <Font cssVariable="--font-plex" preload />

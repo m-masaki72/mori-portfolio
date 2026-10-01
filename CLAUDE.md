@@ -27,6 +27,7 @@ Astro portfolio site. No framework components (React/Vue/etc.) — pure `.astro`
 - `NAV_LINKS` — shared nav items used by Header and Footer
 - `SOCIALS` — social link list used by Contact, Footer, Links pages
 - `HOME`, `BLOG`, `PROJECTS` — page-level title/description
+- `ADSENSE_CLIENT` — AdSense publisher ID (`ca-pub-...`). 空ならAdSenseスクリプト非出力。`src/pages/ads.txt.ts` がこれから `/ads.txt` を生成
 
 **Fonts**: IBM Plex Mono (`--font-plex`) and Geist (`--font-geist`), loaded via `astro:assets` Font API.
 
@@ -34,7 +35,7 @@ Astro portfolio site. No framework components (React/Vue/etc.) — pure `.astro`
 
 **Styles**: `src/styles/global.css` — imported once via `Layout.astro`. Tailwind CSS v4.
 
-**OGP**: `Head.astro` outputs `og:*` and `twitter:*` meta tags. Pass `image` prop to `<Layout>` to set a custom OGP image per page.
+**OGP**: `Head.astro` outputs `og:*` and `twitter:*` meta tags. Default image is `public/og-default.png` (1200×630). Pass `image` prop to `<Layout>` to set a custom OGP image per page.
 
 **Screenshots**: `public/screenshots/` — referenced from project `.md` frontmatter as `image.url`.
 

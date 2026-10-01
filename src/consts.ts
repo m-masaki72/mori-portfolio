@@ -6,6 +6,10 @@ export const SITE = {
   EMAIL: "mementomori7272@gmail.com",
 };
 
+// AdSense のパブリッシャーID（例: "ca-pub-1234567890123456"）。
+// 空のあいだは広告スクリプトを出力せず、ads.txt もコメントのみになる
+export const ADSENSE_CLIENT = "";
+
 export const HOME = {
   TITLE: "音響・ゲーム・Webツールの個人開発ポートフォリオ",
   DESCRIPTION:
