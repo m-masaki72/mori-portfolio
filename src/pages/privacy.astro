@@ -1,0 +1,112 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { SITE } from "@/consts";
+
+const ENACTED = "2026年10月1日";
+---
+
+<Layout
+  title="プライバシーポリシー・免責事項"
+  description={`${SITE.TITLE}のプライバシーポリシー（広告配信・Cookie・アクセス解析）および免責事項`}
+>
+  <section class="container mx-auto px-6 pt-18 pb-24">
+    <article>
+      <h1>プライバシーポリシー・免責事項</h1>
+      <p>
+        {SITE.TITLE}（以下「当サイト」）および当サイト運営者が公開する
+        <code>morilab-garage.com</code>
+        配下の各サービス（以下「各サービス」）における、個人情報の取り扱いと免責事項について定めます。
+      </p>
+
+      <h2>広告の配信について</h2>
+      <p>
+        当サイトおよび各サービスでは、第三者配信の広告サービス「Google
+        AdSense」を利用しています。
+      </p>
+      <p>
+        Google などの第三者配信事業者は Cookie
+        を使用して、利用者が当サイトや他のウェブサイトに過去にアクセスした際の情報に基づいて広告を配信します。Google
+        が広告 Cookie を使用することにより、Google
+        やそのパートナーは当サイトや他のサイトへのアクセス情報に基づいて適切な広告を表示できます。
+      </p>
+      <p>
+        利用者は
+        <a href="https://adssettings.google.com/" target="_blank" rel="noopener noreferrer">Google 広告設定</a>
+        でパーソナライズ広告を無効にできます。また、
+        <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer">www.aboutads.info</a>
+        にアクセスすると、第三者配信事業者の Cookie を無効にできます。
+      </p>
+      <p>
+        Google による広告での Cookie の利用については、
+        <a href="https://policies.google.com/technologies/ads?hl=ja" target="_blank" rel="noopener noreferrer">Google の広告に関するポリシー</a>
+        をご覧ください。
+      </p>
+
+      <h2>Cookie について</h2>
+      <p>
+        Cookie
+        は、ウェブサイトがブラウザに保存する小さなデータです。当サイトおよび各サービスでは、広告配信やアクセス解析のために
+        Cookie を使用することがあります。Cookie
+        には、氏名・メールアドレス・住所など、個人を特定できる情報は含まれません。
+      </p>
+      <p>
+        ブラウザの設定で Cookie
+        を無効にできます。ただし、無効にすると一部の機能が正しく動作しない場合があります。
+      </p>
+
+      <h2>アクセス解析ツールについて</h2>
+      <p>
+        当サイトおよび各サービスでは、利用状況を把握してサービスを改善するために、Google
+        アナリティクスなどのアクセス解析ツールを利用することがあります。これらのツールは
+        Cookie を使用してトラフィックデータを収集しますが、データは匿名で収集され、個人を特定するものではありません。
+      </p>
+      <p>
+        Google アナリティクスによるデータの収集は、
+        <a href="https://tools.google.com/dlpage/gaoptout?hl=ja" target="_blank" rel="noopener noreferrer">オプトアウト アドオン</a>
+        で無効にできます。詳しくは
+        <a href="https://policies.google.com/technologies/partner-sites?hl=ja" target="_blank" rel="noopener noreferrer">Google のサービスを使用するサイトやアプリから収集した情報の Google による使用</a>
+        をご覧ください。
+      </p>
+
+      <h2>各サービスで扱うデータについて</h2>
+      <p>
+        各サービスで利用者が入力・選択した画像・音声・テキストなどのデータは、各サービスの説明に特に記載がない限り、ブラウザ内でのみ処理されます。運営者のサーバーに送信・保存されることはありません。
+      </p>
+
+      <h2>お問い合わせで取得する情報</h2>
+      <p>
+        <a href="/contact">お問い合わせ</a>
+        やメールでいただいた氏名・メールアドレスなどの情報は、お問い合わせへの回答のためにのみ使用します。法令に基づく場合を除き、本人の同意なく第三者に提供することはありません。
+      </p>
+
+      <h2>免責事項</h2>
+      <p>
+        当サイトおよび各サービスの情報やプログラムは、できる限り正確になるよう努めていますが、その正確性・安全性・有用性を保証するものではありません。当サイトおよび各サービスの利用によって生じた損害について、運営者は一切の責任を負いません。
+      </p>
+      <p>
+        当サイトからリンクしている外部サイトの内容について、運営者は責任を負いません。
+      </p>
+      <p>
+        各サービスは、予告なく内容を変更したり、公開を停止したりすることがあります。
+      </p>
+
+      <h2>著作権について</h2>
+      <p>
+        当サイトに掲載している文章・画像などの著作権は、特に記載がない限り運営者に帰属します。引用の範囲を超える無断転載は禁止します。
+      </p>
+
+      <h2>プライバシーポリシーの変更</h2>
+      <p>
+        本ポリシーの内容は、法令の変更や必要に応じて予告なく改定することがあります。改定後の内容は、本ページに掲載した時点から効力を持つものとします。
+      </p>
+
+      <h2>運営者・連絡先</h2>
+      <p>
+        運営者：MasakiMori（{SITE.TITLE}）<br />
+        連絡先：<a href={`mailto:${SITE.EMAIL}`}>{SITE.EMAIL}</a>
+      </p>
+
+      <p>制定日：{ENACTED}</p>
+    </article>
+  </section>
+</Layout>

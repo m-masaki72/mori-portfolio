@@ -1,0 +1,42 @@
+[
+  {
+    "subdomain": "chordeureka",
+    "target": "ghs.googlehosted.com",
+    "proxied": true
+  },
+  {
+    "subdomain": "uchinoko-id",
+    "target": "idphotogenerator.pages.dev",
+    "proxied": true
+  },
+  {
+    "subdomain": "momoko",
+    "target": "m-masaki72.github.io",
+    "proxied": false
+  },
+  {
+    "subdomain": "huh-cat",
+    "target": "m-masaki72.github.io",
+    "proxied": false
+  },
+  {
+    "subdomain": "morse",
+    "target": "m-masaki72.github.io",
+    "proxied": false
+  },
+  {
+    "subdomain": "interval-timer",
+    "target": "m-masaki72.github.io",
+    "proxied": false
+  },
+  {
+    "subdomain": "loudness-meter",
+    "target": "m-masaki72.github.io",
+    "proxied": false
+  },
+  {
+    "subdomain": "penlight",
+    "target": "m-masaki72.github.io",
+    "proxied": false
+  }
+]

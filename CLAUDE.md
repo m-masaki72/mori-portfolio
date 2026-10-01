@@ -17,11 +17,10 @@ Astro portfolio site. No framework components (React/Vue/etc.) — pure `.astro`
 
 **Routing**: File-based. `src/pages/` maps directly to URL routes.
 - `src/pages/projects/[...id].astro` — project detail pages
-- `src/pages/blog/[...id].astro` — blog post detail pages
+- `src/pages/privacy.astro` — privacy policy / disclaimer (AdSense, Cookie, analytics). Covers all `*.morilab-garage.com` services; linked from Footer.
 
 **Content collections** (`src/content.config.ts`):
 - `projects` — `src/content/projects/*.md`. Required: `title`, `description`, `image { url, alt }`. Optional: `liveUrl`, `githubUrl`.
-- `blog` — `src/content/blog/*.md`. Required: `title`, `description`, `date`. Optional: `draft`, `tags`, `series`, `image { url, alt }`.
 
 **Global constants** (`src/consts.ts`):
 - `SITE` — `URL`, `TITLE`, `DESCRIPTION`, `EMAIL`
@@ -40,3 +39,5 @@ Astro portfolio site. No framework components (React/Vue/etc.) — pure `.astro`
 **Screenshots**: `public/screenshots/` — referenced from project `.md` frontmatter as `image.url`.
 
 **Deployment**: GitHub Pages via GitHub Actions. Site URL: `https://morilab-garage.com` (set in `astro.config.mjs` and `SITE.URL`).
+
+**DNS automation**: `scripts/sync-dns.mjs` + `dns-projects.json` manage Cloudflare DNS records across multiple projects (this site included) from a single source of truth. `convert-images.mjs` handles image format conversion for the content pipeline. See `TODO_DNS.md` for outstanding DNS-related work.

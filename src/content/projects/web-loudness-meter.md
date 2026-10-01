@@ -1,7 +1,7 @@
 ---
 title: "Web Loudness Meter"
 description: "インストール不要のブラウザ音響計測ツール。LUFS/dBFS/dBA/FFTスペクトラムをリアルタイム表示。PWA対応。"
-liveUrl: https://m-masaki72.github.io/web-loudness-meter/
+liveUrl: https://loudness-meter.morilab-garage.com/
 githubUrl: https://github.com/m-masaki72/web-loudness-meter
 image: {
 url: "/screenshots/web-loudness-meter.png",

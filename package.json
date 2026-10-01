@@ -9,7 +9,8 @@
     "dev": "astro dev",
     "build": "node scripts/convert-images.mjs && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "sync-dns": "node --env-file-if-exists=.env scripts/sync-dns.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.1",

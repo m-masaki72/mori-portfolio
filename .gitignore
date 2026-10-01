@@ -27,3 +27,6 @@ pnpm-debug.log*
 
 # Claude Code
 .claude/
+
+# 未公開ドメイン計画（公開リポジトリに含めない）
+TODO_DNS.md

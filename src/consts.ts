@@ -11,11 +11,6 @@ export const HOME = {
   DESCRIPTION: "コーディング、プロジェクト制作、日々の試行錯誤についての個人ブログ",
 };
 
-export const BLOG = {
-  TITLE: "ブログ",
-  DESCRIPTION: "プログラミング、プロジェクト、その他についての記事集",
-};
-
 export const PROJECTS = {
   TITLE: "プロジェクト",
   DESCRIPTION: "リポジトリとライブデモへのリンクを含む制作物の一覧",

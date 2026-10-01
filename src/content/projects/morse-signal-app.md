@@ -1,7 +1,7 @@
 ---
 title: "Morse Signal App"
 description: "日本語・英語対応のモールス信号変換・音声再生・放射状樹形図可視化Reactアプリ。"
-liveUrl: https://m-masaki72.github.io/morse-signal-app/
+liveUrl: https://morse.morilab-garage.com/
 githubUrl: https://github.com/m-masaki72/morse-signal-app
 image: {
 url: "/screenshots/morse-signal-app.png",

@@ -9,6 +9,9 @@ const allProjects: CollectionEntry<"projects">[] = (
 ---
 
 <section id="Projects" class="container mx-auto px-6">
-  <Marquee text="work" />
+  <Marquee text="work" label="制作物" />
   {allProjects.map((project) => <Card entry={project} />)}
+  <a href="/projects" class="inline-block mt-6 text-lg underline underline-offset-4">
+    制作物をすべて見る →
+  </a>
 </section>
