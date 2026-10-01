@@ -8,7 +8,7 @@ export const SITE = {
 
 // AdSense のパブリッシャーID（例: "ca-pub-1234567890123456"）。
 // 空のあいだは広告スクリプトを出力せず、ads.txt もコメントのみになる
-export const ADSENSE_CLIENT = "";
+export const ADSENSE_CLIENT = "ca-pub-6039922373762217";
 
 export const HOME = {
   TITLE: "音響・ゲーム・Webツールの個人開発ポートフォリオ",
