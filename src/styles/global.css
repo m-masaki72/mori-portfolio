@@ -8,10 +8,12 @@
   --font-geist: "Geist", sans-serif;
 
   /* colors */
-  --color-primary: oklch(86.89 0.29 142.02); /* #27FF0B*/
+  --color-primary: oklch(86.89 0.29 142.02); /* #27FF0B 背景・塗り専用（白地の文字色には使わない） */
+  --color-primary-ink: oklch(0.48 0.16 142); /* 白地でも読める濃い緑（リンク・強調文字用） */
   --color-background: oklch(99.7 0 0); /* #fefefe */
   --color-foreground: oklch(0 0 0); /* #000000 */
   --color-secondary: oklch(0.38 0 1); /* #434343*/
+  --color-muted: oklch(0.96 0 0); /* 画像の余白・チップ背景 */
 }
 
 .heading {
@@ -20,14 +22,61 @@
 
 html {
   @apply scroll-smooth;
+  /* 固定ヘッダーの下にアンカーが隠れないように */
+  scroll-padding-top: 5rem;
 }
 
 body {
   @apply font-geist text-foreground bg-background;
 }
 
-article {
+:focus-visible {
+  outline: 3px solid var(--color-foreground);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.prose-body {
   @apply prose prose-neutral prose-img:mx-auto prose-img:my-auto text-lg leading-8;
-  @apply prose-headings:font-bold prose-headings:font-plex prose-headings:text-foreground mx-auto;
-  @apply text-secondary prose-a:underline-offset-2;
+  @apply prose-headings:font-bold prose-headings:font-plex prose-headings:text-foreground;
+  @apply text-secondary prose-a:underline-offset-2 prose-a:text-primary-ink;
+}
+
+/* 共通ボタン */
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-3 font-medium transition sm:px-8 sm:py-4;
+}
+@utility btn-primary {
+  @apply btn bg-primary text-foreground hover:brightness-95 hover:shadow-[0_6px_0_0_var(--color-foreground)] hover:-translate-y-0.5;
+}
+@utility btn-dark {
+  @apply btn bg-foreground text-background hover:bg-secondary;
+}
+@utility btn-ghost {
+  @apply btn border border-dashed border-secondary hover:bg-muted;
+}
+
+/* 小さなラベル */
+@utility chip {
+  @apply inline-flex items-center rounded-full border border-black/10 bg-white px-2.5 py-0.5 text-xs text-secondary;
+}
+@utility chip-accent {
+  @apply inline-flex items-center rounded-full bg-primary px-2.5 py-0.5 text-xs font-medium text-foreground;
+}
+
+@utility eyebrow {
+  @apply font-plex text-xs font-bold tracking-[0.2em] uppercase text-secondary sm:text-sm;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

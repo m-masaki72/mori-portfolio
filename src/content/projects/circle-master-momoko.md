@@ -7,6 +7,10 @@ image: {
 url: "/screenshots/circle-master-momoko.png",
 alt: "Circle M@ster Momoko"
 }
+category: "ゲーム"
+platform: "Web"
+tech: ["JavaScript", "Canvas"]
+order: 15
 ---
 
 「トゲトゲなさんかくを、まあるくしてね。」——桃子ちゃんのリクエストに応えるべく、マウスや指でフリーハンドの円を描いて真円度を競うWebゲーム。HTML5 Canvas APIで筆跡を取得し、最小二乗法で基準円を算出してスコアを判定する。スコアに応じて桃子ちゃんのセリフが変化するのが醍醐味。学園アイドルマスターのファンアートとして制作した。

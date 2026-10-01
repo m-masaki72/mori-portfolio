@@ -4,6 +4,6 @@ import Layout from "@/layouts/Layout.astro";
 import { SITE } from "@/consts";
 ---
 
-<Layout title="お問い合わせ" description={SITE.DESCRIPTION}>
-    <ContactForm />
+<Layout title="お問い合わせ" description={`${SITE.TITLE}（MasakiMori）へのお問い合わせ。制作物への感想・不具合報告・お仕事のご相談はメールまたはSNSからどうぞ。`}>
+    <div class="pt-12"><ContactForm as="h1" /></div>
 </Layout>

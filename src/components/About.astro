@@ -1,39 +1,48 @@
-<section id="About" class="container mx-auto mb-28 p-6">
-    <h2 class="heading text-5xl md:text-9xl uppercase">自己紹介</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 items-center md:p-0 gap-8">
-        <div class="space-y-6">
-            <div
-                class="w-full aspect-[668/516] md:max-w-[668px] overflow-hidden rounded-3xl"
-            >
-                <img
-                    src="/portrait.jpg"
-                    alt="プロフィール画像"
-                    class="w-full h-full object-cover"
-                />
-            </div>
+---
+type Props = {
+    // 単体ページ（/about）では h1、トップでは h2
+    as?: "h1" | "h2";
+};
+
+const { as: Heading = "h2" } = Astro.props;
+const skills = ["C++", "C#", "JavaScript", "TypeScript", "JUCE", "Web Audio API", "Claude API", "Astro"];
+---
+
+<section id="About" class="container mx-auto px-6 py-16 md:py-24">
+    <p class="eyebrow mb-3">About</p>
+    <Heading class="heading text-4xl md:text-6xl mb-10 md:mb-14">自己紹介</Heading>
+    <div class="grid grid-cols-1 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] items-start gap-10 md:gap-16">
+        <div class="overflow-hidden rounded-3xl border border-black/10 aspect-[668/516] max-w-[560px]">
+            <img
+                src="/portrait.jpg"
+                alt="MasakiMori のプロフィール画像"
+                class="w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+                width="668"
+                height="516"
+            />
         </div>
 
-        <div>
-            <div class="text-lg md:text-2xl text-secondary space-y-4">
+        <div class="space-y-8">
+            <div class="text-lg md:text-xl text-secondary leading-relaxed space-y-4">
                 <p>
-                    音響・ゲーム・プラグイン開発が好きなエンジニア。
-                    C++ を軸に VST プラグインやゲーム、Web ツールなど
-                    ジャンルを問わずものづくりを続けています。
+                    MasakiMori です。音響・ゲーム・プラグイン開発が好きなエンジニアで、C++ を軸に VST
+                    プラグインやゲーム、Web ツールなどジャンルを問わずものづくりを続けています。
+                </p>
+                <p>
+                    最近は Claude API を使った作曲支援ツールや、インストール不要でブラウザだけで完結する小さなアプリづくりに力を入れています。
                 </p>
             </div>
             <div>
-                <h3 class="heading text-2xl uppercase my-8 text-secondary">
-                    スキル
-                </h3>
-                <div class="flex flex-wrap gap-4 mt-8">
-                    {["C++", "C#", "JavaScript", "TypeScript", "JUCE", "Web Audio API"].map((skill) => (
-                        <span
-                            class="inline-flex items-center justify-center rounded-4xl py-4 px-8 outline-1 outline-dashed outline-secondary"
-                        >
-                            {skill}
-                        </span>
-                    ))}
-                </div>
+                <h3 class="heading text-xl mb-4">スキル</h3>
+                <ul class="flex flex-wrap gap-2.5">
+                    {
+                        skills.map((skill) => (
+                            <li class="rounded-full border border-dashed border-secondary px-5 py-2 text-base">{skill}</li>
+                        ))
+                    }
+                </ul>
             </div>
         </div>
     </div>

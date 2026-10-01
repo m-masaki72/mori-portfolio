@@ -7,6 +7,10 @@ image: {
 url: "https://opengraph.githubassets.com/3563586d1c35e72a9880be8fcdd69d6355f23aaca6931c78d6088e5d82e82a66/m-masaki72/rssemble-cards-for-rss-feeds",
 alt: "Rssemble Cards for RSS Feeds"
 }
+category: "開発ツール"
+platform: "WordPress"
+tech: ["PHP", "WordPress", "SimplePie"]
+order: 9
 ---
 
 複数のRSSフィードを取得し、OGP画像付きカードグリッドとして表示するWordPressプラグイン。WordPress組み込みのSimplePie・トランジェント・DOMDocumentのみ使用し外部サービス依存ゼロ。`curl_multi`による並列OGP取得、grid / list / carousel など8レイアウト、トランジェントキャッシュ、管理UIのライブプレビューに対応。WordPress.orgで公開中。

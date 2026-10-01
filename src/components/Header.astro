@@ -1,48 +1,53 @@
 ---
 import { SITE, NAV_LINKS } from "@/consts";
 
-const links = NAV_LINKS;
+const current = Astro.url.pathname;
+const isCurrent = (href: string) => current === href || current.startsWith(`${href}/`);
 ---
 
-<header class="fixed top-0 w-full z-50">
-    <div class="container mx-auto flex items-center justify-between p-6">
-        <a href="/" class="font-bold font-plex text-4xl"
-            >{SITE.TITLE.toUpperCase().charAt(0)}.</a
-        >
-        <nav class="space-x-3 text-secondary hidden md:block">
+<header class="fixed top-0 inset-x-0 z-50 border-b border-black/5 bg-background/80 backdrop-blur-md">
+    <div class="container mx-auto flex h-16 items-center justify-between px-6">
+        <a href="/" class="flex items-baseline gap-3" aria-label={`${SITE.TITLE} ホーム`}>
+            <span class="font-plex text-3xl font-bold">{SITE.TITLE.toUpperCase().charAt(0)}.</span>
+            <span class="font-plex text-sm font-bold uppercase tracking-widest text-secondary hidden sm:inline">{SITE.TITLE}</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-8 text-[15px]" aria-label="メイン">
             {
-                links.map((link) => (
+                NAV_LINKS.map((link) => (
                     <a
                         href={link.href}
-                        class="hover:border-b-2 hover:border-dashed hover:border-secondary pb-0.5"
+                        aria-current={isCurrent(link.href) ? "page" : undefined}
+                        class="relative py-1 text-secondary hover:text-foreground aria-[current=page]:text-foreground aria-[current=page]:font-bold after:absolute after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:origin-left after:scale-x-0 after:bg-primary after:transition hover:after:scale-x-100 aria-[current=page]:after:scale-x-100"
                     >
                         {link.name}
                     </a>
                 ))
             }
+            <a href="/contact" class="rounded-full bg-foreground px-4 py-2 text-sm text-background hover:bg-secondary transition">お問い合わせ</a>
         </nav>
         <button
             id="menu-toggle"
-            class="hamburger focus:outline-none flex md:hidden"
-            aria-label="Toggle navigation"
+            class="hamburger md:hidden"
+            aria-label="メニューを開く"
+            aria-controls="menu-mobile"
+            aria-expanded="false"
         >
             <span class="hamburger-line"></span>
             <span class="hamburger-line"></span>
             <span class="hamburger-line"></span>
         </button>
     </div>
-    <div
-        id="menu-mobile"
-        class="hidden md:hidden space-x-3 text-secondary bg-background backdrop-blur-2xl w-screen p-4"
-    >
-        <nav class="flex flex-col gap-4 text-2xl">
+    <div id="menu-mobile" class="hidden md:hidden border-t border-black/5 bg-background px-6 pb-6">
+        <nav class="flex flex-col text-2xl font-plex font-bold" aria-label="メイン（モバイル）">
             {
-                links.map((link) => (
+                [...NAV_LINKS, { name: "お問い合わせ", href: "/contact" }].map((link) => (
                     <a
                         href={link.href}
-                        class="hover:border-b-2 hover:border-dashed hover:border-secondary pb-0.5"
+                        aria-current={isCurrent(link.href) ? "page" : undefined}
+                        class="flex items-center justify-between border-b border-dashed border-black/15 py-4 aria-[current=page]:text-primary-ink"
                     >
                         {link.name}
+                        <span aria-hidden="true">→</span>
                     </a>
                 ))
             }
@@ -52,62 +57,67 @@ const links = NAV_LINKS;
 
 <style>
     .hamburger {
-        gap: 5px;
         cursor: pointer;
         position: relative;
-        width: 24px;
-        height: 21px;
-        padding: 0;
+        width: 44px;
+        height: 44px;
+        margin-right: -10px;
         border: 0;
         background: transparent;
     }
 
     .hamburger-line {
-        width: 24px;
-        height: 3px;
-        background-color: var(--color-secondary, #000000);
-        transition: all 0.3s ease;
         position: absolute;
-        left: 0;
+        left: 10px;
+        width: 24px;
+        height: 2px;
+        background-color: var(--color-foreground);
+        transition: transform 0.3s ease, opacity 0.3s ease, top 0.3s ease;
     }
 
     .hamburger-line:nth-child(1) {
-        top: 0;
+        top: 14px;
     }
 
     .hamburger-line:nth-child(2) {
-        top: 9px;
+        top: 21px;
     }
 
     .hamburger-line:nth-child(3) {
-        top: 18px;
+        top: 28px;
     }
 
-    .hamburger.active .hamburger-line:nth-child(1) {
+    .hamburger[aria-expanded="true"] .hamburger-line:nth-child(1) {
+        top: 21px;
         transform: rotate(45deg);
-        top: 9px;
     }
 
-    .hamburger.active .hamburger-line:nth-child(2) {
-        display: none;
+    .hamburger[aria-expanded="true"] .hamburger-line:nth-child(2) {
         opacity: 0;
     }
 
-    .hamburger.active .hamburger-line:nth-child(3) {
+    .hamburger[aria-expanded="true"] .hamburger-line:nth-child(3) {
+        top: 21px;
         transform: rotate(-45deg);
-        top: 9px;
     }
 </style>
 
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const menuMobile = document.getElementById("menu-mobile");
-        const toggle = document.getElementById("menu-toggle");
-        toggle?.addEventListener("click", () => {
-            menuMobile?.classList.toggle("hidden");
-            toggle.classList.toggle("active");
-            const expanded = toggle.classList.contains("active");
-            toggle.setAttribute("aria-expanded", String(expanded));
-        });
+    const menu = document.getElementById("menu-mobile");
+    const toggle = document.getElementById("menu-toggle");
+
+    const setOpen = (open: boolean) => {
+        menu?.classList.toggle("hidden", !open);
+        toggle?.setAttribute("aria-expanded", String(open));
+        toggle?.setAttribute("aria-label", open ? "メニューを閉じる" : "メニューを開く");
+    };
+
+    toggle?.addEventListener("click", () => setOpen(toggle.getAttribute("aria-expanded") !== "true"));
+    menu?.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setOpen(false)));
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && toggle?.getAttribute("aria-expanded") === "true") {
+            setOpen(false);
+            toggle.focus();
+        }
     });
 </script>

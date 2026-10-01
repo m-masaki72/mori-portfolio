@@ -20,7 +20,7 @@ Astro portfolio site. No framework components (React/Vue/etc.) — pure `.astro`
 - `src/pages/privacy.astro` — privacy policy / disclaimer (AdSense, Cookie, analytics). Covers all `*.morilab-garage.com` services; linked from Footer.
 
 **Content collections** (`src/content.config.ts`):
-- `projects` — `src/content/projects/*.md`. Required: `title`, `description`, `image { url, alt }`. Optional: `liveUrl`, `githubUrl`.
+- `projects` — `src/content/projects/*.md`. Required: `title`, `description`, `image { url, alt }`, `category` (enum `CATEGORIES`), `platform`. Optional: `tech[]`, `order` (表示順, 小さいほど先頭), `liveUrl`, `githubUrl`. 一覧取得は `src/lib/projects.ts` の `getProjects()`（order順）を使う。
 
 **Global constants** (`src/consts.ts`):
 - `SITE` — `URL`, `TITLE`, `DESCRIPTION`, `EMAIL`

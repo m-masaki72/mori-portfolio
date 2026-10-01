@@ -1,18 +1,77 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import Card from "@/components/Card.astro";
-import { getCollection, type CollectionEntry } from "astro:content";
+import { CATEGORIES } from "@/content.config";
+import { getProjects } from "@/lib/projects";
 import { PROJECTS } from "@/consts";
 
-const allProjects: CollectionEntry<"projects">[] =
-    await getCollection("projects");
+const projects = await getProjects();
+const categories = CATEGORIES.filter((c) => projects.some((p) => p.data.category === c));
 ---
 
 <Layout title={PROJECTS.TITLE} description={PROJECTS.DESCRIPTION}>
-    <section id="Projects" class="container mx-auto px-6 pt-18">
-        <h2 class="heading text-5xl md:text-9xl uppercase mr-4 md:mr-8 my-8">
-            制作物
-        </h2>
-        {allProjects.map((project) => <Card entry={project} />)}
+    <section class="container mx-auto px-6 pt-28 pb-24 md:pt-36">
+        <p class="eyebrow mb-3">Works</p>
+        <h1 class="heading text-4xl md:text-6xl">{PROJECTS.TITLE}</h1>
+        <p class="mt-5 max-w-2xl text-lg text-secondary leading-relaxed">{PROJECTS.DESCRIPTION}</p>
+
+        <div id="filters" class="mt-10 mb-8 hidden flex-wrap gap-2" role="group" aria-label="カテゴリで絞り込み">
+            <button type="button" data-filter="all" aria-pressed="true" class="filter-btn">
+                すべて <span class="opacity-60">{projects.length}</span>
+            </button>
+            {
+                categories.map((c) => (
+                    <button type="button" data-filter={c} aria-pressed="false" class="filter-btn">
+                        {c} <span class="opacity-60">{projects.filter((p) => p.data.category === c).length}</span>
+                    </button>
+                ))
+            }
+        </div>
+
+        <div id="project-grid" class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {projects.map((project, i) => <Card entry={project} eager={i < 3} headingLevel="h2" />)}
+        </div>
     </section>
 </Layout>
+
+<style>
+    .filter-btn {
+        cursor: pointer;
+        border-radius: 9999px;
+        border: 1px solid rgb(0 0 0 / 0.15);
+        background: var(--color-background);
+        padding: 0.5rem 1rem;
+        min-height: 44px;
+        font-size: 0.95rem;
+        transition: background-color 0.2s;
+    }
+    .filter-btn:hover {
+        background: var(--color-muted);
+    }
+    .filter-btn[aria-pressed="true"] {
+        background: var(--color-foreground);
+        border-color: var(--color-foreground);
+        color: var(--color-background);
+    }
+</style>
+
+<script>
+    // JS が動く環境でのみフィルタを表示（未対応環境では全件表示のまま）
+    const filters = document.getElementById("filters");
+    const grid = document.getElementById("project-grid");
+    if (filters && grid) {
+        filters.classList.replace("hidden", "flex");
+        grid.classList.remove("mt-10");
+        const buttons = filters.querySelectorAll<HTMLButtonElement>("button[data-filter]");
+        const cards = grid.querySelectorAll<HTMLElement>("[data-category]");
+        buttons.forEach((btn) =>
+            btn.addEventListener("click", () => {
+                const f = btn.dataset.filter;
+                buttons.forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+                cards.forEach((card) => {
+                    card.hidden = f !== "all" && card.dataset.category !== f;
+                });
+            }),
+        );
+    }
+</script>

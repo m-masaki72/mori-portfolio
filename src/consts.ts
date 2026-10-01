@@ -7,13 +7,15 @@ export const SITE = {
 };
 
 export const HOME = {
-  TITLE: "ホーム",
-  DESCRIPTION: "コーディング、プロジェクト制作、日々の試行錯誤についての個人ブログ",
+  TITLE: "音響・ゲーム・Webツールの個人開発ポートフォリオ",
+  DESCRIPTION:
+    "MasakiMoriの個人開発ポートフォリオ。AIコード進行ツール、VSTプラグイン、Windows常駐アプリ、ブラウザで動くWebツールやゲームなど、音響・ゲーム・Webを中心とした制作物を紹介しています。",
 };
 
 export const PROJECTS = {
-  TITLE: "プロジェクト",
-  DESCRIPTION: "リポジトリとライブデモへのリンクを含む制作物の一覧",
+  TITLE: "制作物一覧",
+  DESCRIPTION:
+    "AI作曲支援ツール、VSTプラグイン、Windowsアプリ、ブラウザで動くWebツールやゲーム、開発者向けツールまで。MasakiMoriがこれまでに公開した制作物をカテゴリ別に紹介します。",
 };
 
 export const NAV_LINKS = [

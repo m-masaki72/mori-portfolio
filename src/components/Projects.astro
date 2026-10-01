@@ -1,17 +1,22 @@
 ---
 import Card from "./Card.astro";
 import Marquee from "./Marquee.astro";
-import { getCollection, type CollectionEntry } from "astro:content";
+import { getProjects } from "@/lib/projects";
 
-const allProjects: CollectionEntry<"projects">[] = (
-  await getCollection("projects")
-).slice(0, 3);
+const all = await getProjects();
+const featured = all.slice(0, 6);
 ---
 
-<section id="Projects" class="container mx-auto px-6">
-  <Marquee text="work" label="制作物" />
-  {allProjects.map((project) => <Card entry={project} />)}
-  <a href="/projects" class="inline-block mt-6 text-lg underline underline-offset-4">
-    制作物をすべて見る →
-  </a>
+<section id="Projects" class="py-16 md:py-24">
+  <Marquee text="works" label="注目の制作物" />
+  <div class="container mx-auto px-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {featured.map((project) => <Card entry={project} />)}
+    </div>
+    <div class="mt-10 flex justify-center">
+      <a href="/projects" class="btn-ghost">
+        制作物をすべて見る（{all.length}件） <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
 </section>

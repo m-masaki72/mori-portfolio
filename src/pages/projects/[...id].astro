@@ -1,38 +1,45 @@
 ---
 import { SITE, PROJECTS } from "@/consts";
 import { PERSON_ID, WEBSITE_ID, breadcrumb } from "@/lib/jsonld";
+import { getProjects } from "@/lib/projects";
 import Layout from "@/layouts/Layout.astro";
-import { getCollection, render, type CollectionEntry } from "astro:content";
+import Card from "@/components/Card.astro";
+import ProjectImage from "@/components/ProjectImage.astro";
+import { render } from "astro:content";
 
 export async function getStaticPaths() {
-    const allProjects: CollectionEntry<"projects">[] =
-        await getCollection("projects");
-
-    return allProjects.map((project) => ({
+    const all = await getProjects();
+    return all.map((project, i) => ({
         params: { id: project.id },
-        props: { project },
+        props: {
+            project,
+            prev: all[i - 1],
+            next: all[i + 1],
+            related: all.filter((p) => p.id !== project.id && p.data.category === project.data.category).slice(0, 3),
+        },
     }));
 }
 
-const { project } = Astro.props;
+const { project, prev, next, related } = Astro.props;
+const { title, description, image, category, platform, tech, liveUrl, githubUrl } = project.data;
 
 const { Content } = await render(project);
 
 const pageURL = new URL(`/projects/${project.id}/`, SITE.URL).href;
-const imageURL = new URL(project.data.image.url, SITE.URL).href;
-const relatedUrls = [
-    ...new Set([project.data.liveUrl, project.data.githubUrl].filter(Boolean)),
-];
+const imageURL = new URL(image.url, SITE.URL).href;
+const relatedUrls = [...new Set([liveUrl, githubUrl].filter(Boolean))];
 
 const jsonLd = [
     {
         "@type": "CreativeWork",
         "@id": `${pageURL}#work`,
-        name: project.data.title,
-        description: project.data.description,
+        name: title,
+        description,
         url: pageURL,
         image: imageURL,
         inLanguage: "ja",
+        genre: category,
+        keywords: tech.join(", "),
         author: { "@id": PERSON_ID },
         isPartOf: { "@id": WEBSITE_ID },
         ...(relatedUrls.length > 0 && { sameAs: relatedUrls }),
@@ -40,88 +47,131 @@ const jsonLd = [
     breadcrumb([
         { name: "ホーム", url: `${SITE.URL}/` },
         { name: PROJECTS.TITLE, url: `${SITE.URL}/projects/` },
-        { name: project.data.title, url: pageURL },
+        { name: title, url: pageURL },
     ]),
 ];
 ---
 
-<Layout
-    title={project.data.title}
-    description={project.data.description}
-    image={project.data.image.url}
-    ogType="article"
-    jsonLd={jsonLd}
->
-    <div class="container mx-auto space-y-8 pt-18 px-6">
-        <button
-            class="flex gap-2 items-center text-secondary hover:text-primary cursor-pointer pl-2 my-6"
-            title="back"
-            id="back-button"
-        >
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="28"
-                height="28"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-move-left-icon lucide-move-left"
-                ><path d="M6 8L2 12L6 16"></path><path d="M2 12H22"></path></svg
-            >
-            <span>戻る</span>
-        </button>
-        <div
-            class="flex justify-between md:items-center pb-4 border-b border-dashed border-secondary gap-4 flex-col md:flex-row"
-        >
-            <div class="space-y-4">
-                <h1 class="heading text-3xl md:text-5xl uppercase">
-                    {project.data.title}
-                </h1>
-                <p>{project.data.description}</p>
-            </div>
+<Layout title={title} description={description} image={image.url} ogType="article" jsonLd={jsonLd}>
+    <div class="container mx-auto px-6 pt-24 md:pt-28 pb-20">
+        <nav aria-label="パンくずリスト" class="mb-8 text-sm text-secondary">
+            <ol class="flex flex-wrap items-center gap-2">
+                <li><a href="/" class="hover:text-foreground underline-offset-2 hover:underline">ホーム</a></li>
+                <li aria-hidden="true">/</li>
+                <li><a href="/projects" class="hover:text-foreground underline-offset-2 hover:underline">{PROJECTS.TITLE}</a></li>
+                <li aria-hidden="true">/</li>
+                <li aria-current="page" class="text-foreground font-medium">{title}</li>
+            </ol>
+        </nav>
 
-            <div class="flex flex-col sm:flex-row gap-4">
-                {project.data.githubUrl && (
-                    <a
-                        href={project.data.githubUrl}
-                        class="w-full sm:w-auto flex items-center justify-center bg-primary rounded-2xl py-3 px-6 sm:py-4 sm:px-10 cursor-pointer hover:bg-background hover:outline hover:outline-1 hover:outline-dashed hover:outline-secondary hover:text-foreground transition"
-                    >
-                        ソースコード
-                    </a>
-                )}
-                {project.data.liveUrl && (
-                    <a
-                        href={project.data.liveUrl}
-                        class="w-full sm:w-auto flex items-center justify-center bg-foreground text-background rounded-2xl py-3 px-6 sm:py-4 sm:px-10 cursor-pointer hover:bg-background hover:outline hover:outline-1 hover:outline-dashed hover:outline-secondary hover:text-foreground transition"
-                    >
-                        デモを見る
-                    </a>
-                )}
+        <header class="space-y-5 pb-8">
+            <div class="flex flex-wrap gap-1.5">
+                <span class="chip-accent">{category}</span>
+                <span class="chip">{platform}</span>
             </div>
-        </div>
+            <h1 class="heading text-4xl md:text-6xl">{title}</h1>
+            <p class="max-w-3xl text-lg md:text-xl text-secondary leading-relaxed">{description}</p>
+            <div class="flex flex-col sm:flex-row gap-3 pt-2">
+                {
+                    liveUrl && (
+                        <a href={liveUrl} target="_blank" rel="noopener" class="btn-primary">
+                            アプリを開く <span aria-hidden="true">↗</span>
+                        </a>
+                    )
+                }
+                {
+                    githubUrl && (
+                        <a href={githubUrl} target="_blank" rel="noopener" class="btn-dark">
+                            ソースコード <span aria-hidden="true">↗</span>
+                        </a>
+                    )
+                }
+            </div>
+        </header>
 
-        <div
-            class="w-full lg:h-[70vh] aspect-[610/400] overflow-hidden rounded-2xl"
-        >
-            <img
-                src={project.data.image.url}
-                alt={project.data.image.alt}
-                class="w-full h-full object-contain"
+        <figure class="overflow-hidden rounded-3xl border border-black/10 bg-muted">
+            <ProjectImage
+                src={image.url}
+                alt={image.alt}
+                eager
+                class="mx-auto w-full max-h-[70vh] object-contain"
             />
-        </div>
-        <article
-            class="px-3 flex-2 mx-auto border-b border-dashed border-secondary mb-18"
-        >
-            <Content />
-        </article>
-    </div>
+        </figure>
 
-    <script is:inline>
-        document.getElementById("back-button").addEventListener("click", () => {
-            window.history.back();
-        });
-    </script>
+        <div class="mt-12 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_300px] gap-10 lg:gap-16">
+            <article class="prose-body max-w-prose">
+                <Content />
+            </article>
+            <aside class="lg:sticky lg:top-24 self-start rounded-3xl border border-black/10 bg-background p-6 space-y-5">
+                <dl class="space-y-4 text-sm">
+                    <div>
+                        <dt class="eyebrow mb-1">カテゴリ</dt>
+                        <dd>{category}</dd>
+                    </div>
+                    <div>
+                        <dt class="eyebrow mb-1">プラットフォーム</dt>
+                        <dd>{platform}</dd>
+                    </div>
+                    {
+                        tech.length > 0 && (
+                            <div>
+                                <dt class="eyebrow mb-2">使用技術</dt>
+                                <dd>
+                                    <ul class="flex flex-wrap gap-1.5">
+                                        {tech.map((t) => <li class="chip">{t}</li>)}
+                                    </ul>
+                                </dd>
+                            </div>
+                        )
+                    }
+                </dl>
+                {
+                    (liveUrl || githubUrl) && (
+                        <div class="flex flex-col gap-2 border-t border-dashed border-black/15 pt-5">
+                            {liveUrl && (
+                                <a href={liveUrl} target="_blank" rel="noopener" class="underline underline-offset-2 text-primary-ink">
+                                    アプリを開く ↗
+                                </a>
+                            )}
+                            {githubUrl && (
+                                <a href={githubUrl} target="_blank" rel="noopener" class="underline underline-offset-2 text-primary-ink">
+                                    GitHub ↗
+                                </a>
+                            )}
+                        </div>
+                    )
+                }
+            </aside>
+        </div>
+
+        <nav aria-label="前後の制作物" class="mt-16 grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-dashed border-secondary pt-8">
+            {
+                prev ? (
+                    <a href={`/projects/${prev.id}`} class="rounded-2xl border border-black/10 p-5 hover:border-foreground transition">
+                        <span class="eyebrow block mb-1">← 前の制作物</span>
+                        <span class="heading text-lg">{prev.data.title}</span>
+                    </a>
+                ) : <span />
+            }
+            {
+                next && (
+                    <a href={`/projects/${next.id}`} class="rounded-2xl border border-black/10 p-5 text-right hover:border-foreground transition">
+                        <span class="eyebrow block mb-1">次の制作物 →</span>
+                        <span class="heading text-lg">{next.data.title}</span>
+                    </a>
+                )
+            }
+        </nav>
+
+        {
+            related.length > 0 && (
+                <section class="mt-16">
+                    <h2 class="heading text-2xl md:text-3xl mb-6">同じカテゴリの制作物</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {related.map((p) => <Card entry={p} />)}
+                    </div>
+                </section>
+            )
+        }
+    </div>
 </Layout>

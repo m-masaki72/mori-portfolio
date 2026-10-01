@@ -1,66 +1,50 @@
 ---
 import { SITE, SOCIALS, NAV_LINKS } from "@/consts";
-import { getCollection, type CollectionEntry } from "astro:content";
+import { getProjects } from "@/lib/projects";
 
-const Projects: CollectionEntry<"projects">[] = (
-  await getCollection("projects")
-).slice(0, 3);
+const projects = (await getProjects()).slice(0, 4);
 ---
 
-<footer class="bg-primary container mx-auto rounded-t-[80px] p-10 space-y-8">
-  <div
-    class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6"
-  >
-    <h2 class="text-5xl lg:text-9xl uppercase">{SITE.TITLE}</h2>
-    <p class="text-2xl lg:text-3xl max-w-[760px]">
+<footer class="bg-primary container mx-auto rounded-t-[32px] md:rounded-t-[64px] px-6 py-10 sm:p-10 md:p-14 space-y-10">
+  <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-4">
+    <p class="heading text-5xl md:text-7xl uppercase">{SITE.TITLE}</p>
+    <p class="text-lg md:text-2xl max-w-[640px]">
       シンプルさこそ究極の洗練である——コードにおいても。
     </p>
   </div>
-  <div class="flex flex-col sm:flex-row sm:flex-wrap justify-between gap-10">
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
     <div>
-      <h3 class="mb-2 text-xl">連絡先</h3>
-      <ul>
-        <li><a href={`mailto:${SITE.EMAIL}`}>{SITE.EMAIL}</a></li>
-      </ul>
-    </div>
-    <div>
-      <h3 class="mb-2 text-xl">ナビゲーション</h3>
-      <ul class="space-y-1 text-secondary">
-        {NAV_LINKS.map((link) => (
-          <li><a href={link.href}>{link.name}</a></li>
+      <p class="mb-3 font-bold">ナビゲーション</p>
+      <ul class="space-y-1.5">
+        {[{ name: "ホーム", href: "/" }, ...NAV_LINKS, { name: "お問い合わせ", href: "/contact" }].map((link) => (
+          <li><a class="hover:underline underline-offset-2" href={link.href}>{link.name}</a></li>
         ))}
       </ul>
     </div>
     <div>
-      <h3 class="mb-2 text-xl">SNS</h3>
-      <ul class="space-y-1 text-secondary">
-        {
-          SOCIALS.map((link) => (
-            <li>
-              <a href={link.HREF}>{link.NAME}</a>
-            </li>
-          ))
-        }
+      <p class="mb-3 font-bold">制作物</p>
+      <ul class="space-y-1.5">
+        {projects.map((project) => (
+          <li><a class="hover:underline underline-offset-2" href={`/projects/${project.id}`}>{project.data.title}</a></li>
+        ))}
+        <li><a class="underline underline-offset-2" href="/projects">すべて見る →</a></li>
       </ul>
     </div>
     <div>
-      <h3 class="mb-2 text-xl">プロジェクト</h3>
-      <ul class="space-y-1 text-secondary">
-        {
-          Projects.map((project) => (
-            <li>
-                <a href={`/projects/${project.id}`}>{project.data.title}</a>
-            </li>
-          ))
-        }
+      <p class="mb-3 font-bold">SNS</p>
+      <ul class="space-y-1.5">
+        {SOCIALS.map((link) => (
+          <li><a class="hover:underline underline-offset-2" href={link.HREF} target="_blank" rel="noopener noreferrer">{link.NAME}</a></li>
+        ))}
       </ul>
     </div>
+    <div>
+      <p class="mb-3 font-bold">連絡先</p>
+      <a class="break-all hover:underline underline-offset-2" href={`mailto:${SITE.EMAIL}`}>{SITE.EMAIL}</a>
+    </div>
   </div>
-  <div class="flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-6 text-sm">
+  <div class="flex flex-col sm:flex-row justify-between items-center gap-3 border-t border-black/20 pt-6 text-sm">
     <a href="/privacy" class="underline underline-offset-2">プライバシーポリシー・免責事項</a>
-    <a href="/contact" class="underline underline-offset-2">お問い合わせ</a>
+    <span class="opacity-70">© {SITE.TITLE} / MasakiMori. Astroで制作</span>
   </div>
-  <span class="block text-center text-sm opacity-70">
-    © {SITE.TITLE}. Astroで制作
-  </span>
 </footer>

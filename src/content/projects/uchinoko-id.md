@@ -7,6 +7,10 @@ image: {
 url: "/screenshots/uchinoko-id.png",
 alt: "うちの子ID写真メーカー"
 }
+category: "Webツール"
+platform: "Web"
+tech: ["JavaScript", "Canvas", "@imgly/background-removal"]
+order: 7
 ---
 
 ペットや推しキャラの「証明写真」が作れるブラウザアプリ。お手本画像1枚＋証明写真用画像6枚をアップロードすると、`@imgly/background-removal`がブラウザ内で背景除去（サーバー送信なし）。ドラッグ＆スライダーで位置・スケールを調整し、背景色・枠線レイアウトをカスタマイズして高解像度PNGでダウンロードできる。SharedArrayBufferが必要な制約を`_headers`で解決し、Cloudflare Pagesで配信している。

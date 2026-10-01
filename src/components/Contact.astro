@@ -1,40 +1,46 @@
 ---
 import { SITE, SOCIALS } from "@/consts";
+
+type Props = {
+    // 単体ページ（/contact）では h1、トップでは h2
+    as?: "h1" | "h2";
+};
+
+const { as: Heading = "h2" } = Astro.props;
 ---
 
-<section id="Contact" class="container mx-auto my-28 p-10 space-y-12">
-    <h2 class="heading text-5xl lg:text-9xl uppercase">お問い合わせ</h2>
-
-    <div class="space-y-8">
-        <p class="text-xl lg:text-3xl max-w-xl">
-            アイデアや相談、感想など、お気軽にどうぞ。
-        </p>
-
-        <div class="space-y-2">
-            <a
-                href={`mailto:${SITE.EMAIL}`}
-                class="inline-flex items-center justify-center bg-primary rounded-2xl py-3 px-6 sm:py-4 sm:px-10 cursor-pointer hover:bg-background hover:outline hover:outline-1 hover:outline-dashed hover:outline-secondary hover:text-foreground transition text-xl"
-            >
-                メールを送る
-            </a>
-            <p class="text-secondary text-lg">{SITE.EMAIL}</p>
+<section id="Contact" class="container mx-auto px-6 py-16 md:py-24">
+    <div class="rounded-3xl border border-black/10 bg-background p-6 sm:p-10 md:p-14 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
+        <div class="space-y-6">
+            <p class="eyebrow">Contact</p>
+            <Heading class="heading text-4xl md:text-6xl">お問い合わせ</Heading>
+            <p class="text-lg md:text-xl text-secondary leading-relaxed">
+                アイデアや相談、不具合報告、感想など、お気軽にどうぞ。
+            </p>
+            <div class="space-y-2">
+                <a href={`mailto:${SITE.EMAIL}`} class="btn-primary text-lg">メールを送る</a>
+                <p class="text-secondary break-all">{SITE.EMAIL}</p>
+            </div>
         </div>
-
-        <div class="text-xl space-y-2">
-            {
-                SOCIALS.map((link) => (
-                    <p>
-                        <a
-                            href={link.HREF}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="underline hover:text-secondary transition"
-                        >
-                            {link.NAME}
-                        </a>
-                    </p>
-                ))
-            }
+        <div>
+            <h3 class="heading text-xl mb-4">SNS・発信先</h3>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {
+                    SOCIALS.map((link) => (
+                        <li>
+                            <a
+                                href={link.HREF}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="flex items-center justify-between rounded-2xl border border-dashed border-secondary/40 px-5 py-3.5 hover:border-foreground hover:bg-muted transition"
+                            >
+                                <span class="font-medium">{link.NAME}</span>
+                                <span aria-hidden="true" class="text-secondary">↗</span>
+                            </a>
+                        </li>
+                    ))
+                }
+            </ul>
         </div>
     </div>
 </section>

@@ -7,6 +7,10 @@ image: {
 url: "/screenshots/sana-8bit-vst.jpg",
 alt: "SANA 8BIT VST"
 }
+category: "音楽・オーディオ"
+platform: "VST (Windows / macOS)"
+tech: ["C++", "JUCE", "VST"]
+order: 6
 ---
 
 チップチューン制作向けのVSTiシンセサイザー。JUCEフレームワーク（C++）でDLLとして実装し、Studio One・Cubase・FL Studio・Ableton Liveなど主要DAWで動作確認済み。オシレーターは複数波形を切り替え可能で、ADSRエンベロープ・ピッチスイープ・ビブラート・波形スコープを搭載。WAVEFORM MEMORYコンポーネントで独自波形を手書きできるのが特徴。SoundCloudにデモ音源を公開している。

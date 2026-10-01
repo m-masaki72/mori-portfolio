@@ -5,9 +5,10 @@ import { SOCIALS } from "@/consts";
 const links = SOCIALS.map((s) => ({ label: s.NAME, url: s.HREF }));
 ---
 
-<Layout title="Links" description="各種リンク">
-    <section class="container mx-auto px-6 pt-18">
-        <h2 class="heading text-5xl md:text-9xl uppercase my-8">リンク</h2>
+<Layout title="Links" description="MasakiMoriのSNS・ブログ・作品発表先（GitHub、X、Zenn、Qiita、SoundCloud、YouTubeなど）へのリンク集">
+    <section class="container mx-auto px-6 pt-28 pb-24 md:pt-36">
+        <p class="eyebrow mb-3">Links</p>
+        <h1 class="heading text-4xl md:text-6xl mb-10">リンク</h1>
         <ul class="flex flex-col gap-4 max-w-2xl">
             {
                 links.map((link) => (

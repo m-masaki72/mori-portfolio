@@ -7,6 +7,10 @@ image: {
 url: "/screenshots/web-loudness-meter.png",
 alt: "Web Loudness Meter"
 }
+category: "音楽・オーディオ"
+platform: "Web / PWA"
+tech: ["AudioWorklet", "Web Audio API", "IndexedDB", "PWA"]
+order: 4
 ---
 
 スマートフォン・PCブラウザで動くリアルタイム音響計測ツール。ITU-R BS.1770-4 / EBU R128 準拠のLUFS計測、FFTスペクトラムアナライザー、騒音レベル判定（dBSPL キャリブレーション対応）などを搭載。AudioWorkletによるDSP処理、IndexedDBへの計測履歴保存、PWAインストールに対応。
