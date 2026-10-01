@@ -1,15 +1,26 @@
 ---
 import { Font } from "astro:assets";
 import { SITE } from "@/consts";
+import { buildGraph, type JsonLdNode } from "@/lib/jsonld";
 
 interface Props {
     title: string;
     description: string;
     image?: string;
+    ogType?: "website" | "article";
+    jsonLd?: JsonLdNode[];
 }
 
-const { title, description, image = `${SITE.URL}/screenshots/portrait.jpg` } = Astro.props;
+const {
+    title,
+    description,
+    image = "/portrait.jpg",
+    ogType = "website",
+    jsonLd = [],
+} = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, SITE.URL);
+// OGP は絶対URL必須。相対パスはサイトURL基準で解決する
+const imageURL = new URL(image, SITE.URL).href;
 ---
 
 <meta charset="UTF-8" />
@@ -24,18 +35,24 @@ const canonicalURL = new URL(Astro.url.pathname, SITE.URL);
 <meta name="description" content={description} />
 
 <!-- Open Graph -->
-<meta property="og:type" content="website" />
+<meta property="og:type" content={ogType} />
+<meta property="og:site_name" content={SITE.TITLE} />
+<meta property="og:locale" content="ja_JP" />
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={image} />
+<meta property="og:image" content={imageURL} />
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:url" content={canonicalURL} />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
-<meta name="twitter:image" content={image} />
+<meta name="twitter:image" content={imageURL} />
+
+<!-- Structured Data -->
+<script type="application/ld+json" is:inline set:html={buildGraph(jsonLd)} />
+<link rel="sitemap" href="/sitemap-index.xml" />
 
 <!-- fonts -->
 <Font cssVariable="--font-plex" preload />

@@ -1,5 +1,6 @@
 ---
-import { SITE } from "@/consts";
+import { SITE, PROJECTS } from "@/consts";
+import { PERSON_ID, WEBSITE_ID, breadcrumb } from "@/lib/jsonld";
 import Layout from "@/layouts/Layout.astro";
 import { getCollection, render, type CollectionEntry } from "astro:content";
 
@@ -16,9 +17,41 @@ export async function getStaticPaths() {
 const { project } = Astro.props;
 
 const { Content } = await render(project);
+
+const pageURL = new URL(`/projects/${project.id}/`, SITE.URL).href;
+const imageURL = new URL(project.data.image.url, SITE.URL).href;
+const relatedUrls = [
+    ...new Set([project.data.liveUrl, project.data.githubUrl].filter(Boolean)),
+];
+
+const jsonLd = [
+    {
+        "@type": "CreativeWork",
+        "@id": `${pageURL}#work`,
+        name: project.data.title,
+        description: project.data.description,
+        url: pageURL,
+        image: imageURL,
+        inLanguage: "ja",
+        author: { "@id": PERSON_ID },
+        isPartOf: { "@id": WEBSITE_ID },
+        ...(relatedUrls.length > 0 && { sameAs: relatedUrls }),
+    },
+    breadcrumb([
+        { name: "ホーム", url: `${SITE.URL}/` },
+        { name: PROJECTS.TITLE, url: `${SITE.URL}/projects/` },
+        { name: project.data.title, url: pageURL },
+    ]),
+];
 ---
 
-<Layout title={project.data.title} description={project.data.description}>
+<Layout
+    title={project.data.title}
+    description={project.data.description}
+    image={project.data.image.url}
+    ogType="article"
+    jsonLd={jsonLd}
+>
     <div class="container mx-auto space-y-8 pt-18 px-6">
         <button
             class="flex gap-2 items-center text-secondary hover:text-primary cursor-pointer pl-2 my-6"
