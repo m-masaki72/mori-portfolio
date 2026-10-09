@@ -22,7 +22,8 @@
 ## 計測
 - [x] Cloudflare Web Analytics をポートフォリオに埋め込み（2026-10-10、手動スニペット方式）
 - [ ] Cloudflare Web Analytics を各アプリにも導入（Pages の5件は Metrics タブで Enable、GitHub Pages の6件はサイト追加＋スニペット）
-- [ ] Search Console にサイトマップを送信し、インデックス状況を確認
+- [x] Search Console にサイトマップを送信（2026-10-10）
+- [ ] Search Console でインデックス状況を確認（再申請前）
 
 ## SEO
 - [x] morse・loudness-meter・nothing-to-do: 静的HTMLに `<h1>` を追加（2026-10-01）
