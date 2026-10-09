@@ -1,0 +1,129 @@
+---
+import { SITE, ARTICLES } from "@/consts";
+import { PERSON_ID, WEBSITE_ID, breadcrumb } from "@/lib/jsonld";
+import { formatDate, getArticles, isoDate } from "@/lib/articles";
+import Layout from "@/layouts/Layout.astro";
+import ArticleItem from "@/components/ArticleItem.astro";
+import { render } from "astro:content";
+
+export async function getStaticPaths() {
+    const all = await getArticles();
+    return all.map((article, i) => ({
+        params: { id: article.id },
+        props: {
+            article,
+            // 新しい順に並んでいるので、1つ前が「次（新しい）記事」
+            newer: all[i - 1],
+            older: all[i + 1],
+            related: all
+                .filter((a) => a.id !== article.id && a.data.tags.some((t) => article.data.tags.includes(t)))
+                .slice(0, 2),
+        },
+    }));
+}
+
+const { article, newer, older, related } = Astro.props;
+const { title, description, pubDate, updatedDate, tags, originalUrl } = article.data;
+
+const { Content } = await render(article);
+
+const pageURL = new URL(`/articles/${article.id}/`, SITE.URL).href;
+
+const jsonLd = [
+    {
+        "@type": "BlogPosting",
+        "@id": `${pageURL}#article`,
+        headline: title,
+        description,
+        url: pageURL,
+        mainEntityOfPage: pageURL,
+        datePublished: isoDate(pubDate),
+        ...(updatedDate && { dateModified: isoDate(updatedDate) }),
+        inLanguage: "ja",
+        keywords: tags.join(", "),
+        author: { "@id": PERSON_ID },
+        publisher: { "@id": PERSON_ID },
+        isPartOf: { "@id": WEBSITE_ID },
+    },
+    breadcrumb([
+        { name: "ホーム", url: `${SITE.URL}/` },
+        { name: ARTICLES.TITLE, url: `${SITE.URL}/articles/` },
+        { name: title, url: pageURL },
+    ]),
+];
+---
+
+<Layout title={title} description={description} ogType="article" jsonLd={jsonLd}>
+    <div class="container mx-auto px-6 pt-24 md:pt-28 pb-20">
+        <nav aria-label="パンくずリスト" class="mb-8 text-sm text-secondary">
+            <ol class="flex flex-wrap items-center gap-2">
+                <li><a href="/" class="hover:text-foreground underline-offset-2 hover:underline">ホーム</a></li>
+                <li aria-hidden="true">/</li>
+                <li><a href="/articles" class="hover:text-foreground underline-offset-2 hover:underline">{ARTICLES.TITLE}</a></li>
+                <li aria-hidden="true">/</li>
+                <li aria-current="page" class="text-foreground font-medium">{title}</li>
+            </ol>
+        </nav>
+
+        <article class="mx-auto max-w-3xl">
+            <header class="space-y-4 pb-8 border-b border-dashed border-secondary">
+                <p class="text-sm text-secondary">
+                    <time datetime={isoDate(pubDate)}>{formatDate(pubDate)}</time>
+                    {updatedDate && <span>（更新：<time datetime={isoDate(updatedDate)}>{formatDate(updatedDate)}</time>）</span>}
+                </p>
+                <h1 class="heading text-3xl md:text-5xl leading-tight">{title}</h1>
+                {
+                    tags.length > 0 && (
+                        <ul class="flex flex-wrap gap-1.5">
+                            {tags.map((t) => <li class="chip">{t}</li>)}
+                        </ul>
+                    )
+                }
+            </header>
+
+            <div class="prose-body max-w-none pt-8">
+                <Content />
+            </div>
+
+            {
+                originalUrl && (
+                    <p class="mt-12 rounded-2xl bg-muted p-5 text-sm text-secondary">
+                        この記事は、2026年10月に
+                        <a href={originalUrl} target="_blank" rel="noopener" class="underline underline-offset-2 text-primary-ink">はてなブログ</a>
+                        から移設しました。
+                    </p>
+                )
+            }
+        </article>
+
+        <nav aria-label="前後の記事" class="mx-auto max-w-3xl mt-16 grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-dashed border-secondary pt-8">
+            {
+                older ? (
+                    <a href={`/articles/${older.id}`} class="rounded-2xl border border-black/10 p-5 hover:border-foreground transition">
+                        <span class="eyebrow block mb-1">← 前の記事</span>
+                        <span class="heading text-lg">{older.data.title}</span>
+                    </a>
+                ) : <span />
+            }
+            {
+                newer && (
+                    <a href={`/articles/${newer.id}`} class="rounded-2xl border border-black/10 p-5 text-right hover:border-foreground transition">
+                        <span class="eyebrow block mb-1">次の記事 →</span>
+                        <span class="heading text-lg">{newer.data.title}</span>
+                    </a>
+                )
+            }
+        </nav>
+
+        {
+            related.length > 0 && (
+                <section class="mx-auto max-w-3xl mt-16">
+                    <h2 class="heading text-2xl md:text-3xl mb-6">関連する記事</h2>
+                    <div class="grid grid-cols-1 gap-6">
+                        {related.map((a) => <ArticleItem entry={a} />)}
+                    </div>
+                </section>
+            )
+        }
+    </div>
+</Layout>

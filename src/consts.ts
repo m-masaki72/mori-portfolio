@@ -25,9 +25,16 @@ export const PROJECTS = {
     "AI作曲支援ツール、VSTプラグイン、Windowsアプリ、ブラウザで動くWebツールやゲーム、開発者向けツールまで。MasakiMoriがこれまでに公開した制作物をカテゴリ別に紹介します。",
 };
 
+export const ARTICLES = {
+  TITLE: "記事一覧",
+  DESCRIPTION:
+    "Claude Code などの AI 活用、Unity・ゲーム開発、Web・サーバー運用まで。実際に手を動かして調べたこと・ハマったことをまとめた技術記事です。",
+};
+
 export const NAV_LINKS = [
   { name: "自己紹介", href: "/about" },
   { name: "制作物", href: "/projects" },
+  { name: "記事", href: "/articles" },
   { name: "リンク", href: "/links" },
 ];
 

@@ -1,0 +1,85 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import ArticleItem from "@/components/ArticleItem.astro";
+import { getArticles, tagsOf } from "@/lib/articles";
+import { ARTICLES, SITE } from "@/consts";
+import { breadcrumb } from "@/lib/jsonld";
+
+const articles = await getArticles();
+const tags = tagsOf(articles);
+
+const jsonLd = [
+    breadcrumb([
+        { name: "ホーム", url: `${SITE.URL}/` },
+        { name: ARTICLES.TITLE, url: `${SITE.URL}/articles/` },
+    ]),
+];
+---
+
+<Layout title={ARTICLES.TITLE} description={ARTICLES.DESCRIPTION} jsonLd={jsonLd}>
+    <section class="container mx-auto px-6 pt-28 pb-24 md:pt-36">
+        <p class="eyebrow mb-3">Articles</p>
+        <h1 class="heading text-4xl md:text-6xl">{ARTICLES.TITLE}</h1>
+        <p class="mt-5 max-w-2xl text-lg text-secondary leading-relaxed">{ARTICLES.DESCRIPTION}</p>
+
+        <div id="filters" class="mt-10 mb-8 hidden flex-wrap gap-2" role="group" aria-label="タグで絞り込み">
+            <button type="button" data-filter="all" aria-pressed="true" class="filter-btn">
+                すべて <span class="opacity-60">{articles.length}</span>
+            </button>
+            {
+                tags.map(({ tag, count }) => (
+                    <button type="button" data-filter={tag} aria-pressed="false" class="filter-btn">
+                        {tag} <span class="opacity-60">{count}</span>
+                    </button>
+                ))
+            }
+        </div>
+
+        <div id="article-list" class="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {articles.map((article) => <ArticleItem entry={article} headingLevel="h2" />)}
+        </div>
+    </section>
+</Layout>
+
+<style>
+    .filter-btn {
+        cursor: pointer;
+        border-radius: 9999px;
+        border: 1px solid rgb(0 0 0 / 0.15);
+        background: var(--color-background);
+        padding: 0.5rem 1rem;
+        min-height: 44px;
+        font-size: 0.95rem;
+        transition: background-color 0.2s;
+    }
+    .filter-btn:hover {
+        background: var(--color-muted);
+    }
+    .filter-btn[aria-pressed="true"] {
+        background: var(--color-foreground);
+        border-color: var(--color-foreground);
+        color: var(--color-background);
+    }
+</style>
+
+<script>
+    // JS が動く環境でのみフィルタを表示（未対応環境では全件表示のまま）
+    const filters = document.getElementById("filters");
+    const list = document.getElementById("article-list");
+    if (filters && list) {
+        filters.classList.replace("hidden", "flex");
+        list.classList.remove("mt-10");
+        const buttons = filters.querySelectorAll<HTMLButtonElement>("button[data-filter]");
+        const items = list.querySelectorAll<HTMLElement>("[data-tags]");
+        buttons.forEach((btn) =>
+            btn.addEventListener("click", () => {
+                const f = btn.dataset.filter ?? "all";
+                buttons.forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+                items.forEach((item) => {
+                    const tags: string[] = JSON.parse(item.dataset.tags ?? "[]");
+                    item.hidden = f !== "all" && !tags.includes(f);
+                });
+            }),
+        );
+    }
+</script>

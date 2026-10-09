@@ -21,12 +21,13 @@ Astro portfolio site. No framework components (React/Vue/etc.) — pure `.astro`
 
 **Content collections** (`src/content.config.ts`):
 - `projects` — `src/content/projects/*.md`. Required: `title`, `description`, `image { url, alt }`, `category` (enum `CATEGORIES`), `platform`. Optional: `tech[]`, `order` (表示順, 小さいほど先頭), `liveUrl`, `githubUrl`. 一覧取得は `src/lib/projects.ts` の `getProjects()`（order順）を使う。
+- `articles` — `src/content/articles/*.md`（`/articles/<id>`）。Required: `title`, `description`, `pubDate`. Optional: `updatedDate`, `tags[]`, `originalUrl`（はてなブログからの移設元。あると詳細ページに移設の注記を出す）。記事内画像は `public/articles/<id>/`。一覧取得は `src/lib/articles.ts` の `getArticles()`（新しい順）。
 
 **Global constants** (`src/consts.ts`):
 - `SITE` — `URL`, `TITLE`, `DESCRIPTION`, `EMAIL`
 - `NAV_LINKS` — shared nav items used by Header and Footer
 - `SOCIALS` — social link list used by Contact, Footer, Links pages
-- `HOME`, `BLOG`, `PROJECTS` — page-level title/description
+- `HOME`, `PROJECTS`, `ARTICLES` — page-level title/description
 - `ADSENSE_CLIENT` — AdSense publisher ID (`ca-pub-...`). 空ならAdSenseスクリプト非出力。`src/pages/ads.txt.ts` がこれから `/ads.txt` を生成
 
 **Fonts**: IBM Plex Mono (`--font-plex`) and Geist (`--font-geist`), loaded via `astro:assets` Font API.

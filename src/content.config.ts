@@ -25,4 +25,17 @@ const projects = defineCollection({
   }),
 });
 
-export const collections = { projects };
+const articles = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/articles" }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    pubDate: z.coerce.date(),
+    updatedDate: z.coerce.date().optional(),
+    tags: z.array(z.string()).default([]),
+    // はてなブログから移設した記事の元URL
+    originalUrl: z.url().optional(),
+  }),
+});
+
+export const collections = { projects, articles };
