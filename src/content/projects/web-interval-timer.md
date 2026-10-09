@@ -10,7 +10,7 @@ alt: "Web Interval Timer"
 category: "Webツール"
 platform: "Web / PWA"
 tech: ["JavaScript", "Web Audio API", "PWA"]
-order: 11
+order: 15
 ---
 
 筋トレ・HIIT・ポモドーロ・勉強など、複数のインターバルを組み合わせたメニューをブラウザだけで回せるタイマー。「30秒運動→10秒休憩を8セット」のような設定も、時間を並べて繰り返し回数を入れるだけで作れる。アプリのインストールは不要で、ホーム画面に追加すればオフラインでも使える。

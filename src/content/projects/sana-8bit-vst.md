@@ -10,7 +10,7 @@ alt: "SANA 8BIT VST"
 category: "音楽・オーディオ"
 platform: "VST (Windows / macOS)"
 tech: ["C++", "JUCE", "VST"]
-order: 6
+order: 10
 ---
 
 チップチューン制作向けのソフトウェアシンセサイザー（VSTi）。ファミコンやゲームボーイのような8bitサウンドを、普段使っているDAWの中で手軽に鳴らせる。C++とJUCEフレームワークで開発し、ソースコードはGPL-3.0で公開している。SoundCloudにはこのシンセで作ったデモ音源を置いている。

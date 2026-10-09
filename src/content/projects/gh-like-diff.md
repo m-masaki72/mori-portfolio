@@ -10,7 +10,7 @@ alt: "gh-like-diff"
 category: "開発ツール"
 platform: "CLI / npm"
 tech: ["TypeScript", "Node.js", "CLI"]
-order: 8
+order: 12
 ---
 
 ローカルのgit差分を、GitHubのプルリクエストのような見た目のHTMLで閲覧・共有できるCLIツール＆TypeScriptライブラリ。生成されるのは外部依存ゼロの単一HTMLファイルで、サーバーもアカウントもインターネット接続も要らない。ブラウザで開くだけでなく、ファイルをSlackに投げて同僚に見てもらうこともできる。

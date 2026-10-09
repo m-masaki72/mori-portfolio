@@ -10,7 +10,7 @@ alt: "うちの子ID写真メーカー"
 category: "Webツール"
 platform: "Web"
 tech: ["JavaScript", "Canvas", "@imgly/background-removal"]
-order: 7
+order: 11
 ---
 
 ペットや推しキャラクター、ぬいぐるみなど「うちの子」の証明写真風画像を作れるブラウザアプリ。写真をアップロードすると背景を自動で取り除き、証明写真らしい無地の背景と枠に並べてくれる。かしこまった構図と「うちの子」のギャップが楽しい、SNS映えする1枚が手軽に作れる。

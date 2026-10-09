@@ -10,7 +10,7 @@ alt: "Rssemble Cards for RSS Feeds"
 category: "開発ツール"
 platform: "WordPress"
 tech: ["PHP", "WordPress", "SimplePie"]
-order: 9
+order: 13
 ---
 
 複数のRSSフィードから記事を集め、OGP画像付きのカードとして一覧表示するWordPressプラグイン。自分が運営している別ブログやnote、YouTubeの新着などを、WordPressサイトの好きな場所にまとめて表示できる。WordPress.orgの公式プラグインディレクトリで公開しており、管理画面からそのまま検索してインストールできる。

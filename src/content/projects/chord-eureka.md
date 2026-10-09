@@ -9,7 +9,7 @@ alt: "Chord Eureka"
 category: "音楽・オーディオ"
 platform: "Web"
 tech: ["Claude API", "Tonal.js", "midi-writer-js", "Express.js"]
-order: 3
+order: 5
 ---
 
 「切ない」「ジャズ」「疾走感」などのキーワードを入力すると、Claude APIがイメージに合ったコード進行を生成するWebアプリ。生成した進行はその場でピアノロールと楽譜で再生でき、MIDIファイルとしてDAWに持ち込める。作曲の「最初の一歩」を後押しするツールとして作った。すでにある進行を磨きたいときは、姉妹サービスの[Chordpernicus](/projects/chordpernicus)を使う。

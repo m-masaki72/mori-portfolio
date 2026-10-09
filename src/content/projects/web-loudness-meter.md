@@ -10,7 +10,7 @@ alt: "Web Loudness Meter"
 category: "音楽・オーディオ"
 platform: "Web / PWA"
 tech: ["AudioWorklet", "Web Audio API", "IndexedDB", "PWA"]
-order: 4
+order: 6
 ---
 
 スマートフォンやPCのブラウザで動くリアルタイム音響計測ツール。アプリのインストールは不要で、URLを開いてマイクを許可すれば、その場で周囲の音の大きさや周波数を測れる。配信・動画制作のラウドネス確認から、部屋の騒音チェック、楽器練習の音量把握まで、ちょっと測りたいときにすぐ使える。

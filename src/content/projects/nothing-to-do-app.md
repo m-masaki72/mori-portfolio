@@ -10,7 +10,7 @@ alt: "Nothing To Do App"
 category: "Webツール"
 platform: "Web"
 tech: ["TypeScript", "Claude API", "Express", "Cloud Run"]
-order: 13
+order: 17
 ---
 
 「タスクを保存するな。今すぐやれ。」——ToDoアプリへのアンチテーゼとして作ったジョークWebアプリ。普通のToDoアプリはタスクを「あとでやる」ために保存するが、このアプリはタスクを入力した瞬間にAIが「今すぐやれ」と叱りつけ、5秒のカウントダウンで行動を迫る。先延ばしグセのある人の背中を、半ば強引に押すためのアプリだ。
