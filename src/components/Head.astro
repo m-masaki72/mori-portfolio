@@ -1,6 +1,6 @@
 ---
 import { Font } from "astro:assets";
-import { ADSENSE_CLIENT, SITE } from "@/consts";
+import { ADSENSE_CLIENT, CF_ANALYTICS_TOKEN, SITE } from "@/consts";
 import { buildGraph, type JsonLdNode } from "@/lib/jsonld";
 
 interface Props {
@@ -61,6 +61,17 @@ const imageURL = new URL(image, SITE.URL).href;
             async
             src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
             crossorigin="anonymous"
+        />
+    )
+}
+
+{
+    CF_ANALYTICS_TOKEN && (
+        <script
+            is:inline
+            type="module"
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon={JSON.stringify({ token: CF_ANALYTICS_TOKEN })}
         />
     )
 }

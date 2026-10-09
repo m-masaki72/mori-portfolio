@@ -20,7 +20,8 @@
 - [ ] Moeter の掲載画像（「AI性癖診断」の文字入り）を差し替えるか判断
 
 ## 計測
-- [ ] Cloudflare Web Analytics のトークン発行（ダッシュボード）→ ポートフォリオと各アプリに埋め込み
+- [x] Cloudflare Web Analytics をポートフォリオに埋め込み（2026-10-10、手動スニペット方式）
+- [ ] Cloudflare Web Analytics を各アプリにも導入（Pages の5件は Metrics タブで Enable、GitHub Pages の6件はサイト追加＋スニペット）
 - [ ] Search Console にサイトマップを送信し、インデックス状況を確認
 
 ## SEO

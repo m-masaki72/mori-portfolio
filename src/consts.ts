@@ -10,6 +10,9 @@ export const SITE = {
 // 空のあいだは広告スクリプトを出力せず、ads.txt もコメントのみになる
 export const ADSENSE_CLIENT = "ca-pub-6039922373762217";
 
+// Cloudflare Web Analytics のトークン（公開前提の値）。空ならビーコンを出力しない
+export const CF_ANALYTICS_TOKEN = "f9c19e1133b547578ea0f0761266f537";
+
 export const HOME = {
   TITLE: "音響・ゲーム・Webツールの個人開発ポートフォリオ",
   DESCRIPTION:
