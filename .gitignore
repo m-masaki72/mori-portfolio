@@ -30,3 +30,6 @@ pnpm-debug.log*
 
 # 未公開ドメイン計画（公開リポジトリに含めない）
 TODO_DNS.md
+
+# AdSense 向けコンテンツ計画（個人情報を含むため公開リポジトリに含めない）
+CONTENT_PLAN.md
