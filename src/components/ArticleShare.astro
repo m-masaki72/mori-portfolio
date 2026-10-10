@@ -1,0 +1,46 @@
+---
+import { siBluesky, siFacebook, siHatenabookmark, siLine, siThreads, siX } from "simple-icons";
+
+interface Props {
+    title: string;
+    url: string;
+}
+
+const { title, url } = Astro.props;
+const encodedUrl = encodeURIComponent(url);
+const encodedText = encodeURIComponent(`${title} ${url}`);
+
+// 外部スクリプトは読み込まず、各サービスの投稿画面へのリンクだけにする（アイコンはビルド時に埋め込み）
+const shares = [
+    { name: "X", icon: siX, href: `https://x.com/intent/post?text=${encodeURIComponent(title)}&url=${encodedUrl}` },
+    { name: "Bluesky", icon: siBluesky, href: `https://bsky.app/intent/compose?text=${encodedText}` },
+    { name: "Threads", icon: siThreads, href: `https://www.threads.net/intent/post?text=${encodedText}` },
+    { name: "Facebook", icon: siFacebook, href: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}` },
+    { name: "はてブ", icon: siHatenabookmark, href: `https://b.hatena.ne.jp/entry/panel/?url=${encodedUrl}` },
+    { name: "LINE", icon: siLine, href: `https://social-plugins.line.me/lineit/share?url=${encodedUrl}` },
+];
+---
+
+<section class="mt-12">
+    <p class="eyebrow mb-3">この記事をシェア</p>
+    <ul class="flex flex-wrap gap-2">
+        {
+            shares.map((s) => (
+                <li>
+                    <a
+                        href={s.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold text-white transition hover:opacity-80"
+                        style={`background-color: #${s.icon.hex}`}
+                    >
+                        <svg role="img" viewBox="0 0 24 24" class="size-4 fill-current" aria-hidden="true">
+                            <path d={s.icon.path} />
+                        </svg>
+                        {s.name}
+                    </a>
+                </li>
+            ))
+        }
+    </ul>
+</section>

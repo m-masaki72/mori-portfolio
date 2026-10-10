@@ -4,6 +4,7 @@ import { PERSON_ID, WEBSITE_ID, breadcrumb } from "@/lib/jsonld";
 import { formatDate, getArticles, isoDate } from "@/lib/articles";
 import Layout from "@/layouts/Layout.astro";
 import ArticleItem from "@/components/ArticleItem.astro";
+import ArticleShare from "@/components/ArticleShare.astro";
 import { render } from "astro:content";
 
 export async function getStaticPaths() {
@@ -94,6 +95,7 @@ const jsonLd = [
                     </p>
                 )
             }
+            <ArticleShare title={title} url={pageURL} />
         </article>
 
         <nav aria-label="前後の記事" class="mx-auto max-w-3xl mt-16 grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-dashed border-secondary pt-8">
