@@ -35,6 +35,8 @@ const articles = defineCollection({
     tags: z.array(z.string()).default([]),
     // はてなブログから移設した記事の元URL
     originalUrl: z.url().optional(),
+    // 非商用ライセンスの素材を載せる記事など、このページだけ AdSense を出さない
+    noAds: z.boolean().default(false),
   }),
 });
 

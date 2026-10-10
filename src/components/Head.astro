@@ -9,6 +9,7 @@ interface Props {
     image?: string;
     ogType?: "website" | "article";
     jsonLd?: JsonLdNode[];
+    noAds?: boolean;
 }
 
 const {
@@ -17,6 +18,7 @@ const {
     image = "/og-default.png",
     ogType = "website",
     jsonLd = [],
+    noAds = false,
 } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, SITE.URL);
 // OGP は絶対URL必須。相対パスはサイトURL基準で解決する
@@ -55,7 +57,7 @@ const imageURL = new URL(image, SITE.URL).href;
 <link rel="sitemap" href="/sitemap-index.xml" />
 
 {
-    ADSENSE_CLIENT && (
+    ADSENSE_CLIENT && !noAds && (
         <script
             is:inline
             async
