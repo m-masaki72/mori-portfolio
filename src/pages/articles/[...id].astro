@@ -28,6 +28,9 @@ const { title, description, pubDate, updatedDate, tags, originalUrl } = article.
 
 const { Content } = await render(article);
 
+// 移設元の表示名（originalUrl のホストで判定）
+const originalSite = originalUrl && new URL(originalUrl).hostname === "zenn.dev" ? "Zenn" : "はてなブログ";
+
 const pageURL = new URL(`/articles/${article.id}/`, SITE.URL).href;
 
 const jsonLd = [
@@ -90,7 +93,7 @@ const jsonLd = [
                 originalUrl && (
                     <p class="mt-12 rounded-2xl bg-muted p-5 text-sm text-secondary">
                         この記事は、2026年10月に
-                        <a href={originalUrl} target="_blank" rel="noopener" class="underline underline-offset-2 text-primary-ink">はてなブログ</a>
+                        <a href={originalUrl} target="_blank" rel="noopener" class="underline underline-offset-2 text-primary-ink">{originalSite}</a>
                         から移設しました。
                     </p>
                 )
