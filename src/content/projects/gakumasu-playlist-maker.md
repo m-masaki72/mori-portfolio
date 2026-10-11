@@ -1,7 +1,7 @@
 ---
 title: "非公式 学マス プレイリストメーカー"
 description: "学園アイドルマスターのMVや歌唱動画から自分だけのプレイリストを作って連続再生できる非公式Webアプリ。アイドル・曲で絞り込み、URLで共有もできる。"
-liveUrl: https://gakumasu-playlist-maker.pages.dev/
+liveUrl: https://gakumasu-playlist.morilab-garage.com/
 image: {
 url: "/screenshots/gakumasu-playlist-maker.png",
 alt: "非公式 学マス プレイリストメーカーの画面。アイドルの選択欄と動画一覧、プレイリストが並んでいる"

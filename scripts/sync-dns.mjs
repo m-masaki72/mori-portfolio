@@ -1,5 +1,5 @@
 // Cloudflare DNS を scripts/dns-projects.json の内容に同期する。
-// CLOUDFLARE_API_TOKEN, CLOUDFLARE_ZONE_ID（Pages 連携時は CLOUDFLARE_ACCOUNT_ID も）を .env に書くか環境変数で指定する。
+// CLOUDFLARE_DNS_API_TOKEN, CLOUDFLARE_ZONE_ID（Pages 連携時は CLOUDFLARE_ACCOUNT_ID も）を .env に書くか環境変数で指定する。
 // 使い方: npm run sync-dns [-- --dry-run]（.env を自動で読み込む）
 
 import { readFileSync } from 'fs';
@@ -8,13 +8,13 @@ const ROOT_DOMAIN = 'morilab-garage.com';
 const CONFIG_PATH = new URL('./dns-projects.json', import.meta.url);
 const API_BASE = 'https://api.cloudflare.com/client/v4';
 
-const token = process.env.CLOUDFLARE_API_TOKEN;
+const token = process.env.CLOUDFLARE_DNS_API_TOKEN;
 const zoneId = process.env.CLOUDFLARE_ZONE_ID;
 const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
 const dryRun = process.argv.includes('--dry-run');
 
 if (!token || !zoneId) {
-  console.error('CLOUDFLARE_API_TOKEN と CLOUDFLARE_ZONE_ID を環境変数で指定してください。');
+  console.error('CLOUDFLARE_DNS_API_TOKEN と CLOUDFLARE_ZONE_ID を環境変数で指定してください。');
   process.exit(1);
 }
 

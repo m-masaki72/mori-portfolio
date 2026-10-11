@@ -1,7 +1,7 @@
 ---
 title: "Web Metronome"
 description: "インストール不要・スマホ対応のブラウザ完結メトロノーム。振り子アニメーション、タップテンポ、スピードトレーナー、設定バンクに対応したPWA。"
-liveUrl: https://m-masaki72.github.io/web-metronome/
+liveUrl: https://metronome.morilab-garage.com/
 githubUrl: https://github.com/m-masaki72/web-metronome
 image: {
 url: "/screenshots/web-metronome.png",

@@ -58,5 +58,15 @@
     "subdomain": "temanui",
     "target": "temanuibookgenerator.pages.dev",
     "proxied": true
+  },
+  {
+    "subdomain": "metronome",
+    "target": "m-masaki72.github.io",
+    "proxied": false
+  },
+  {
+    "subdomain": "gakumasu-playlist",
+    "target": "gakumasu-playlist-maker.pages.dev",
+    "proxied": true
   }
 ]

@@ -28,4 +28,4 @@
 
 ## SEO
 - [x] morse・loudness-meter・nothing-to-do: 静的HTMLに `<h1>` を追加（2026-10-01）
-- [ ] 学マス（`pages.dev`）・HeatDesk（`workers.dev`）・メトロノーム（`github.io`）を `*.morilab-garage.com` に統一
+- [x] 学マス・HeatDesk・メトロノームを `*.morilab-garage.com` に統一（2026-10-11。旧URLは301、学マスの pages.dev は保存データごと転送）

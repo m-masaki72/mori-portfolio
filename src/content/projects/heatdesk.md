@@ -1,7 +1,7 @@
 ---
 title: "HeatDesk"
 description: "デスクトップの壁紙そのものをシステムモニタにするWindows常駐アプリ。CPU・メモリの使用状況をプロセス別のツリーマップで描き続ける。"
-liveUrl: https://heatdesk.m-masaki7272.workers.dev/
+liveUrl: https://heatdesk.morilab-garage.com/
 image: {
 url: "/screenshots/heatdesk.png",
 alt: "HeatDesk の壁紙。CPUとメモリの使用量がプロセス別のツリーマップで表示されている"
