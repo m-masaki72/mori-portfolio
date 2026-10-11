@@ -22,7 +22,8 @@
 
 ## 計測
 - [x] Cloudflare Web Analytics をポートフォリオに埋め込み（2026-10-10、手動スニペット方式）
-- [ ] Cloudflare Web Analytics を各アプリにも導入（Pages の5件は Metrics タブで Enable、GitHub Pages の6件はサイト追加＋スニペット）
+- [x] Cloudflare Web Analytics を各アプリにも導入（2026-10-11。`morilab-garage.com` ゾーンのサイト1件に集約。proxied のホストは自動注入、GitHub Pages の7件はポートフォリオと同じトークンのスニペット。structure-jenga は「外部リクエストなし」の方針で対象外）
+- [ ] temanui の Pages 側 Web Analytics（旧トークン `59bd…`、サイト削除済み）を Metrics タブで無効化
 - [x] Search Console にサイトマップを送信（2026-10-10）
 - [ ] Search Console でインデックス状況を確認（再申請前）
 
