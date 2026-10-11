@@ -21,7 +21,7 @@ export async function getStaticPaths() {
 }
 
 const { project, prev, next, related } = Astro.props;
-const { title, description, image, category, platform, tech, liveUrl, githubUrl } = project.data;
+const { title, description, image, category, platform, tech, liveUrl, githubUrl, faq } = project.data;
 
 const { Content } = await render(project);
 
@@ -49,6 +49,19 @@ const jsonLd = [
         { name: PROJECTS.TITLE, url: `${SITE.URL}/projects/` },
         { name: title, url: pageURL },
     ]),
+    ...(faq.length > 0
+        ? [
+              {
+                  "@type": "FAQPage",
+                  "@id": `${pageURL}#faq`,
+                  mainEntity: faq.map(({ q, a }) => ({
+                      "@type": "Question",
+                      name: q,
+                      acceptedAnswer: { "@type": "Answer", text: a },
+                  })),
+              },
+          ]
+        : []),
 ];
 ---
 
@@ -99,9 +112,31 @@ const jsonLd = [
         </figure>
 
         <div class="mt-12 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_300px] gap-10 lg:gap-16">
-            <article class="prose-body max-w-prose">
-                <Content />
-            </article>
+            <div class="min-w-0">
+                <article class="prose-body max-w-prose">
+                    <Content />
+                </article>
+                {
+                    faq.length > 0 && (
+                        <section aria-labelledby="faq-heading" class="mt-14 max-w-prose">
+                            <h2 id="faq-heading" class="heading text-2xl md:text-3xl mb-6">よくある質問</h2>
+                            <div class="divide-y divide-dashed divide-black/15 border-y border-dashed border-black/15">
+                                {faq.map(({ q, a }) => (
+                                    <details class="group">
+                                        <summary class="flex cursor-pointer list-none items-start justify-between gap-4 py-5 font-bold text-lg [&::-webkit-details-marker]:hidden">
+                                            <span><span aria-hidden="true" class="font-plex text-primary-ink mr-2">Q.</span>{q}</span>
+                                            <span aria-hidden="true" class="font-plex text-xl leading-7 transition-transform group-open:rotate-45">+</span>
+                                        </summary>
+                                        <div class="pb-6 text-secondary leading-8 space-y-3">
+                                            {a.split(/\n\s*\n/).map((p) => <p>{p}</p>)}
+                                        </div>
+                                    </details>
+                                ))}
+                            </div>
+                        </section>
+                    )
+                }
+            </div>
             <aside class="lg:sticky lg:top-24 self-start rounded-3xl border border-black/10 bg-background p-6 space-y-5">
                 <dl class="space-y-4 text-sm">
                     <div>

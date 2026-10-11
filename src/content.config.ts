@@ -22,6 +22,8 @@ const projects = defineCollection({
       url: z.string(),
       alt: z.string(),
     }),
+    // よくある質問。詳細ページ下部に表示し、FAQPage の構造化データにも出す
+    faq: z.array(z.object({ q: z.string(), a: z.string() })).default([]),
   }),
 });
 
