@@ -71,7 +71,7 @@ const jsonLd = [
             <ol class="flex flex-wrap items-center gap-2">
                 <li><a href="/" class="hover:text-foreground underline-offset-2 hover:underline">ホーム</a></li>
                 <li aria-hidden="true">/</li>
-                <li><a href="/projects" class="hover:text-foreground underline-offset-2 hover:underline">{PROJECTS.TITLE}</a></li>
+                <li><a href="/projects/" class="hover:text-foreground underline-offset-2 hover:underline">{PROJECTS.TITLE}</a></li>
                 <li aria-hidden="true">/</li>
                 <li aria-current="page" class="text-foreground font-medium">{title}</li>
             </ol>
@@ -182,7 +182,7 @@ const jsonLd = [
         <nav aria-label="前後の制作物" class="mt-16 grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-dashed border-secondary pt-8">
             {
                 prev ? (
-                    <a href={`/projects/${prev.id}`} class="rounded-2xl border border-black/10 p-5 hover:border-foreground transition">
+                    <a href={`/projects/${prev.id}/`} class="rounded-2xl border border-black/10 p-5 hover:border-foreground transition">
                         <span class="eyebrow block mb-1">← 前の制作物</span>
                         <span class="heading text-lg">{prev.data.title}</span>
                     </a>
@@ -190,7 +190,7 @@ const jsonLd = [
             }
             {
                 next && (
-                    <a href={`/projects/${next.id}`} class="rounded-2xl border border-black/10 p-5 text-right hover:border-foreground transition">
+                    <a href={`/projects/${next.id}/`} class="rounded-2xl border border-black/10 p-5 text-right hover:border-foreground transition">
                         <span class="eyebrow block mb-1">次の制作物 →</span>
                         <span class="heading text-lg">{next.data.title}</span>
                     </a>

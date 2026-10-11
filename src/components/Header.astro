@@ -2,7 +2,8 @@
 import { SITE, NAV_LINKS } from "@/consts";
 
 const current = Astro.url.pathname;
-const isCurrent = (href: string) => current === href || current.startsWith(`${href}/`);
+// href は末尾スラッシュ付き（"/projects/"）なので前方一致で配下のページも現在地扱い
+const isCurrent = (href: string) => current.startsWith(href);
 ---
 
 <header class="fixed top-0 inset-x-0 z-50 border-b border-black/5 bg-background/80 backdrop-blur-md">
@@ -23,7 +24,7 @@ const isCurrent = (href: string) => current === href || current.startsWith(`${hr
                     </a>
                 ))
             }
-            <a href="/contact" class="rounded-full bg-foreground px-4 py-2 text-sm text-background hover:bg-secondary transition">お問い合わせ</a>
+            <a href="/contact/" class="rounded-full bg-foreground px-4 py-2 text-sm text-background hover:bg-secondary transition">お問い合わせ</a>
         </nav>
         <button
             id="menu-toggle"
@@ -40,7 +41,7 @@ const isCurrent = (href: string) => current === href || current.startsWith(`${hr
     <div id="menu-mobile" class="hidden md:hidden border-t border-black/5 bg-background px-6 pb-6">
         <nav class="flex flex-col text-2xl font-plex font-bold" aria-label="メイン（モバイル）">
             {
-                [...NAV_LINKS, { name: "お問い合わせ", href: "/contact" }].map((link) => (
+                [...NAV_LINKS, { name: "お問い合わせ", href: "/contact/" }].map((link) => (
                     <a
                         href={link.href}
                         aria-current={isCurrent(link.href) ? "page" : undefined}

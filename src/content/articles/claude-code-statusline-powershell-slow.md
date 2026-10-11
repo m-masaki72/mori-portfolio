@@ -53,7 +53,7 @@ real    0m0.143s
 
 PowerShell 版は 1411ms、Node.js 版は 143ms。約10倍速くなり、表示も安定しました。なぜ実行時間の差が症状に直結するのか、以下で確かめます。
 
-※ 今使っている statusLine の全体（利用上限の表示なども入ったもの）は、[私の Claude Code statusline 設定](/articles/claude-code-statusline) で紹介しています。
+※ 今使っている statusLine の全体（利用上限の表示なども入ったもの）は、[私の Claude Code statusline 設定](/articles/claude-code-statusline/) で紹介しています。
 
 ## 調査
 

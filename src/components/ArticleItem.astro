@@ -16,7 +16,7 @@ const { title, description, pubDate, tags } = entry.data;
 >
     <time datetime={isoDate(pubDate)} class="text-sm text-secondary">{formatDate(pubDate)}</time>
     <Heading class="heading mt-1 text-xl md:text-2xl">
-        <a href={`/articles/${entry.id}`} class="after:absolute after:inset-0 focus:outline-none">{title}</a>
+        <a href={`/articles/${entry.id}/`} class="after:absolute after:inset-0 focus:outline-none">{title}</a>
     </Heading>
     <p class="mt-2 text-secondary leading-relaxed line-clamp-2">{description}</p>
     {

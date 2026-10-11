@@ -16,7 +16,7 @@ const projects = (await getProjects()).slice(0, 4);
     <div>
       <p class="mb-3 font-bold">ナビゲーション</p>
       <ul class="space-y-1.5">
-        {[{ name: "ホーム", href: "/" }, ...NAV_LINKS, { name: "お問い合わせ", href: "/contact" }].map((link) => (
+        {[{ name: "ホーム", href: "/" }, ...NAV_LINKS, { name: "お問い合わせ", href: "/contact/" }].map((link) => (
           <li><a class="hover:underline underline-offset-2" href={link.href}>{link.name}</a></li>
         ))}
       </ul>
@@ -25,9 +25,9 @@ const projects = (await getProjects()).slice(0, 4);
       <p class="mb-3 font-bold">制作物</p>
       <ul class="space-y-1.5">
         {projects.map((project) => (
-          <li><a class="hover:underline underline-offset-2" href={`/projects/${project.id}`}>{project.data.title}</a></li>
+          <li><a class="hover:underline underline-offset-2" href={`/projects/${project.id}/`}>{project.data.title}</a></li>
         ))}
-        <li><a class="underline underline-offset-2" href="/projects">すべて見る →</a></li>
+        <li><a class="underline underline-offset-2" href="/projects/">すべて見る →</a></li>
       </ul>
     </div>
     <div>
@@ -44,7 +44,7 @@ const projects = (await getProjects()).slice(0, 4);
     </div>
   </div>
   <div class="flex flex-col sm:flex-row justify-between items-center gap-3 border-t border-black/20 pt-6 text-sm">
-    <a href="/privacy" class="underline underline-offset-2">プライバシーポリシー・免責事項</a>
+    <a href="/privacy/" class="underline underline-offset-2">プライバシーポリシー・免責事項</a>
     <span class="opacity-70">© {SITE.TITLE} / MasakiMori. Astroで制作</span>
   </div>
 </footer>

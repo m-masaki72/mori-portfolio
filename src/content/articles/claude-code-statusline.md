@@ -42,7 +42,7 @@ Claude Code の画面下に出る **statusline** は、自分でスクリプト�
 
 ### Model
 
-[タスクの難しさでモデルを使い分けている](/articles/claude-code-model-selection) ので、今どのモデルで動いているかがすぐ分かるようにしています。軽い質問のために切り替えたモデルのまま、重い作業を始めてしまうのを防げます。
+[タスクの難しさでモデルを使い分けている](/articles/claude-code-model-selection/) ので、今どのモデルで動いているかがすぐ分かるようにしています。軽い質問のために切り替えたモデルのまま、重い作業を始めてしまうのを防げます。
 
 ## 設定
 
@@ -151,7 +151,7 @@ process.stdin.on('end', () => {
 
 Node.js に書き直したら、実行時間が約1.4秒から約0.14秒になり、表示が安定しました。原因の調べ方と計測結果は、別の記事に詳しく書いています。
 
-→ [Claude Code の statusLine が表示されない原因は PowerShell の起動遅延](/articles/claude-code-statusline-powershell-slow)
+→ [Claude Code の statusLine が表示されない原因は PowerShell の起動遅延](/articles/claude-code-statusline-powershell-slow/)
 
 ## まとめ
 

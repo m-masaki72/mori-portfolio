@@ -4,7 +4,7 @@ description: "タブを切り替えたら自動で別窓再生にしたくて、
 pubDate: 2026-10-10
 tags: ["YouTube", "Chrome", "Picture-in-Picture"]
 ---
-個人開発の [非公式 学マス プレイリストメーカー](/projects/gakumasu-playlist-maker) は、YouTube の動画を埋め込みプレーヤーで連続再生する Web アプリです。
+個人開発の [非公式 学マス プレイリストメーカー](/projects/gakumasu-playlist-maker/) は、YouTube の動画を埋め込みプレーヤーで連続再生する Web アプリです。
 
 作業しながら BGM 代わりに流したいのですが、別のタブに切り替えると再生が止まります。YouTube の埋め込みは「見えている状態で再生する」のが前提なので、タブが隠れたら一時停止するようにしているためです。
 

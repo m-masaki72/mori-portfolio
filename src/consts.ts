@@ -32,10 +32,10 @@ export const ARTICLES = {
 };
 
 export const NAV_LINKS = [
-  { name: "自己紹介", href: "/about" },
-  { name: "制作物", href: "/projects" },
-  { name: "記事", href: "/articles" },
-  { name: "リンク", href: "/links" },
+  { name: "自己紹介", href: "/about/" },
+  { name: "制作物", href: "/projects/" },
+  { name: "記事", href: "/articles/" },
+  { name: "リンク", href: "/links/" },
 ];
 
 export const SOCIALS = [

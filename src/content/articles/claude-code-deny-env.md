@@ -64,7 +64,7 @@ Read ツールの deny はファイルのパスで判定するので、比較的
 - 読み込んでから表示する：`source .env` してから `echo $API_KEY`、`printenv`
 - ディレクトリごと検索する：`grep -r API_KEY .` のように、パスに `.env` が出てこない書き方
 
-コマンドを40個並べても、すべての書き方をパターンで止めるのは無理です。**Bash の deny は「よくある読み方」を止める柵** で、壁ではないと割り切っています。これは、以前書いた [危険な git 操作を hooks で止める](/articles/claude-code-hooks-block-dangerous-git) と同じ考え方です。
+コマンドを40個並べても、すべての書き方をパターンで止めるのは無理です。**Bash の deny は「よくある読み方」を止める柵** で、壁ではないと割り切っています。これは、以前書いた [危険な git 操作を hooks で止める](/articles/claude-code-hooks-block-dangerous-git/) と同じ考え方です。
 
 ## ほかに重ねている対策
 
