@@ -38,13 +38,14 @@ export const NAV_LINKS = [
   { name: "リンク", href: "/links/" },
 ];
 
+// DESC は Links ページで各リンクの下に出す説明
 export const SOCIALS = [
-  { NAME: "GitHub", HREF: "https://github.com/m-masaki72" },
-  { NAME: "X (Twitter)", HREF: "https://x.com/mementomori72" },
-  { NAME: "Zenn", HREF: "https://zenn.dev/masaki_mori72" },
-  { NAME: "Qiita", HREF: "https://qiita.com/m-masaki72" },
-  { NAME: "はてなブログ", HREF: "https://mementomori7272.hatenablog.com/" },
-  { NAME: "SoundCloud", HREF: "https://soundcloud.com/morimoririnn" },
-  { NAME: "YouTube", HREF: "https://www.youtube.com/@masakimori2508" },
-  { NAME: "OFUSE (投げ銭)", HREF: "https://ofuse.me/801de8c8" },
+  { NAME: "GitHub", HREF: "https://github.com/m-masaki72", DESC: "SANA 8BIT VST や Web アプリなど、公開している制作物のソースコード" },
+  { NAME: "X (Twitter)", HREF: "https://x.com/mementomori72", DESC: "新しいアプリや記事の公開のお知らせと、開発中の小ネタ" },
+  { NAME: "Zenn", HREF: "https://zenn.dev/masaki_mori72", DESC: "Unity・C#・Git などの技術記事（新しい記事はこのサイトで書いています）" },
+  { NAME: "Qiita", HREF: "https://qiita.com/m-masaki72", DESC: "JUCE でのプリセット作成や Git・Unity の作業メモ（初期の技術メモ）" },
+  { NAME: "はてなブログ", HREF: "https://mementomori7272.hatenablog.com/", DESC: "アプリの紹介記事と、ゲームや本の感想・ガジェットの話" },
+  { NAME: "SoundCloud", HREF: "https://soundcloud.com/morimoririnn", DESC: "チップチューンの自作曲と、SANA 8BIT VST のデモ音源" },
+  { NAME: "YouTube", HREF: "https://www.youtube.com/@masakimori2508", DESC: "Chord Eureka や TaktKey など、アプリのデモ動画" },
+  { NAME: "OFUSE (投げ銭)", HREF: "https://ofuse.me/801de8c8", DESC: "制作を応援していただける方への投げ銭・ファンレター窓口" },
 ];

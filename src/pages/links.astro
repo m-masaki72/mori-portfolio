@@ -2,7 +2,7 @@
 import Layout from "@/layouts/Layout.astro";
 import { SOCIALS } from "@/consts";
 
-const links = SOCIALS.map((s) => ({ label: s.NAME, url: s.HREF }));
+const links = SOCIALS.map((s) => ({ label: s.NAME, url: s.HREF, desc: s.DESC }));
 ---
 
 <Layout title="Links" description="MasakiMoriのSNS・ブログ・作品発表先（GitHub、X、Zenn、Qiita、SoundCloud、YouTubeなど）へのリンク集">
@@ -17,11 +17,12 @@ const links = SOCIALS.map((s) => ({ label: s.NAME, url: s.HREF }));
                             href={link.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            class="flex items-baseline gap-6 border border-dashed border-secondary/30 rounded-lg px-6 py-4 hover:border-secondary transition-colors"
+                            class="flex flex-col gap-1 border border-dashed border-secondary/30 rounded-lg px-6 py-4 hover:border-secondary transition-colors"
                         >
                             <span class="font-plex font-bold text-xl">
                                 {link.label}
                             </span>
+                            <span class="text-sm text-secondary">{link.desc}</span>
                         </a>
                     </li>
                 ))
