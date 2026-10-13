@@ -47,4 +47,4 @@ Astro portfolio site. No framework components (React/Vue/etc.) — pure `.astro`
 
 **DNS automation**: `scripts/sync-dns.mjs` + `scripts/dns-projects.json` manage Cloudflare DNS records and Pages custom domains across multiple projects (this site included) from a single source of truth.
 
-**Local-only docs** (gitignored): `CONTENT_PLAN.md`（記事ネタ帳・AdSense 再申請計画）、`TODO_DNS.md`（DNS 移行の記録と追加手順）。`TODO.md`（収益化・SEO）は git 管理。
+**Local-only docs** (gitignored): `CONTENT_PLAN.md`（記事の方針・ネタ帳。タスクは持たない）、`TODO_DNS.md`（DNS 移行の記録と追加手順）。`TODO.md`（収益化・SEO のタスク。期限・進捗はここだけで管理）は git 管理。
