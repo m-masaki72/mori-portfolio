@@ -1,0 +1,23 @@
+---
+import type { Crumb } from "@/lib/jsonld";
+
+// 最後の要素を現在のページとして表示する（JSON-LD の breadcrumb() と同じ items を渡す）
+type Props = { items: Crumb[] };
+
+const { items } = Astro.props;
+const current = items.at(-1);
+---
+
+<nav aria-label="パンくずリスト" class="mb-8 text-sm text-secondary">
+    <ol class="flex flex-wrap items-center gap-2">
+        {
+            items.slice(0, -1).map((c) => (
+                <>
+                    <li><a href={c.path} class="hover:text-foreground underline-offset-2 hover:underline">{c.name}</a></li>
+                    <li aria-hidden="true">/</li>
+                </>
+            ))
+        }
+        <li aria-current="page" class="text-foreground font-medium">{current?.name}</li>
+    </ol>
+</nav>

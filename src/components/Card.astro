@@ -1,5 +1,5 @@
 ---
-import type { Project } from "@/lib/projects";
+import { projectPath, type Project } from "@/lib/projects";
 import ProjectImage from "./ProjectImage.astro";
 
 type Props = {
@@ -14,7 +14,7 @@ const { title, description, image, category, platform, tech } = entry.data;
 
 <article
     data-category={category}
-    class="group relative flex flex-col overflow-hidden rounded-3xl border border-black/10 bg-background transition hover:-translate-y-1 hover:shadow-[0_8px_0_0_var(--color-foreground)] hover:border-foreground focus-within:border-foreground"
+    class="group relative flex flex-col overflow-hidden rounded-3xl border border-black/10 bg-background card-hover"
 >
     <div class="overflow-hidden bg-muted border-b border-black/10">
         <ProjectImage
@@ -30,7 +30,7 @@ const { title, description, image, category, platform, tech } = entry.data;
             <span class="chip">{platform}</span>
         </div>
         <Heading class="heading text-xl md:text-2xl">
-            <a href={`/projects/${entry.id}/`} class="after:absolute after:inset-0 focus-visible:outline-none">
+            <a href={projectPath(entry.id)} class="after:absolute after:inset-0 focus-visible:outline-none">
                 {title}
             </a>
         </Heading>

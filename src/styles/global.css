@@ -68,6 +68,31 @@ body {
   @apply font-plex text-xs font-bold tracking-[0.2em] uppercase text-secondary sm:text-sm;
 }
 
+/* ホバーで浮くカード（ArticleItem / Card） */
+@utility card-hover {
+  @apply transition hover:-translate-y-1 hover:shadow-[0_8px_0_0_var(--color-foreground)] hover:border-foreground focus-within:border-foreground;
+}
+
+/* 一覧ページの絞り込みボタン */
+.filter-btn {
+  cursor: pointer;
+  border-radius: 9999px;
+  border: 1px solid rgb(0 0 0 / 0.15);
+  background: var(--color-background);
+  padding: 0.5rem 1rem;
+  min-height: 44px;
+  font-size: 0.95rem;
+  transition: background-color 0.2s;
+}
+.filter-btn:hover {
+  background: var(--color-muted);
+}
+.filter-btn[aria-pressed="true"] {
+  background: var(--color-foreground);
+  border-color: var(--color-foreground);
+  color: var(--color-background);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

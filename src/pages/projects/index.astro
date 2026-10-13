@@ -15,45 +15,26 @@ const categories = CATEGORIES.filter((c) => projects.some((p) => p.data.category
         <h1 class="heading text-4xl md:text-6xl">{PROJECTS.TITLE}</h1>
         <p class="mt-5 max-w-2xl text-lg text-secondary leading-relaxed">{PROJECTS.DESCRIPTION}</p>
 
-        <div id="filters" class="mt-10 mb-8 hidden flex-wrap gap-2" role="group" aria-label="カテゴリで絞り込み">
-            <button type="button" data-filter="all" aria-pressed="true" class="filter-btn">
-                すべて <span class="opacity-60">{projects.length}</span>
-            </button>
-            {
-                categories.map((c) => (
-                    <button type="button" data-filter={c} aria-pressed="false" class="filter-btn">
-                        {c} <span class="opacity-60">{projects.filter((p) => p.data.category === c).length}</span>
-                    </button>
-                ))
-            }
-        </div>
+        <div class="mt-10">
+            <div id="filters" class="mb-8 hidden flex-wrap gap-2" role="group" aria-label="カテゴリで絞り込み">
+                <button type="button" data-filter="all" aria-pressed="true" class="filter-btn">
+                    すべて <span class="opacity-60">{projects.length}</span>
+                </button>
+                {
+                    categories.map((c) => (
+                        <button type="button" data-filter={c} aria-pressed="false" class="filter-btn">
+                            {c} <span class="opacity-60">{projects.filter((p) => p.data.category === c).length}</span>
+                        </button>
+                    ))
+                }
+            </div>
 
-        <div id="project-grid" class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((project, i) => <Card entry={project} eager={i < 3} headingLevel="h2" />)}
+            <div id="project-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {projects.map((project, i) => <Card entry={project} eager={i < 3} headingLevel="h2" />)}
+            </div>
         </div>
     </section>
 </Layout>
-
-<style>
-    .filter-btn {
-        cursor: pointer;
-        border-radius: 9999px;
-        border: 1px solid rgb(0 0 0 / 0.15);
-        background: var(--color-background);
-        padding: 0.5rem 1rem;
-        min-height: 44px;
-        font-size: 0.95rem;
-        transition: background-color 0.2s;
-    }
-    .filter-btn:hover {
-        background: var(--color-muted);
-    }
-    .filter-btn[aria-pressed="true"] {
-        background: var(--color-foreground);
-        border-color: var(--color-foreground);
-        color: var(--color-background);
-    }
-</style>
 
 <script>
     // JS が動く環境でのみフィルタを表示（未対応環境では全件表示のまま）
@@ -61,7 +42,6 @@ const categories = CATEGORIES.filter((c) => projects.some((p) => p.data.category
     const grid = document.getElementById("project-grid");
     if (filters && grid) {
         filters.classList.replace("hidden", "flex");
-        grid.classList.remove("mt-10");
         const buttons = filters.querySelectorAll<HTMLButtonElement>("button[data-filter]");
         const cards = grid.querySelectorAll<HTMLElement>("[data-category]");
         buttons.forEach((btn) =>

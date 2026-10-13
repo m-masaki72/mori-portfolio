@@ -1,0 +1,13 @@
+---
+type Props = { tags: string[]; class?: string };
+
+const { tags, class: className } = Astro.props;
+---
+
+{
+    tags.length > 0 && (
+        <ul class:list={["flex flex-wrap gap-1.5", className]}>
+            {tags.map((t) => <li class="chip">{t}</li>)}
+        </ul>
+    )
+}

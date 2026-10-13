@@ -3,31 +3,18 @@ import Head from "@/components/Head.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import { SITE } from "@/consts";
-import type { JsonLdNode } from "@/lib/jsonld";
+import type { ComponentProps } from "astro/types";
 import "../styles/global.css";
 
-type Props = {
-    title: string;
-    description: string;
-    image?: string;
-    ogType?: "website" | "article";
-    jsonLd?: JsonLdNode[];
-    noAds?: boolean;
-};
+// title はページ名だけ渡す（サイト名は Head 用にここで付ける）
+type Props = ComponentProps<typeof Head>;
 
-const { title, description, image, ogType, jsonLd, noAds } = Astro.props;
+const { title, ...headProps } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="ja">
-    <Head
-        title={`${title} | ${SITE.TITLE}`}
-        description={description}
-        image={image}
-        ogType={ogType}
-        jsonLd={jsonLd}
-        noAds={noAds}
-    />
+    <Head title={`${title} | ${SITE.TITLE}`} {...headProps} />
     <body>
         <Header />
         <div class="min-h-screen w-full relative">

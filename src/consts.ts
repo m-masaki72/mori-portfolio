@@ -38,7 +38,7 @@ export const NAV_LINKS = [
   { name: "リンク", href: "/links/" },
 ];
 
-// DESC は Links ページで各リンクの下に出す説明
+// DESC は Links ページで各リンクの下に出す説明。SAME_AS: false は Person の sameAs（JSON-LD）から外す
 export const SOCIALS = [
   { NAME: "GitHub", HREF: "https://github.com/m-masaki72", DESC: "SANA 8BIT VST や Web アプリなど、公開している制作物のソースコード" },
   { NAME: "X (Twitter)", HREF: "https://x.com/mementomori72", DESC: "新しいアプリや記事の公開のお知らせと、開発中の小ネタ" },
@@ -47,5 +47,5 @@ export const SOCIALS = [
   { NAME: "はてなブログ", HREF: "https://mementomori7272.hatenablog.com/", DESC: "アプリの紹介記事と、ゲームや本の感想・ガジェットの話" },
   { NAME: "SoundCloud", HREF: "https://soundcloud.com/morimoririnn", DESC: "チップチューンの自作曲と、SANA 8BIT VST のデモ音源" },
   { NAME: "YouTube", HREF: "https://www.youtube.com/@masakimori2508", DESC: "Chord Eureka や TaktKey など、アプリのデモ動画" },
-  { NAME: "OFUSE (投げ銭)", HREF: "https://ofuse.me/801de8c8", DESC: "制作を応援していただける方への投げ銭・ファンレター窓口" },
+  { NAME: "OFUSE (投げ銭)", HREF: "https://ofuse.me/801de8c8", DESC: "制作を応援していただける方への投げ銭・ファンレター窓口", SAME_AS: false },
 ];

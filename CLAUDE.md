@@ -6,9 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```sh
 npm run dev       # Dev server at localhost:4321
-npm run build     # Production build to ./dist/
+npm run build     # scripts/convert-images.mjs → astro build (./dist/)
 npm run preview   # Preview production build
 npm run astro ... # Astro CLI (e.g. astro add, astro check)
+npm run sync-dns  # Cloudflare DNS / Pages custom domains from scripts/dns-projects.json (.env required)
 ```
 
 ## Architecture
@@ -21,7 +22,7 @@ Astro portfolio site. No framework components (React/Vue/etc.) — pure `.astro`
 
 **Content collections** (`src/content.config.ts`):
 - `projects` — `src/content/projects/*.md`. Required: `title`, `description`, `image { url, alt }`, `category` (enum `CATEGORIES`), `platform`. Optional: `tech[]`, `order` (表示順, 小さいほど先頭), `liveUrl`, `githubUrl`, `faq[] { q, a }`（詳細ページ下部にアコーディオン表示＋FAQPage JSON-LD。本文に「よくある質問」見出しは書かない）. 一覧取得は `src/lib/projects.ts` の `getProjects()`（order順）を使う。
-- `articles` — `src/content/articles/*.md`（`/articles/<id>`）。Required: `title`, `description`, `pubDate`. Optional: `updatedDate`, `tags[]`, `originalUrl`（はてなブログ・Zennからの移設元。あると詳細ページに移設の注記を出す。表示名はホストで判定）、`noAds`（true でそのページだけ AdSense スクリプトを出さない。非商用ライセンスのモデル・素材（商用NGの MMD モデルの描画など）を載せる記事に付ける）。記事内画像は `public/articles/<id>/`。一覧取得は `src/lib/articles.ts` の `getArticles()`（新しい順）。
+- `articles` — `src/content/articles/*.md`（`/articles/<id>`）。Required: `title`, `description`, `pubDate`. Optional: `updatedDate`, `tags[]`, `originalUrl`（はてなブログ・Zennからの移設元。あると詳細ページに移設の注記を出す。表示名は `src/lib/articles.ts` の `ORIGINAL_SITES` でホストから引き、未登録ホストはビルドエラー）、`noAds`（true でそのページだけ AdSense スクリプトを出さない。非商用ライセンスのモデル・素材（商用NGの MMD モデルの描画など）を載せる記事に付ける）。記事内画像は `public/articles/<id>/`。一覧取得は `src/lib/articles.ts` の `getArticles()`（新しい順）。
 
 **Global constants** (`src/consts.ts`):
 - `SITE` — `URL`, `TITLE`, `DESCRIPTION`, `EMAIL`
@@ -38,8 +39,12 @@ Astro portfolio site. No framework components (React/Vue/etc.) — pure `.astro`
 
 **OGP**: `Head.astro` outputs `og:*` and `twitter:*` meta tags. Default image is `public/og-default.png` (1200×630). Pass `image` prop to `<Layout>` to set a custom OGP image per page.
 
-**Screenshots**: `public/screenshots/` — referenced from project `.md` frontmatter as `image.url`.
+**Screenshots**: `public/screenshots/` — referenced from project `.md` frontmatter as `image.url` (png/jpg)。`npm run build` が先に同名の `.webp` を生成する（webp は gitignore 対象）。記事内画像（`public/articles/`）は変換されないので最初から webp で置く。
+
+**Internal links**: 内部リンクは末尾スラッシュ付き（`/articles/<id>/`）。GitHub Pages がスラッシュなしを301するため。記事・制作物へのリンクは `articlePath()` / `projectPath()` を使う。パンくずは `Breadcrumb.astro` と JSON-LD の `breadcrumb()` に同じ `{ name, path }[]` を渡す。
 
 **Deployment**: GitHub Pages via GitHub Actions. Site URL: `https://morilab-garage.com` (set in `astro.config.mjs` and `SITE.URL`).
 
-**DNS automation**: `scripts/sync-dns.mjs` + `dns-projects.json` manage Cloudflare DNS records across multiple projects (this site included) from a single source of truth. `convert-images.mjs` handles image format conversion for the content pipeline. See `TODO_DNS.md` for outstanding DNS-related work.
+**DNS automation**: `scripts/sync-dns.mjs` + `scripts/dns-projects.json` manage Cloudflare DNS records and Pages custom domains across multiple projects (this site included) from a single source of truth.
+
+**Local-only docs** (gitignored): `CONTENT_PLAN.md`（記事ネタ帳・AdSense 再申請計画）、`TODO_DNS.md`（DNS 移行の記録と追加手順）。`TODO.md`（収益化・SEO）は git 管理。

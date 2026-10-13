@@ -1,0 +1,32 @@
+---
+type Link = { href: string; title: string };
+
+type Props = {
+    label: string;
+    noun: string;
+    prev?: Link;
+    next?: Link;
+    class?: string;
+};
+
+const { label, noun, prev, next, class: className } = Astro.props;
+---
+
+<nav aria-label={label} class:list={["mt-16 grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-dashed border-secondary pt-8", className]}>
+    {
+        prev && (
+            <a href={prev.href} class="rounded-2xl border border-black/10 p-5 hover:border-foreground transition">
+                <span class="eyebrow block mb-1">← 前の{noun}</span>
+                <span class="heading text-lg">{prev.title}</span>
+            </a>
+        )
+    }
+    {
+        next && (
+            <a href={next.href} class="sm:col-start-2 rounded-2xl border border-black/10 p-5 text-right hover:border-foreground transition">
+                <span class="eyebrow block mb-1">次の{noun} →</span>
+                <span class="heading text-lg">{next.title}</span>
+            </a>
+        )
+    }
+</nav>

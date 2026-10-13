@@ -16,11 +16,13 @@ export default defineConfig({
       name: "IBM Plex Mono",
       cssVariable: "--font-plex",
       provider: fontProviders.google(),
+      styles: ["normal"],
     },
     {
       name: "Geist",
       cssVariable: "--font-geist",
       provider: fontProviders.google(),
+      styles: ["normal"],
     },
   ],
   integrations: [sitemap()],

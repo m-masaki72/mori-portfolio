@@ -13,7 +13,7 @@ const person: JsonLdNode = {
   url: `${SITE.URL}/about/`,
   image: `${SITE.URL}/portrait.jpg`,
   description: SITE.DESCRIPTION,
-  sameAs: SOCIALS.filter((s) => !s.HREF.includes("ofuse.me")).map((s) => s.HREF),
+  sameAs: SOCIALS.filter((s) => s.SAME_AS !== false).map((s) => s.HREF),
 };
 
 const website: JsonLdNode = {
@@ -35,14 +35,17 @@ export function buildGraph(extra: JsonLdNode[] = []): string {
   return json.replace(/</g, "\\u003c");
 }
 
-export function breadcrumb(items: { name: string; url: string }[]): JsonLdNode {
+// path はサイト内の絶対パス（例: "/articles/"）
+export type Crumb = { name: string; path: string };
+
+export function breadcrumb(items: Crumb[]): JsonLdNode {
   return {
     "@type": "BreadcrumbList",
     itemListElement: items.map((item, i) => ({
       "@type": "ListItem",
       position: i + 1,
       name: item.name,
-      item: item.url,
+      item: new URL(item.path, SITE.URL).href,
     })),
   };
 }

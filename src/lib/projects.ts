@@ -10,6 +10,9 @@ export async function getProjects(): Promise<Project[]> {
   return all.sort((a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title, "ja"));
 }
 
+/** 制作物ページのパス（末尾スラッシュ付き） */
+export const projectPath = (id: string) => `/projects/${id}/`;
+
 /** public/ 配下の画像に同名 .webp があればそのパスを返す（scripts/convert-images.mjs が生成） */
 export function webpOf(url: string): string | undefined {
   if (!url.startsWith("/") || !/\.(png|jpe?g)$/i.test(url)) return undefined;

@@ -1,6 +1,6 @@
 ---
 import { SITE, SOCIALS, NAV_LINKS } from "@/consts";
-import { getProjects } from "@/lib/projects";
+import { getProjects, projectPath } from "@/lib/projects";
 
 const projects = (await getProjects()).slice(0, 4);
 ---
@@ -25,7 +25,7 @@ const projects = (await getProjects()).slice(0, 4);
       <p class="mb-3 font-bold">制作物</p>
       <ul class="space-y-1.5">
         {projects.map((project) => (
-          <li><a class="hover:underline underline-offset-2" href={`/projects/${project.id}/`}>{project.data.title}</a></li>
+          <li><a class="hover:underline underline-offset-2" href={projectPath(project.id)}>{project.data.title}</a></li>
         ))}
         <li><a class="underline underline-offset-2" href="/projects/">すべて見る →</a></li>
       </ul>
