@@ -326,10 +326,11 @@ async function audit(host, origin) {
     const o = await fetchText(`https://${origin}/`, "manual");
     if (o.status === 200) {
       const oc = parseHead(o.text).links.find((l) => l.rel === "canonical")?.href;
-      const ok = (oc && new URL(oc, `https://${origin}/`).host === host) || /noindex/i.test(o.xRobots ?? "");
-      lines.push(`公開元 ${origin}: 200 (canonical=${oc ?? "-"})`);
-      if (!ok) ng(`${origin} が同じ内容を 200 で配信し canonical もカスタムドメインを向いていない（重複インデックス）`);
-      else warn(`${origin} が同じ内容を 200 で配信（canonical で回避済みだが 301 リダイレクトが理想）`);
+      const noindex = /noindex/i.test(o.xRobots ?? "");
+      const canonicalOk = oc && new URL(oc, `https://${origin}/`).host === host;
+      lines.push(`公開元 ${origin}: 200 (canonical=${oc ?? "-"}${noindex ? ", X-Robots-Tag: noindex" : ""})`);
+      if (!noindex && !canonicalOk) ng(`${origin} が同じ内容を 200 で配信し canonical もカスタムドメインを向いていない（重複インデックス）`);
+      else if (!noindex) warn(`${origin} に X-Robots-Tag: noindex がない（canonical で回避済み。_headers で付けると確実）`);
     } else lines.push(`公開元 ${origin}: ${o.status}${o.location ? ` → ${o.location}` : ""}`);
   }
 
