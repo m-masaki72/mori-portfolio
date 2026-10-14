@@ -10,6 +10,7 @@ npm run build     # scripts/convert-images.mjs → astro build (./dist/)
 npm run preview   # Preview production build
 npm run astro ... # Astro CLI (e.g. astro add, astro check)
 npm run sync-dns  # Cloudflare DNS / Pages custom domains from scripts/dns-projects.json (.env required)
+npm run audit-seo # 全サブドメインの検索向けメタ情報（OGP・JSON-LD・favicon・sitemap・重複インデックス等）を一括チェック。引数でホスト絞り込み
 ```
 
 ## Architecture

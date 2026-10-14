@@ -10,6 +10,7 @@
     "build": "node scripts/convert-images.mjs && astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "audit-seo": "node scripts/audit-seo.mjs",
     "sync-dns": "node --env-file-if-exists=.env scripts/sync-dns.mjs"
   },
   "dependencies": {
