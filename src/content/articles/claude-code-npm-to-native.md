@@ -70,7 +70,7 @@ Auto-update channel: latest
 
 環境変数は起動時に読み込まれるので、Claude Code を起動し直してから、もう一度 `claude doctor` で `Auto-updates` の行を確認します。
 
-ただし、この変数を消すと、リリースノートの取得や機能フラグの取得なども戻ります。何を止めたいのかで選ぶところです。逆に「自動更新だけを止めたい」なら、`DISABLE_AUTOUPDATER` という専用の変数があります。
+ただし、この変数を消すと、リリースノートの取得なども戻ります。何を止めたいのかで選ぶところです。なお、機能フラグの取得は `DISABLE_TELEMETRY` でも止まります（[公式ドキュメント](https://code.claude.com/docs/en/data-usage#telemetry-services)）。`DISABLE_TELEMETRY` を残した私の設定では、機能フラグが必要な機能は使えないままです。逆に「自動更新だけを止めたい」なら、`DISABLE_AUTOUPDATER` という専用の変数があります。
 
 ## それでも移行してよかったこと：古い npm 版が残っていた
 

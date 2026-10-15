@@ -114,7 +114,7 @@ auto mode に入ると、**任意のコードを実行できる広い許可ル�
 注意点が2つあります。
 
 - `autoMode` の設定は **`~/.claude/settings.json` に書く**。プロジェクトの `.claude/settings.json` や `settings.local.json` に書いても読まれません（リポジトリ側から許可を注入できないようにするため）
-- `/auto-mode-setup` は機能フラグの取得が必要です。[前の記事](/articles/claude-code-npm-to-native/) で書いた `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` を入れていると使えません
+- `/auto-mode-setup` は機能フラグの取得が必要です。[前の記事](/articles/claude-code-npm-to-native/) で書いた `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC` を入れていると使えません。`DISABLE_TELEMETRY` でも機能フラグの取得は止まるので、同じく使えません
 
 今の設定は `claude auto-mode config` で確認できます。既定のルールは `claude auto-mode defaults` で全文を読めます。
 
