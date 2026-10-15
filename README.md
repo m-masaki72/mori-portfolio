@@ -18,8 +18,10 @@ Masaki Mori のポートフォリオサイト。
 | :---------------- | :---------------------------------- |
 | `npm install`     | Install dependencies                |
 | `npm run dev`     | Dev server at `localhost:4321`      |
-| `npm run build`   | Production build to `./dist/`       |
+| `npm run build`   | Convert screenshots to webp, then production build to `./dist/` |
 | `npm run preview` | Preview production build            |
+| `npm run sync-dns` | Sync Cloudflare DNS / Pages custom domains from `scripts/dns-projects.json` (`.env` required) |
+| `npm run audit-seo` | Check OGP / JSON-LD / sitemap etc. across all subdomains |
 
 ## Deploy
 
