@@ -2,7 +2,6 @@
 title: "claude -p --json-schema はスキーマ違反を AI に差し戻す。ただし AI が諦めると exit 0 で中身が空になる"
 description: "claude -p に --json-schema を付けると、出力がスキーマで検証され、違反は AI に差し戻されて直されます。7種類の制約でわざと違反させると、AI が途中で諦めた場合は structured_output が無いまま exit 0・success で終わりました。試行回数の上限（既定5回）、検証されない format キーワード、呼び出し側で何を確かめるべきかをまとめます。"
 pubDate: 2026-10-16
-updatedDate: 2026-10-16
 tags: ["Claude Code"]
 ---
 `claude -p` に `--json-schema` を付けると、Claude の出力を JSON スキーマどおりの形で受け取れます。[AI の生成結果を930件自動採点した記事](/articles/claude-code-p-batch-evaluation/) でも、生成結果をこの方法で受け取っていました。
@@ -41,7 +40,9 @@ tags: ["Claude Code"]
 claude -p "<違反させるプロンプト>" --model haiku --output-format stream-json --verbose --setting-sources "" --json-schema '<上のスキーマ>'
 ```
 
-最初は `--setting-sources ""` を付けずに実行していました。これだと私のグローバル CLAUDE.md（口調の設定など）が読み込まれ、AI の振る舞いに影響しているかもしれません。そこで、CLAUDE.md などを読まない設定で全ケースを2回ずつ取り直しました。下の表は、この3回分の結果です。
+最初は `--setting-sources ""` を付けずに実行していました。これだと私のグローバル CLAUDE.md（口調の設定など）が読み込まれ、AI の振る舞いに影響しているかもしれません。そこで、CLAUDE.md などを読まない設定で全ケースを2回ずつ取り直しました。後の「7種類の制約で違反させた結果」の表は、この3回分の結果です。
+
+なお、取り直しでも `--tools ""`（後述）は付け忘れていました。ただ、StructuredOutput 以外のツールが呼ばれたのは、違反させないふつうの課題の1回だけでした。
 
 ## 仕組み：出力はツールの呼び出しとして作られる
 
@@ -67,6 +68,7 @@ AI はこのエラーを読んで、値を直して呼び直します。ふつ�
 | required | count は書かないで | `root: must have required property 'count'` | 諦めた | 諦めた | 諦めた |
 | additionalProperties | owner という項目も入れて | `root: must NOT have additional properties ('owner' is not allowed)` | 通った | 通った | 通った |
 | minimum | count を -1 に | `/count: must be >= 0` | 諦めた | 通った | 諦めた |
+| enum | critical のまま。2回失敗したら文章で答えて | enum と同じ | 諦めた | 諦めた | 諦めた |
 
 どの制約も、違反はきちんと検出されました。エラー文には、どの項目がどう違反したかが JSON Pointer（`/title` など）付きで書かれています。
 
@@ -76,7 +78,7 @@ AI はこのエラーを読んで、値を直して呼び直します。ふつ�
 
 ## 罠：諦めると exit 0 のまま中身が無い
 
-結果を分けたのは、**指示とスキーマのどちらを優先するか** でした。「直してよい」と言われたり、言い換えで両立できたりすると、AI は直します。「3文字だけ」「書かないで」のように、指示どおりにするとスキーマに合わない場合、AI は指示を守ったまま1〜2回試し、「スキーマで拒否されたので出力できません」と文章で答えて終わりました。
+結果を分けたのは、**指示とスキーマのどちらを優先するか** でした。「直してよい」と言われていれば、AI は3回とも直しました。逆に、「3文字だけ」「書かないで」のように指示とスキーマがはっきりぶつかると、AI は指示を守ったまま1〜2回試し、「スキーマで拒否されたので出力できません」と文章で答えて終わりました。その間のケースは揺れます。title を短く言い換えれば済む maxLength でも、設定なしの2回は2回とも諦めました。
 
 このときの最終結果がこれです。
 
@@ -116,15 +118,19 @@ AI はこのエラーを読んで、値を直して呼び直します。ふつ�
 ```python
 import json, shutil, subprocess
 
+claude = shutil.which("claude")
+if claude is None:
+    raise RuntimeError("claude が PATH にありません")
 p = subprocess.run(
-    [shutil.which("claude"), "-p", "--output-format", "json",
+    [claude, "-p", "--output-format", "json",
      "--setting-sources", "", "--tools", "", "--json-schema", schema],
     input=prompt, capture_output=True, text=True, encoding="utf-8",
 )
-if p.returncode != 0 and not p.stdout.strip():
-    # 不正なスキーマやフラグなど、実行前のエラーは stderr に出る
-    raise RuntimeError(p.stderr.strip())
-out = json.loads(p.stdout)
+try:
+    out = json.loads(p.stdout)
+except json.JSONDecodeError:
+    # 不正なスキーマやフラグなど、実行前のエラーは stdout が空で、理由は stderr に出る
+    raise RuntimeError(f"exit {p.returncode}: {p.stderr.strip()[:200]}")
 data = out.get("structured_output")
 if out.get("subtype") != "success" or data is None:
     # 上限やフォールバックの理由は errors、AI が諦めた理由は result に入る
@@ -154,7 +160,7 @@ if out.get("subtype") != "success" or data is None:
 | オプション | 効果 |
 |---|---|
 | `--setting-sources ""` | `~/.claude` やプロジェクトの設定（CLAUDE.md・hooks など）を読み込まない |
-| `--bare` | CLAUDE.md の自動読み込み、hooks、プラグインの同期、auto memory などをまとめて止める最小モード |
+| `--bare` | CLAUDE.md の自動読み込み、hooks、プラグインの同期、auto memory などをまとめて止める最小モード。ただし認証は `ANTHROPIC_API_KEY` か `apiKeyHelper` だけで、**サブスクリプションのログイン（OAuth）は使えない** |
 | `--tools ""` | ツールを使わせない。出力を作るだけの用途なら、ファイル操作やコマンド実行は要らない |
 
 930件の記事でも、`--tools ""` と `--setting-sources ""` を付けていました。今回の実験では付け忘れていて、その結果が上の2つです。
@@ -166,10 +172,8 @@ if out.get("subtype") != "success" or data is None:
 - `structured_output` に入るのは検証を通った値だけ
 - **AI が諦めると、`structured_output` が無いまま exit 0・`success` で終わる**。試行回数の上限（既定5回、`MAX_STRUCTURED_OUTPUT_RETRIES`）まで粘って exit 1 になるのはまれだった
 - 呼び出し側は、終了コードではなく **`subtype` と `structured_output` の値** で成否を判定する
-- 守らせたい形はプロンプトではなくスキーマに書く。バッチでは `--setting-sources ""`（または `--bare`）と `--tools ""` を付ける
+- 守らせたい形はプロンプトではなくスキーマに書く。バッチでは `--setting-sources ""` と `--tools ""` を付ける（API キーで動かすなら `--bare` でもよい）
 
 「スキーマで検証される」と聞くと、成功すれば必ず形の合った出力が手に入る、と考えがちです。実際には「出力が無い成功」がありました。スキーマが守ってくれるのは中身の形までで、中身があるかどうかは呼び出し側で確かめる必要があります。
 
-## 更新履歴
-
-- 2026-10-16：CLAUDE.md を読み込まない条件で全ケースを取り直し、結果の表を3回分にしました。`format` が検証されないこと、`error_max_structured_output_retries` がモデルのフォールバックでも起きること、ドキュメントの該当箇所、`--tools ""` を付けないとファイル操作が実行されたことを追記し、判定用のコード例を直しました。
+※ 公開直後に、CLAUDE.md を読み込まない条件での取り直しと、`format`・フォールバック・判定用コードの記述を加えました。
