@@ -2,6 +2,7 @@
 title: "私の Claude Code 設定ツアー（settings.json・グローバル CLAUDE.md・hooks・statusline）"
 description: "毎日の個人開発で使っている Claude Code の設定を一通り紹介します。settings.json の permissions・hooks・モデル設定、グローバル CLAUDE.md に書いているルール、キー割り当てとプラグインまで、何をなぜそう設定しているかをまとめました。"
 pubDate: 2026-10-14
+updatedDate: 2026-10-17
 tags: ["Claude Code", "設定"]
 ---
 個人開発のほぼすべてを Claude Code と一緒に進めています。設定は、困ったことが起きるたびに少しずつ足してきたものです。
@@ -15,7 +16,7 @@ tags: ["Claude Code", "設定"]
 | ファイル | 書いていること |
 |---|---|
 | `~/.claude/settings.json` | 権限（allow / deny）、hooks、statusline、モデルと思考の量、自動 compact |
-| `~/.claude/CLAUDE.md` | 応答の言語、モデルの使い分け、Windows の落とし穴、セキュリティのルール |
+| `~/CLAUDE.md`（ホーム直下） | 応答の言語、モデルの使い分け、Windows の落とし穴、セキュリティのルール |
 | `~/.claude/keybindings.json` | Enter で改行・Ctrl+Enter で送信 |
 | `~/.claude/hooks/` | 危険な git 操作を止めるスクリプト |
 | `~/.claude/statusline.js` | 利用上限とコンテキストの使用率を表示 |
@@ -116,7 +117,7 @@ Claude Code が実行した `git clean` で `.env` が消えたのがきっか�
 
 ## グローバル CLAUDE.md
 
-`~/.claude/CLAUDE.md` は、すべてのプロジェクトで最初に読まれます。書いているのは次のような内容です。
+`~/CLAUDE.md` はホーム直下に置いています。Claude Code は作業ディレクトリの親フォルダにある `CLAUDE.md` も読むので、ホームの下にあるプロジェクトならどれでも最初に読まれます（ユーザー共通の置き場所として公式に案内されているのは `~/.claude/CLAUDE.md` です）。書いているのは次のような内容です。
 
 | 節 | 内容 |
 |---|---|

@@ -2,11 +2,12 @@
 title: "Windows で Claude Code を使うときのハマりどころ（Git Bash・ヒアドキュメント・CRLF・子プロセス）"
 description: "Windows で Claude Code を毎日使っていて実際に踏んだハマりどころを4つまとめました。Bash ツールの正体が Git Bash であること、ヒアドキュメントの崩れ、CRLF、止めたはずの子プロセスが残る問題と、それぞれ CLAUDE.md にどう書いて防いでいるかを紹介します。"
 pubDate: 2026-10-10
+updatedDate: 2026-10-17
 tags: ["Claude Code", "Windows", "Git Bash"]
 ---
 Windows で Claude Code を使っていると、Mac や Linux ではまず起きないところでつまずきます。
 
-ここでは、実際に踏んだものを4つまとめます。どれも一度踏んだあとで、グローバルの `CLAUDE.md`（`~/.claude/CLAUDE.md`）にルールとして書き、Claude に毎回守らせるようにしています。
+ここでは、実際に踏んだものを4つまとめます。どれも一度踏んだあとで、グローバルの `CLAUDE.md`（ホーム直下の `~/CLAUDE.md`）にルールとして書き、Claude に毎回守らせるようにしています。
 
 **環境**：Windows 10 / Git Bash / PowerShell 7 / Claude Code
 

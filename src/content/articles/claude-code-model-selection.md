@@ -2,11 +2,12 @@
 title: "Claude Code でタスクの難しさによってモデルを使い分ける（Haiku / Sonnet / Opus の判断基準）"
 description: "Claude Code で Haiku・Sonnet・Opus をどう使い分けているか、グローバル CLAUDE.md に書いている判断表をそのまま紹介します。Opus 5.5 が速くなりトークン消費も減ったことで、以前よりかなり Opus 寄りに変えました。"
 pubDate: 2026-10-10
+updatedDate: 2026-10-17
 tags: ["Claude Code", "Claude"]
 ---
 Claude Code では、Haiku・Sonnet・Opus のどのモデルで作業するかを選べます。
 
-わたしは、どのモデルを使うべきかの判断基準をグローバルの `CLAUDE.md`（`~/.claude/CLAUDE.md`）に書いています。最近その基準を、以前よりかなり **Opus 寄り** に変えました。その中身と理由をまとめます。
+わたしは、どのモデルを使うべきかの判断基準をグローバルの `CLAUDE.md`（ホーム直下の `~/CLAUDE.md`）に書いています。最近その基準を、以前よりかなり **Opus 寄り** に変えました。その中身と理由をまとめます。
 
 ## 判断表
 
