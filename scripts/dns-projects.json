@@ -68,5 +68,10 @@
     "subdomain": "gakumasu-playlist",
     "target": "gakumasu-playlist-maker.pages.dev",
     "proxied": true
+  },
+  {
+    "subdomain": "lux-meter",
+    "target": "m-masaki72.github.io",
+    "proxied": false
   }
 ]
