@@ -12,3 +12,4 @@
 
 ## 計測
 - [ ] Search Console でインデックス状況を確認（再申請前）
+- [ ] Search Console に lux-meter.morilab-garage.com を登録し、sitemap.xml を送信（2026-10-18 に github.io から移転。必要なら robots.txt も置く）
