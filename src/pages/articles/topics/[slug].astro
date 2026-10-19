@@ -1,0 +1,83 @@
+---
+import { SITE, ARTICLES, TOPICS } from "@/consts";
+import { WEBSITE_ID, breadcrumb } from "@/lib/jsonld";
+import { articlePath, articlesOfTopic, getArticles, topicPath } from "@/lib/articles";
+import { getProjects, projectPath } from "@/lib/projects";
+import Layout from "@/layouts/Layout.astro";
+import ArticleItem from "@/components/ArticleItem.astro";
+import Breadcrumb from "@/components/Breadcrumb.astro";
+import TopicLinks from "@/components/TopicLinks.astro";
+
+export async function getStaticPaths() {
+    const all = await getArticles();
+    const projects = await getProjects();
+    return TOPICS.map((topic) => ({
+        params: { slug: topic.slug },
+        props: {
+            topic,
+            articles: articlesOfTopic(topic, all),
+            project: topic.project ? projects.find((p) => p.id === topic.project) : undefined,
+        },
+    }));
+}
+
+const { topic, articles, project } = Astro.props;
+if (topic.project && !project) throw new Error(`TOPICS の project が見つかりません: ${topic.project}`);
+
+const title = `${topic.name}の記事`;
+const path = topicPath(topic.slug);
+const pageURL = new URL(path, SITE.URL).href;
+const crumbs = [
+    { name: "ホーム", path: "/" },
+    { name: ARTICLES.TITLE, path: "/articles/" },
+    { name: topic.name, path },
+];
+
+const jsonLd = [
+    {
+        "@type": "CollectionPage",
+        "@id": `${pageURL}#collection`,
+        name: title,
+        description: topic.description,
+        url: pageURL,
+        inLanguage: "ja",
+        isPartOf: { "@id": WEBSITE_ID },
+        mainEntity: {
+            "@type": "ItemList",
+            numberOfItems: articles.length,
+            itemListElement: articles.map((a, i) => ({
+                "@type": "ListItem",
+                position: i + 1,
+                url: new URL(articlePath(a.id), SITE.URL).href,
+                name: a.data.title,
+            })),
+        },
+    },
+    breadcrumb(crumbs),
+];
+---
+
+<Layout title={title} description={topic.description} jsonLd={jsonLd}>
+    <section class="container mx-auto px-6 pt-24 md:pt-28 pb-24">
+        <Breadcrumb items={crumbs} />
+        <p class="eyebrow mb-3">Topic</p>
+        <h1 class="heading text-4xl md:text-6xl">{title}</h1>
+        <p class="mt-5 max-w-2xl text-lg text-secondary leading-relaxed">{topic.description}</p>
+        {
+            project && (
+                <p class="mt-4 text-secondary">
+                    アプリの紹介は
+                    <a href={projectPath(project.id)} class="underline underline-offset-2 text-primary-ink">{project.data.title}</a>
+                    のページにあります。
+                </p>
+            )
+        }
+
+        <TopicLinks class="mt-10" current={topic.slug} />
+
+        <p class="mt-10 mb-6 text-sm text-secondary">{articles.length}件（新しい順）</p>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {articles.map((article) => <ArticleItem entry={article} headingLevel="h2" />)}
+        </div>
+    </section>
+</Layout>

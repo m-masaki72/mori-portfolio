@@ -1,0 +1,27 @@
+---
+import { TOPICS } from "@/consts";
+import { articlesOfTopic, getArticles, topicPath } from "@/lib/articles";
+
+type Props = { class?: string; current?: string };
+
+const { class: className, current } = Astro.props;
+const all = await getArticles();
+---
+
+<nav aria-label="テーマから探す" class={className}>
+    <ul class="flex flex-wrap gap-2">
+        {
+            TOPICS.map((topic) => (
+                <li>
+                    <a
+                        href={topicPath(topic.slug)}
+                        aria-current={topic.slug === current ? "page" : undefined}
+                        class="filter-btn inline-flex items-center gap-1"
+                    >
+                        {topic.name} <span class="opacity-60">{articlesOfTopic(topic, all).length}</span>
+                    </a>
+                </li>
+            ))
+        }
+    </ul>
+</nav>

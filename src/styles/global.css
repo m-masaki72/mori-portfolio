@@ -87,7 +87,8 @@ body {
 .filter-btn:hover {
   background: var(--color-muted);
 }
-.filter-btn[aria-pressed="true"] {
+.filter-btn[aria-pressed="true"],
+.filter-btn[aria-current="page"] {
   background: var(--color-foreground);
   border-color: var(--color-foreground);
   color: var(--color-background);

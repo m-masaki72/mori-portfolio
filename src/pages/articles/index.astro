@@ -1,6 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import ArticleItem from "@/components/ArticleItem.astro";
+import TopicLinks from "@/components/TopicLinks.astro";
 import { getArticles, tagsOf } from "@/lib/articles";
 import { ARTICLES } from "@/consts";
 import { breadcrumb } from "@/lib/jsonld";
@@ -22,7 +23,11 @@ const jsonLd = [
         <h1 class="heading text-4xl md:text-6xl">{ARTICLES.TITLE}</h1>
         <p class="mt-5 max-w-2xl text-lg text-secondary leading-relaxed">{ARTICLES.DESCRIPTION}</p>
 
-        <div class="mt-10">
+        <h2 class="heading mt-10 mb-4 text-xl md:text-2xl">テーマから探す</h2>
+        <TopicLinks />
+
+        <h2 class="heading mt-12 text-xl md:text-2xl">すべての記事</h2>
+        <div class="mt-4">
             <div id="filters" class="mb-8 hidden flex-wrap gap-2" role="group" aria-label="タグで絞り込み">
                 <button type="button" data-filter="all" aria-pressed="true" class="filter-btn">
                     すべて <span class="opacity-60">{articles.length}</span>

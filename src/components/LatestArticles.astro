@@ -1,6 +1,7 @@
 ---
 import ArticleItem from "./ArticleItem.astro";
 import Marquee from "./Marquee.astro";
+import TopicLinks from "./TopicLinks.astro";
 import { getArticles } from "@/lib/articles";
 
 const all = await getArticles();
@@ -15,6 +16,8 @@ const latest = all.slice(0, 4);
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     {latest.map((article) => <ArticleItem entry={article} />)}
                 </div>
+                <h3 class="heading mt-12 mb-4 text-xl text-center">テーマから探す</h3>
+                <TopicLinks class="[&_ul]:justify-center" />
                 <div class="mt-10 flex justify-center">
                     <a href="/articles/" class="btn-ghost">
                         記事をすべて見る（{all.length}件） <span aria-hidden="true">→</span>

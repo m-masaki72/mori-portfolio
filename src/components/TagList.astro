@@ -1,4 +1,6 @@
 ---
+import { topicOfTag, topicPath } from "@/lib/articles";
+
 type Props = { tags: string[]; class?: string };
 
 const { tags, class: className } = Astro.props;
@@ -7,7 +9,15 @@ const { tags, class: className } = Astro.props;
 {
     tags.length > 0 && (
         <ul class:list={["flex flex-wrap gap-1.5", className]}>
-            {tags.map((t) => <li class="chip">{t}</li>)}
+            {tags.map((t) => {
+                // テーマページがあるタグだけリンクにする（カード全体のリンクより手前に出す）
+                const topic = topicOfTag(t);
+                return (
+                    <li class="chip relative z-10 has-[a:hover]:bg-muted">
+                        {topic ? <a href={topicPath(topic.slug)} class="underline-offset-2 hover:underline">{t}</a> : t}
+                    </li>
+                );
+            })}
         </ul>
     )
 }

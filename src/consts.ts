@@ -25,6 +25,56 @@ export const PROJECTS = {
     "AI作曲支援ツール、VSTプラグイン、Windowsアプリ、ブラウザで動くWebツールやゲーム、開発者向けツールまで。MasakiMoriがこれまでに公開した制作物をカテゴリ別に紹介します。",
 };
 
+// 記事のテーマ別まとめページ（/articles/topics/<slug>/）。tags のどれかを持つ記事を集める。
+// 記事が少ないタグは薄いページになるので、まとめるほど数があるものだけ載せる
+export type Topic = { slug: string; name: string; tags: string[]; description: string; project?: string };
+
+export const TOPICS: Topic[] = [
+  {
+    slug: "claude-code",
+    name: "Claude Code",
+    tags: ["Claude Code"],
+    description:
+      "Claude Code を毎日の開発で使いながら、設定・hooks・auto mode・サブエージェント・claude -p などを実際に試し、ログを集計して分かったことをまとめています。Windows で使うときのハマりどころや、推測が外れた失敗の記録も含みます。",
+  },
+  {
+    slug: "chord-eureka",
+    name: "Chord Eureka",
+    tags: ["Chord Eureka"],
+    project: "chord-eureka",
+    description:
+      "AI コード進行アプリ Chord Eureka の開発記録です。2年間の運用で分かったこと、楽譜表示の自作、ボイシングのプリセット、生成結果の自動採点などを書いています。",
+  },
+  {
+    slug: "gcp",
+    name: "GCP",
+    tags: ["GCP", "Google Cloud"],
+    description:
+      "個人開発で使っている GCP（Cloud Run・Compute Engine・Artifact Registry・Cloud Storage）の記事です。請求の見直しシリーズでは、確約利用割引の二重購入、VM の通信料、GPU の予算キルスイッチなどを実際の金額つきで書いています。",
+  },
+  {
+    slug: "cloudflare",
+    name: "Cloudflare",
+    tags: ["Cloudflare", "Cloudflare Workers"],
+    description:
+      "Cloudflare（Pages Functions・Workers・DNS・キャッシュ）を個人開発で使った記録です。動的 OGP 画像の生成、GCS 画像のエッジ配信、通信料の削減などを扱っています。",
+  },
+  {
+    slug: "windows",
+    name: "Windows",
+    tags: ["Windows"],
+    description:
+      "Windows で開発するときのハマりどころと対処の記録です。Git Bash・PowerShell・CRLF の問題、スリープの制御、Microsoft Store へのアプリ公開などを書いています。",
+  },
+  {
+    slug: "indie-dev",
+    name: "個人開発",
+    tags: ["個人開発"],
+    description:
+      "個人で作って公開しているアプリ・サービスの開発と運用の記録です。アプリの長期運用、クラウドの費用、CI の無料枠、AI を使った開発の進め方などを、実際の数字と失敗込みで書いています。",
+  },
+];
+
 export const ARTICLES = {
   TITLE: "記事一覧",
   DESCRIPTION:

@@ -1,32 +1,50 @@
 ---
-import { SITE, ARTICLES } from "@/consts";
+import { SITE, ARTICLES, TOPICS } from "@/consts";
 import { PERSON_ID, WEBSITE_ID, breadcrumb } from "@/lib/jsonld";
-import { articlePath, formatDate, getArticles, isoDate, originalSiteName } from "@/lib/articles";
+import {
+    articlePath,
+    articlesOfTopic,
+    formatDate,
+    getArticles,
+    isoDate,
+    originalSiteName,
+    relatedArticles,
+    topicPath,
+} from "@/lib/articles";
 import Layout from "@/layouts/Layout.astro";
 import ArticleItem from "@/components/ArticleItem.astro";
 import ArticleShare from "@/components/ArticleShare.astro";
 import Breadcrumb from "@/components/Breadcrumb.astro";
 import PrevNextNav from "@/components/PrevNextNav.astro";
 import TagList from "@/components/TagList.astro";
+import TopicLinks from "@/components/TopicLinks.astro";
 import { render } from "astro:content";
 
 export async function getStaticPaths() {
+    // この件数以下のテーマは、記事ページに全件を一覧する（シリーズとして読めるように）。
+    // getStaticPaths は単独で実行されるので、定数もこの中に置く
+    const SERIES_MAX = 8;
     const all = await getArticles();
-    return all.map((article, i) => ({
-        params: { id: article.id },
-        props: {
-            article,
-            // 新しい順に並んでいるので、1つ前が「次（新しい）記事」
-            newer: all[i - 1],
-            older: all[i + 1],
-            related: all
-                .filter((a) => a.id !== article.id && a.data.tags.some((t) => article.data.tags.includes(t)))
-                .slice(0, 2),
-        },
-    }));
+    return all.map((article, i) => {
+        const series = TOPICS.map((topic) => ({ topic, articles: articlesOfTopic(topic, all) })).filter(
+            (s) => s.articles.length <= SERIES_MAX && s.articles.some((a) => a.id === article.id),
+        );
+        const inSeries = new Set(series.flatMap((s) => s.articles.map((a) => a.id)));
+        return {
+            params: { id: article.id },
+            props: {
+                article,
+                // 新しい順に並んでいるので、1つ前が「次（新しい）記事」
+                newer: all[i - 1],
+                older: all[i + 1],
+                series,
+                related: relatedArticles(article, all, 4, inSeries),
+            },
+        };
+    });
 }
 
-const { article, newer, older, related } = Astro.props;
+const { article, newer, older, series, related } = Astro.props;
 const { title, description, pubDate, updatedDate, tags, originalUrl, noAds } = article.data;
 
 const { Content } = await render(article);
@@ -89,6 +107,27 @@ const jsonLd = [
             <ArticleShare title={title} url={pageURL} />
         </article>
 
+        {
+            series.map(({ topic, articles }) => (
+                <section class="mx-auto max-w-3xl mt-16 rounded-3xl border border-black/10 bg-background p-6 md:p-8">
+                    <h2 class="heading text-xl md:text-2xl mb-4">
+                        「<a href={topicPath(topic.slug)} class="underline underline-offset-4">{topic.name}</a>」の記事（{articles.length}件）
+                    </h2>
+                    <ol class="space-y-2 leading-relaxed">
+                        {articles.map((a) => (
+                            <li>
+                                {a.id === article.id ? (
+                                    <span aria-current="page" class="font-bold">▶ {a.data.title}</span>
+                                ) : (
+                                    <a href={articlePath(a.id)} class="text-primary-ink underline underline-offset-2">{a.data.title}</a>
+                                )}
+                            </li>
+                        ))}
+                    </ol>
+                </section>
+            ))
+        }
+
         <PrevNextNav
             label="前後の記事"
             noun="記事"
@@ -101,11 +140,16 @@ const jsonLd = [
             related.length > 0 && (
                 <section class="mx-auto max-w-3xl mt-16">
                     <h2 class="heading text-2xl md:text-3xl mb-6">関連する記事</h2>
-                    <div class="grid grid-cols-1 gap-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         {related.map((a) => <ArticleItem entry={a} />)}
                     </div>
                 </section>
             )
         }
+
+        <section class="mx-auto max-w-3xl mt-16">
+            <h2 class="heading text-2xl md:text-3xl mb-6">テーマから探す</h2>
+            <TopicLinks />
+        </section>
     </div>
 </Layout>

@@ -24,6 +24,7 @@ Astro portfolio site. No framework components (React/Vue/etc.) — pure `.astro`
 **Content collections** (`src/content.config.ts`):
 - `projects` — `src/content/projects/*.md`. Required: `title`, `description`, `image { url, alt }`, `category` (enum `CATEGORIES`), `platform`. Optional: `tech[]`, `order` (表示順, 小さいほど先頭), `liveUrl`, `githubUrl`, `faq[] { q, a }`（詳細ページ下部にアコーディオン表示＋FAQPage JSON-LD。本文に「よくある質問」見出しは書かない）. 一覧取得は `src/lib/projects.ts` の `getProjects()`（order順）を使う。
 - `articles` — `src/content/articles/*.md`（`/articles/<id>`）。Required: `title`, `description`, `pubDate`. Optional: `updatedDate`, `tags[]`, `originalUrl`（はてなブログ・Zennからの移設元。あると詳細ページに移設の注記を出す。表示名は `src/lib/articles.ts` の `ORIGINAL_SITES` でホストから引き、未登録ホストはビルドエラー）、`noAds`（true でそのページだけ AdSense スクリプトを出さない。非商用ライセンスのモデル・素材（商用NGの MMD モデルの描画など）を載せる記事に付ける）。記事内画像は `public/articles/<id>/`。一覧取得は `src/lib/articles.ts` の `getArticles()`（新しい順）。
+- テーマページ `/articles/topics/<slug>/` は `src/consts.ts` の `TOPICS`（slug・表示名・集めるタグ・説明文）から生成。テーマに属するタグのチップはリンクになり、8件以下のテーマは記事ページにシリーズ一覧を出す。記事が少ないタグはテーマにしない（薄いページになるため）。制作物ページの「〜についての記事」は、記事本文の `/projects/<id>/` へのリンクから自動で拾う。
 
 **Global constants** (`src/consts.ts`):
 - `SITE` — `URL`, `TITLE`, `DESCRIPTION`, `EMAIL`
