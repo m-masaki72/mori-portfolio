@@ -10,6 +10,16 @@
 - [ ] gcp-vm-egress-404-gzip に Standard ティアの結果を追記（2026-10-19 以降、GCP コンソールの SKU 別レポートで Carrier Peering の課金が消えたか確認）
 - [ ] Moeter の掲載画像（「AI性癖診断」の文字入り）を差し替えるか判断
 
+## インデックス対策（10-20 フェーズ1・GitHub 側のリンク整備は完了）
+- [ ] 新規記事の公開は週2〜3本までに抑える
+- [ ] 重点記事10本を決め、Search Console の URL 検査で1日2〜3本ずつ登録リクエスト
+- [ ] Claude Code の設定系記事をまとめる記事を作り、各記事へリンク
+- [ ] 移設した古い記事（Jenkins・Rider・Unity）を今の内容に更新して updatedDate を付ける
+- [ ] Zenn に要約＋本編リンクの記事を通常公開で数本出す
+- [ ] はてなブログにテーマページへのリンク記事を1本置く
+- [ ] GitHub プロフィールのピン留めを設定（SANA_8BIT_VST を先頭に）
+- [ ] Search Console で sitemap を再送信し、テーマページ（claude-code・gcp）を登録リクエスト
+
 ## 計測
 - [ ] Search Console でインデックス状況を確認（再申請前）
 - [ ] Search Console に lux-meter.morilab-garage.com を登録し、sitemap.xml を送信（2026-10-18 に github.io から移転。必要なら robots.txt も置く）
