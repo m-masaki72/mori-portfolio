@@ -73,5 +73,10 @@
     "subdomain": "lux-meter",
     "target": "m-masaki72.github.io",
     "proxied": false
+  },
+  {
+    "subdomain": "spi3",
+    "target": "m-masaki72.github.io",
+    "proxied": false
   }
 ]
