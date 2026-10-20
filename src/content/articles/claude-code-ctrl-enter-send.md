@@ -58,6 +58,8 @@ Enter を改行にします。
 - WSL の bash など、ほかのシェルでも Ctrl+Enter の動きが変わります（Ctrl+X の意味がシェルごとに違うため）。
 - Claude Code で補完候補が出ているときに Ctrl+Enter を押すと、候補を確定せずにそのまま送信します。
 
+ほかの設定も含めた全体像は、[私の Claude Code 設定ツアー](/articles/claude-code-settings-tour/) にまとめています。
+
 ## 参考：中身の挙動
 
 ### なぜ両方の設定が必要か

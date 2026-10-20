@@ -125,6 +125,8 @@ README も、`CLAUDE.md` と同じ API の説明を持っていました。こ�
 - 完了したタスクの記録は git 履歴に任せて、`PROGRESS.md` から消す
 - 整理を頼むときは、ファイルごとに「書くこと」の基準を渡す
 
+ほかの設定も含めた全体像は、[私の Claude Code 設定ツアー](/articles/claude-code-settings-tour/) にまとめています。
+
 ## 参考文献
 
 - [Manage Claude's memory - Claude Code Docs](https://code.claude.com/docs/en/memory)

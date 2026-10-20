@@ -66,3 +66,5 @@ Claude Code では、Haiku・Sonnet・Opus のどのモデルで作業するか�
 - 指定したモデルが大きくズレているときだけ、Claude に一言言わせる。確認待ちはさせない
 
 モデルの性能や消費量は新しいモデルが出るたびに変わるので、この表もそのたびに見直すつもりです。
+
+ほかの設定も含めた全体像は、[私の Claude Code 設定ツアー](/articles/claude-code-settings-tour/) にまとめています。

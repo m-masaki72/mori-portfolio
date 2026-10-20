@@ -97,3 +97,5 @@ esac
 - Claude Code の `PreToolUse` フックで、Bash ツールのコマンドを実行前にチェックできる
 - `git reset --hard`・`git clean`・force push を止め、`--force-with-lease` は通す
 - 文字列マッチなのですり抜けはあるが、うっかり事故を防ぐ柵としては十分役に立っている
+
+ほかの設定も含めた全体像は、[私の Claude Code 設定ツアー](/articles/claude-code-settings-tour/) にまとめています。

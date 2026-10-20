@@ -1,59 +1,137 @@
 ---
 title: "Jenkinsの「OutOfMemoryError : Java heap space」の対応方法・調査まとめ"
-description: "Jenkins で「OutOfMemoryError: Java heap space」が出たときの対応。Java のヒープサイズ指定と、プラグイン（Post Build Task）が原因のケースをまとめました。"
+description: "Jenkins で「OutOfMemoryError: Java heap space」が出たときの対応。まずどのプロセスのメモリが足りないのかを切り分け、コントローラー・エージェントのヒープ指定（systemd・Docker・Windows）、ビルドツール側の設定、プラグイン（Post Build Task）が原因のケースをまとめました。"
 pubDate: 2023-11-10
+updatedDate: 2026-10-21
 tags: ["Jenkins", "CI"]
 originalUrl: "https://mementomori7272.hatenablog.com/entry/2023/11/10/155330"
 ---
-## 概要
+Jenkins で `OutOfMemoryError: Java heap space` に遭い、対応方法を調べました。同じエラーでも、**どの Java プロセスのメモリが足りないか** によって直す場所が違います。この記事では、切り分け方と、それぞれの直し方をまとめます。
 
-- JavaのHeapサイズエラーに遭い、いくつか調べて対応方法を調べてみた
-- 発生箇所やケースによって対応すべき箇所が違うので、いくつか参考文献含めてまとめていく
+2026年10月に、今の Jenkins に合わせて内容を見直しました（systemd での設定方法、ヒープを割合で指定する推奨値、ビルドツール側の設定を追加）。
 
-## 実行中のOutOfMemory
+## まず、どのプロセスが落ちたのかを見る
 
-### 対応方法
+Jenkins まわりで Java が動いている場所は、主に3つあります。
 
-**対応方法: Node・MasterのJavaのメモリ量を増やしてみる。**
+| どこで落ちたか | ログの出どころ | 直す場所 |
+|---|---|---|
+| コントローラー（旧称 Master） | Jenkins 本体のログ。画面が重くなる・応答しなくなる | コントローラーの `JAVA_OPTS` |
+| エージェント（旧称 Node） | エージェントのログ。接続が切れる | エージェント起動時の引数 |
+| ビルドの中の Java（Maven・Gradle など） | ビルドのコンソール出力 | ビルドツールの設定 |
 
-実行中突然OutOfMemoryが発生する場合は実行メモリが足りないケースの可能性大です。
+ビルドのコンソールに `OutOfMemoryError` が出ていても、Jenkins 本体ではなく、ビルドで動かした Maven や Gradle のメモリが足りないことがよくあります。この場合は Jenkins のヒープを増やしても直りません。
 
-公式の対応方法Wikiも一読するのをおすすめしておきます。 
+## コントローラー・エージェントのメモリを増やす
 
-[Jenkins : Builds failing with OutOfMemoryErrors](https://wiki.jenkins.io/JENKINS/Builds-failing-with-OutOfMemoryErrors.html)
+実行中に突然落ちる場合は、Jenkins を動かしている Java のメモリが足りない可能性が高いです。
 
-### 対応詳細
+### 指定のしかた
 
-実際に対応するとして、どこを増やすのかについて詳細なメモを残しておきます。NodeやMasterでJavaで実行する際のオプションにメモリオプションを渡しておきます。 具体的には以下のようなオプションを指定するのが良いです。
-
-```sh
-# Java実行時の引数で最小メモリxmsと最大メモリxmxをMBで指定
-java -Xms256m -Xmx256m <Jenkinsの実行パス>
-
-# Java実行時の引数で最小メモリxmsと最大メモリxmxをGBでも指定できる
-java -Xms2g -Xmx2g <Jenkinsの実行パス>
-```
-
-また上記のオプションでは固定メモリになりますが、Docker等で実行している場合はマシンの割合で指定するのが良いでしょう。
+固定の値で指定するなら、最小 `-Xms` と最大 `-Xmx` を渡します。
 
 ```sh
-# Java実行時の引数で最小メモリと最大メモリをパーセンテージで指定する
-java  -XX:InitialRAMPercentage=50 -XX:MaxRAMPercentage=75 <Jenkinsの実行パス>
+# MB で指定
+java -Xms256m -Xmx256m -jar jenkins.war
+
+# GB でも指定できる
+java -Xms2g -Xmx2g -jar jenkins.war
 ```
 
-場合によってはjenkins.xmlやサービスの実行ファイルで指定する場合もあるので各自の環境でそこは読み替えること。
+Docker などのコンテナで動かす場合は、マシンのメモリに対する割合で指定するほうが扱いやすいです。Jenkins の公式ブログ（2026年2月）では、Java 17 以降なら次のような値をすすめています。
 
-## プラグイン実行時のOutOfMemory
+```sh
+# コントローラー：ヒープは最大60%まで。残りは OS やネイティブのメモリに回す
+-XX:+UseG1GC -XX:MaxRAMPercentage=60.0 -XX:InitialRAMPercentage=20.0
 
-### 対応方法
+# エージェント：もう少し多めでもよい
+-XX:+UseG1GC -XX:MaxRAMPercentage=75.0 -XX:InitialRAMPercentage=50.0
+```
 
-**対応方法: プラグインのエラーを怪しんでみる、違うプラグインを使う**
+ヒープをマシンのメモリいっぱいまで増やすと、今度は OS 側が足りなくなって不安定になります。ほかのアプリも同じマシンで動いているなら、そのぶんも差し引いて考えます。
 
-「Post Build Task」といった外部プラグイン処理が要因でメモリエラーが発生することもあるようです。私の環境では大きすぎるログ・ファイルとPost Build Taskプラグインという条件でメモリエラーが確認できました。（Post Build Taskでは内部でログの文字列比較をしているため、その処理部分が原因のようです）
+### 環境ごとの設定場所
 
-メモリエラーが発生した場合、そのログが出ている箇所を確認し、プラグインが要因かもしれないと目星をつけることが可能かもしれません。ただしOutOfMemoryが発生している場合は突然処理が落ちるため、ログがある場合のない場合がありました。何度か実行してログを取ってみるのが良いでしょう。
+**Linux（systemd でサービスとして動かしている場合）**
+
+ユニットファイルを直接書き換えず、`systemctl edit jenkins` で上書き用の設定を作ります。
+
+```sh
+sudo systemctl edit jenkins
+```
+
+開いたエディタに次のように書きます。
+
+```ini
+[Service]
+Environment="JAVA_OPTS=-Xms2g -Xmx2g"
+```
+
+保存したら再起動します。
+
+```sh
+sudo systemctl restart jenkins
+```
+
+古いパッケージでは `/etc/default/jenkins` の `JAVA_ARGS` で指定していましたが、今の systemd の構成ではこちらは読まれません。
+
+**Docker（公式イメージ）**
+
+環境変数 `JAVA_OPTS` で渡します。
+
+```sh
+docker run -e JAVA_OPTS="-XX:MaxRAMPercentage=60.0" -p 8080:8080 jenkins/jenkins:lts
+```
+
+**Windows（サービスとして動かしている場合）**
+
+インストール先の `jenkins.xml` にある `<arguments>` に、`-Xmx` などを足して、サービスを再起動します。
+
+**エージェント**
+
+エージェントを起動するコマンドの `java` の直後に `-Xmx` などを付けます。SSH で起動するエージェントなら、ノードの設定の「JVM オプション」に書けます。
+
+### 効いているか確かめる
+
+「Jenkins の管理 → システム情報」で、起動時の引数を確認できます。Linux なら `systemctl cat jenkins` で、上書きした設定が入っているかも見られます。
+
+原因を調べたいときは、落ちたときにヒープの中身を残すオプションも付けておくと便利です。
+
+```sh
+-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/var/lib/jenkins/heapdump
+```
+
+## ビルドツール側のメモリを増やす
+
+ビルドの中で動く Java は、Jenkins とは別のプロセスです。ビルドツールの設定でメモリを指定します。
+
+- **Maven**：環境変数 `MAVEN_OPTS="-Xmx2g"`
+- **Gradle**：`gradle.properties` の `org.gradle.jvmargs=-Xmx2g`
+
+パイプラインなら、`environment { MAVEN_OPTS = '-Xmx2g' }` のようにジョブごとに渡せます。
+
+## プラグインが原因のケース
+
+**対応方法：プラグインを疑ってみる。違うプラグインに置き換える**
+
+外部のプラグインの処理が原因でメモリエラーになることもあります。私の環境では、**とても大きなログ** と **Post Build Task プラグイン** が重なったときにメモリエラーが起きました。Post Build Task はビルドのログを文字列として読み込んで比較しているので、その処理でメモリを使い切っていたようです。
+
+メモリエラーが出たら、ログが出ている場所を見て、プラグインが原因かどうか目星をつけます。ただし `OutOfMemoryError` は処理が突然落ちるので、ログが残る場合と残らない場合がありました。何度か実行してログを取ってみるのがよいです。
+
+ログの量を減らす（ビルドの出力を絞る・大きな出力はファイルに書いて成果物にする）だけで直ることもあります。Post Build Task でやっていた処理は、パイプラインの `post { }` ブロックでも書けます。
+
+## まとめ
+
+- まず、落ちたのがコントローラー・エージェント・ビルドツールのどれかを見る
+- コントローラーとエージェントは `JAVA_OPTS` などでヒープを指定する。コンテナでは割合（`MaxRAMPercentage`）で指定し、コントローラーは60%程度までにとどめる
+- systemd の環境では、ユニットファイルを直接書き換えず `systemctl edit jenkins` を使う
+- Maven・Gradle のメモリ不足は、それぞれの設定で直す
+- 大きなログとログを読むプラグインの組み合わせでも起きる
 
 ## 参考リンク
 
+- [Tuning Jenkins Java Settings For Responsiveness and Stability with Large Instances - Jenkins Blog](https://www.jenkins.io/blog/2026/02/06/tuning-java-settings-for-higher-performance/)
+- [Managing systemd services - Jenkins](https://www.jenkins.io/doc/book/system-administration/systemd-services/)
+- [Post build task - Jenkins Plugins](https://plugins.jenkins.io/postbuild-task/)
 - [Jenkins PostBuildTaskプラグインでエラーが発生する時の対処法 | hexacosa.net](https://www.hexacosa.net/blog/detail/152/)
 - [Java VMのヒープサイズをパーセンテージで指定する（-XX:InitialRAMPercentage、-XX:MaxRAMPercentage） - CLOVER🍀](https://kazuhira-r.hatenablog.com/entry/2023/07/09/212521)

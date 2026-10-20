@@ -127,6 +127,8 @@ hooks でも同じような計測結果があります（[netnerds.net](https://
 
 外部コマンドを毎回起動して結果を待つ仕組み（statusLine や hooks など）では、ロジックが正しいことより先に、**起動にかかる時間が更新の間隔より短いこと** が前提になります。
 
+ほかの設定も含めた全体像は、[私の Claude Code 設定ツアー](/articles/claude-code-settings-tour/) にまとめています。
+
 ## 参考文献
 
 - [Customize your status line - Claude Code Docs](https://code.claude.com/docs/en/statusline)

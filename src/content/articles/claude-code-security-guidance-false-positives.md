@@ -102,6 +102,8 @@ Claude Code の会話ログ（`~/.claude/projects/<プロジェクト>/<セッ�
 - 2.0.14 で `.exec(` などは直ったが、Playwright の `$eval` にはまだ反応する
 - 規則は個別に止められないので、「誤反応ならコードを曲げない」と Claude に伝えておく
 
+ほかの設定も含めた全体像は、[私の Claude Code 設定ツアー](/articles/claude-code-settings-tour/) にまとめています。
+
 ## 参考文献
 
 - [anthropics/claude-plugins-official（security-guidance を含む公式プラグイン）](https://github.com/anthropics/claude-plugins-official)

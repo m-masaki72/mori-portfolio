@@ -91,6 +91,8 @@ export ANTHROPIC_DEFAULT_OPUS_MODEL='us.anthropic.claude-opus-4-8'
 - **Default への逃げ道も塞いで完全強制** → `model` + `availableModels` + `env` の3点セット。
 - 共通の鉄則：**エイリアス（`opus`）ではなくフルモデル名（`claude-opus-4-6`）を使う**。
 
+ほかの設定も含めた全体像は、[私の Claude Code 設定ツアー](/articles/claude-code-settings-tour/) にまとめています。
+
 ---
 
 *情報は執筆時点のもの。バージョン番号や仕様は変わるため、最新は[公式ドキュメント](https://code.claude.com/docs/en/model-config)を参照。*

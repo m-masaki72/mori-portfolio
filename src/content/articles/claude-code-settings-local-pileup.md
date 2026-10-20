@@ -86,6 +86,8 @@ Claude Code には、会話ログを見て読み取り専用のコマンドの�
 - 接続先の IP や鍵のパスが入ったルールも残っていた
 - 一回限りのコマンドには「今回だけ許可」を使い、繰り返すものだけを汎用の形で足す
 
+ほかの設定も含めた全体像は、[私の Claude Code 設定ツアー](/articles/claude-code-settings-tour/) にまとめています。
+
 ## 参考文献
 
 - [Configure permissions - Claude Code Docs](https://code.claude.com/docs/en/permissions)

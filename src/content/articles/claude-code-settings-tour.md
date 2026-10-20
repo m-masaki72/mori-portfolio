@@ -2,7 +2,7 @@
 title: "私の Claude Code 設定ツアー（settings.json・グローバル CLAUDE.md・hooks・statusline）"
 description: "毎日の個人開発で使っている Claude Code の設定を一通り紹介します。settings.json の permissions・hooks・モデル設定、グローバル CLAUDE.md に書いているルール、キー割り当てとプラグインまで、何をなぜそう設定しているかをまとめました。"
 pubDate: 2026-10-14
-updatedDate: 2026-10-17
+updatedDate: 2026-10-21
 tags: ["Claude Code", "設定"]
 ---
 個人開発のほぼすべてを Claude Code と一緒に進めています。設定は、困ったことが起きるたびに少しずつ足してきたものです。
@@ -22,7 +22,9 @@ tags: ["Claude Code", "設定"]
 | `~/.claude/statusline.js` | 利用上限とコンテキストの使用率を表示 |
 | 各リポジトリの `CLAUDE.md` | そのプロジェクトの構成・コマンド・決まりごと |
 
-グローバルには **どのプロジェクトでも同じこと** だけを書き、プロジェクト固有の話は各リポジトリの CLAUDE.md に分けています。
+グローバルには **どのプロジェクトでも同じこと** だけを書き、プロジェクト固有の話は各リポジトリの CLAUDE.md に分けています。リポジトリ側の CLAUDE.md・README・PROGRESS.md の分け方は [Claude Code 向けのドキュメントは3つに分ける](/articles/claude-code-docs-split/) に書きました。
+
+Claude Code 本体はネイティブ版で入れています。npm 版から移ったときの話は [npm 版の Claude Code は更新が遅いと思って移行したら、原因は自分の設定だった](/articles/claude-code-npm-to-native/) にあります。
 
 ## settings.json
 
@@ -47,6 +49,11 @@ tags: ["Claude Code", "設定"]
 ポイントは **gcloud だけは読み取り系のサブコマンドに限っている** ことです。`list`・`describe`・`logging read` は許可していますが、デプロイや削除は毎回確認が入ります。クラウドの変更は取り返しがつかないので、ここは細かく分けています。
 
 拒否リスト（`deny`）には、`.env` と `credentials` フォルダを読む操作を並べています。ただ、Bash コマンドのパターン指定はすり抜けを防ぎきれません。詳しくは [Claude Code に .env を読ませない deny 設定と、その限界](/articles/claude-code-deny-env/) に書きました。
+
+auto mode が実際に何を止めたのかは1か月分を数えました。「今後は確認しない」で増えていく許可ルールの整理も別の記事にしています。
+
+- [Claude Code の auto mode に止められた操作を1か月分集計した](/articles/claude-code-auto-mode-denials/)
+- [Claude Code の settings.local.json に許可ルールが879件溜まっていた](/articles/claude-code-settings-local-pileup/)
 
 ### hooks：危険な git 操作を止める
 
@@ -86,7 +93,7 @@ Claude Code が実行した `git clean` で `.env` が消えたのがきっか�
 "alwaysThinkingEnabled": false
 ```
 
-普段は Opus を使い、思考の量（effort）は high にしています。軽い作業では、会話の中でモデルを切り替えます。使い分けの基準は CLAUDE.md に表で書いています（後述）。
+普段は Opus を使い、思考の量（effort）は high にしています。軽い作業では、会話の中でモデルを切り替えます。使い分けの基準は CLAUDE.md に表で書いています（後述）。特定のバージョンに固定したいときの設定は [Claude Code でモデルバージョンを固定する方法まとめ](/articles/claude-code-pin-model-version/) にあります。
 
 ### 自動 compact を少し遅らせる
 
@@ -95,7 +102,7 @@ Claude Code が実行した `git clean` で `.env` が消えたのがきっか�
 "autoCompactEnabled": true
 ```
 
-コンテキストが埋まると、会話が自動で要約（compact）されます。要約のたびに細かい経緯は落ちるので、**85% まで使ってから要約する** ようにしています。何を残してほしいかは、CLAUDE.md の「Compact」の節に書いています。
+コンテキストが埋まると、会話が自動で要約（compact）されます。要約のたびに細かい経緯は落ちるので、**85% まで使ってから要約する** ようにしています。何を残してほしいかは、CLAUDE.md の「Compact」の節に書いています。compact で何が残って何が落ちるかは [Claude Code の会話は30日で消え、compact で要約される](/articles/claude-code-memory-compact/) で確かめました。
 
 ### 見た目
 
@@ -111,7 +118,9 @@ Claude Code が実行した `git clean` で `.env` が消えたのがきっか�
 公式のプラグインのうち、有効にしているのは2つだけです。
 
 - **pr-review-toolkit**：コードレビュー用のエージェントがまとまっている。実装のあとに見てもらう
-- **security-guidance**：危なそうなコードを書いたときに注意を出す
+- **security-guidance**：危なそうなコードを書いたときに注意を出す。ただし誤反応も多い → [security-guidance フックは何に反応したか](/articles/claude-code-security-guidance-false-positives/)
+
+レビューの強度（effort）は省略すると前回の値が使われます → [/code-review は、強度を省略すると前回の値を使う](/articles/claude-code-code-review-effort/)
 
 ほかにも入れてはいますが、普段は切っています。有効にするほど、毎回の会話に読み込まれる説明が増えるからです。
 

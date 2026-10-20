@@ -93,3 +93,5 @@ powershell -NoProfile -Command "Get-CimInstance Win32_Process -Filter \"name='py
 - バックグラウンドタスクを止めたら、子プロセスが残っていないか確認する
 
 どれも一度踏めば対策は簡単です。ただ、Claude は会話をまたぐと忘れてしまうので、グローバルの `CLAUDE.md` に書いておくのが確実でした。
+
+ほかの設定も含めた全体像は、[私の Claude Code 設定ツアー](/articles/claude-code-settings-tour/) にまとめています。

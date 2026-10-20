@@ -79,3 +79,5 @@ deny だけに頼らず、いくつか重ねています。
 - `permissions.deny` で、Read ツールと、中身を表示する Bash コマンドから `.env` を守れる
 - ただし Bash の deny は文字列のパターン判定なので、別のコマンドやリダイレクトですり抜けられる
 - deny は柵として使い、CLAUDE.md の指示や、漏れたときの備えと重ねておく
+
+ほかの設定も含めた全体像は、[私の Claude Code 設定ツアー](/articles/claude-code-settings-tour/) にまとめています。
