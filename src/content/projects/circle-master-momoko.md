@@ -2,7 +2,7 @@
 title: "Circle M@ster Momoko"
 description: "描いた円の真円度をスコアリングするWebゲーム。キャラクターがリアクションしてくれる。"
 liveUrl: https://momoko.morilab-garage.com/
-githubUrl: https://github.com/m-masaki72/Circle-Master-Momoko
+githubUrl: https://github.com/m-masaki72/circle-master-momoko
 image: {
 url: "/screenshots/circle-master-momoko.png",
 alt: "Circle M@ster Momoko"

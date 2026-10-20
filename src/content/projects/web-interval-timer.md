@@ -2,7 +2,7 @@
 title: "Web Interval Timer"
 description: "インストール不要のブラウザ完結インターバルタイマー。ラップ・サイクル数をカスタマイズ可能なPWA。"
 liveUrl: https://interval-timer.morilab-garage.com/
-githubUrl: https://github.com/m-masaki72/WebIntervalTimer
+githubUrl: https://github.com/m-masaki72/web-interval-timer
 image: {
 url: "/screenshots/web-interval-timer.png",
 alt: "Web Interval Timer"

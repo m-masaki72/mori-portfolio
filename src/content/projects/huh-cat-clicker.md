@@ -2,7 +2,7 @@
 title: "Huh Cat Clicker"
 description: "クリックするたびに「Huh?」と反応するネコのWebクリッカーゲーム。スコアはローカル保存。"
 liveUrl: https://huh-cat.morilab-garage.com/
-githubUrl: https://github.com/m-masaki72/HuhCatClicker
+githubUrl: https://github.com/m-masaki72/huh-cat-clicker
 image: {
 url: "/screenshots/huh-cat-clicker.jpg",
 alt: "Huh Cat Clicker"

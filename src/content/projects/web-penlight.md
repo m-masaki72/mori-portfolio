@@ -2,7 +2,7 @@
 title: "Web Penlight"
 description: "スマホをサイリウムに変えるWebアプリ。色・テキストをカスタマイズしてライブを盛り上げる。"
 liveUrl: https://penlight.morilab-garage.com/
-githubUrl: https://github.com/m-masaki72/WebPenlight
+githubUrl: https://github.com/m-masaki72/web-penlight
 image: {
 url: "/screenshots/web-penlight.png",
 alt: "Web Penlight"

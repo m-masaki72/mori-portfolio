@@ -2,7 +2,7 @@
 title: "うちの子ID写真メーカー"
 description: "ペットやキャラクターの証明写真風画像を作れるWebアプリ。背景色・位置を調整してダウンロード。"
 liveUrl: https://uchinoko-id.morilab-garage.com/
-githubUrl: https://github.com/m-masaki72/IdPhotoGenerator
+githubUrl: https://github.com/m-masaki72/id-photo-generator
 image: {
 url: "/screenshots/uchinoko-id.png",
 alt: "うちの子ID写真メーカー"
