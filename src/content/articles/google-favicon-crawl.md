@@ -66,7 +66,7 @@ add_action('wp_head', 'add_custom_favicon_link');
 Cloudflareのキャッシュをカスタムパージする。  
 `ブログURL/favicon.ico` だけを対象にキャッシュパージを実施。
 
-![Cloudflareのキャッシュをパージ](/articles/google-favicon-crawl/1.png)
+![Cloudflareのキャッシュをパージ](/articles/google-favicon-crawl/1.webp)
 
 *Cloudflareのキャッシュをパージ*
 
@@ -76,7 +76,7 @@ Favicon確認サイトにアクセスし、ファビコンが正しく設定さ�
 
 [Favicon Checker | Toolsaday](https://toolsaday.com/seo/favicon-checker)
 
-![ファビコンを確認するサイト](/articles/google-favicon-crawl/2.png)
+![ファビコンを確認するサイト](/articles/google-favicon-crawl/2.webp)
 
 *ファビコンを確認するサイト*
 

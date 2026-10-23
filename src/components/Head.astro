@@ -35,6 +35,8 @@ const imageURL = new URL(image, SITE.URL).href;
 <title>{title}</title>
 <meta name="title" content={title} />
 <meta name="description" content={description} />
+<!-- Google Discover などで大きい画像を出してよい（指定が無いとサムネイルが小さくなる） -->
+<meta name="robots" content="max-image-preview:large" />
 
 <!-- Open Graph -->
 <meta property="og:type" content={ogType} />

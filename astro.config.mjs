@@ -3,6 +3,7 @@ import { defineConfig, fontProviders } from "astro/config";
 
 import { SITE } from "./src/consts";
 import sitemap from "@astrojs/sitemap";
+import rehypeImageSize from "./src/lib/rehype-image-size.mjs";
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -24,6 +25,9 @@ const latestArticleDate = [...articleDates.values()].sort().at(-1);
 // https://astro.build/config
 export default defineConfig({
   site: SITE.URL,
+  markdown: {
+    rehypePlugins: [rehypeImageSize],
+  },
   vite: {
     root: process.cwd(),
     plugins: [tailwindcss()],

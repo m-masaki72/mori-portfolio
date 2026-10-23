@@ -51,6 +51,8 @@ const { Content } = await render(article);
 
 const path = articlePath(article.id);
 const pageURL = new URL(path, SITE.URL).href;
+// src/pages/og/articles/[id].png.ts がビルド時に生成する
+const ogImage = `/og/articles/${article.id}.png`;
 const crumbs = [
     { name: "ホーム", path: "/" },
     { name: ARTICLES.TITLE, path: "/articles/" },
@@ -65,6 +67,7 @@ const jsonLd = [
         description,
         url: pageURL,
         mainEntityOfPage: pageURL,
+        image: new URL(ogImage, SITE.URL).href,
         datePublished: isoDate(pubDate),
         ...(updatedDate && { dateModified: isoDate(updatedDate) }),
         inLanguage: "ja",
@@ -77,7 +80,7 @@ const jsonLd = [
 ];
 ---
 
-<Layout title={title} description={description} ogType="article" jsonLd={jsonLd} noAds={noAds}>
+<Layout title={title} description={description} image={ogImage} ogType="article" jsonLd={jsonLd} noAds={noAds}>
     <div class="container mx-auto px-6 pt-24 md:pt-28 pb-20">
         <Breadcrumb items={crumbs} />
 
