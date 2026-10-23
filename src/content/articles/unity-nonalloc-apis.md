@@ -2,7 +2,7 @@
 title: "Unityメモ 〇〇NonAllocが用意されているもの"
 description: "Unity の Physics（3D）にある NonAlloc 版の関数一覧と、All 版との違い・使い分け。Physics2D の NonAlloc は Unity 6 で非推奨になり、結果の配列や List を渡す通常の関数に置き換わっています。GC アロケーションを減らすためのメモです。"
 pubDate: 2025-03-03
-updatedDate: 2026-10-21
+updatedDate: 2026-10-24
 tags: ["Unity", "C#"]
 originalUrl: "https://mementomori7272.hatenablog.com/entry/2025/03/03/004039"
 ---
@@ -163,6 +163,14 @@ public class Raycast2DExample : MonoBehaviour
 ほかの最適化については、Unity のマニュアルにまとまっています。
 
 [Unity - Manual: General Optimizations](https://docs.unity3d.com/Manual/UnderstandingPerformanceGeneralOptimizations.html)
+
+## 動画でも解説しています
+
+こうした「AI に書かせると普通に出てくるけれど、知っておくと避けられる書き方」を、YouTube チャンネル「[AIに任せる前に知るUnity](https://www.youtube.com/@unity_before_ai)」で 1 本 90〜150 秒の動画にしています。問題のあるコード → 何が起きるか（実測）→ その書き方の名前 → 使わないほうがいい場面 → Claude Code への頼み方、の順で説明します。
+
+第 1 回は、弾を毎回 `Instantiate` して `Destroy` する書き方と、オブジェクトプールの比較です。この記事の NonAlloc と同じく、GC アロケーションを減らす話です。
+
+[弾を毎回Instantiate→Destroyでいい？ 測って決めるオブジェクトプール【Unity #01】](https://www.youtube.com/watch?v=tTrdyZvxj_Y)
 
 ## 参考リンク
 

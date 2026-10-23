@@ -97,5 +97,6 @@ export const SOCIALS = [
   { NAME: "はてなブログ", HREF: "https://mementomori7272.hatenablog.com/", DESC: "アプリの紹介記事と、ゲームや本の感想・ガジェットの話" },
   { NAME: "SoundCloud", HREF: "https://soundcloud.com/morimoririnn", DESC: "チップチューンの自作曲と、SANA 8BIT VST のデモ音源" },
   { NAME: "YouTube", HREF: "https://www.youtube.com/@masakimori2508", DESC: "Chord Eureka や TaktKey など、アプリのデモ動画" },
+  { NAME: "YouTube（AIに任せる前に知るUnity）", HREF: "https://www.youtube.com/@unity_before_ai", DESC: "AI が書きがちな C#/Unity のコードの問題点と、Claude Code への頼み方を 1 本 2 分ほどで解説するビデオブログ" },
   { NAME: "OFUSE (投げ銭)", HREF: "https://ofuse.me/801de8c8", DESC: "制作を応援していただける方への投げ銭・ファンレター窓口", SAME_AS: false },
 ];
