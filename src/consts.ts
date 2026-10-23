@@ -2,7 +2,7 @@ export const SITE = {
   URL: "https://morilab-garage.com",
   TITLE: "Mori Lab",
   DESCRIPTION:
-    "音響・ゲーム・プラグイン開発が好きなエンジニア。C++を軸にVSTプラグインやゲーム、Webツールなどを作っています。",
+    "音響・ゲーム・プラグイン開発が好きなエンジニア。C++を軸にVSTプラグインやゲーム、Webツールなどを作りながら、Claude Code などのAIを使った開発の記録をブログに書いています。",
   EMAIL: "mementomori7272@gmail.com",
 };
 
@@ -14,9 +14,9 @@ export const ADSENSE_CLIENT = "ca-pub-6039922373762217";
 export const CF_ANALYTICS_TOKEN = "f9c19e1133b547578ea0f0761266f537";
 
 export const HOME = {
-  TITLE: "音響・ゲーム・Webツールの個人開発ポートフォリオ",
+  TITLE: "Claude Code・AIを使った個人開発のブログ",
   DESCRIPTION:
-    "MasakiMoriの個人開発ポートフォリオ。AIコード進行ツール、VSTプラグイン、Windows常駐アプリ、ブラウザで動くWebツールやゲームなど、音響・ゲーム・Webを中心とした制作物を紹介しています。",
+    "Claude Code を毎日の開発で使いながら、試したこと・測ったこと・失敗したことを書いている個人開発者 MasakiMori のブログ。Unity・GCP・Cloudflare の記事と、VSTプラグインやWebツールなどの制作物も紹介しています。",
 };
 
 export const PROJECTS = {

@@ -1,4 +1,4 @@
-import { SITE, SOCIALS } from "@/consts";
+import { HOME, SITE, SOCIALS } from "@/consts";
 
 // 各アプリ（*.morilab-garage.com）の JSON-LD からも author としてこの @id を参照する
 export const PERSON_ID = `${SITE.URL}/#person`;
@@ -21,7 +21,8 @@ const website: JsonLdNode = {
   "@id": WEBSITE_ID,
   name: SITE.TITLE,
   url: `${SITE.URL}/`,
-  description: SITE.DESCRIPTION,
+  // SITE.DESCRIPTION は人物の紹介文なので、サイトの説明にはトップページの説明文を使う
+  description: HOME.DESCRIPTION,
   inLanguage: "ja",
   publisher: { "@id": PERSON_ID },
 };
