@@ -166,7 +166,7 @@ public class Raycast2DExample : MonoBehaviour
 
 ## 動画でも解説しています
 
-こうした「AI に書かせると普通に出てくるけれど、知っておくと避けられる書き方」を、YouTube チャンネル「[AIに任せる前に知るUnity](https://www.youtube.com/@unity_before_ai)」で 1 本 90〜150 秒の動画にしています。問題のあるコード → 何が起きるか（実測）→ その書き方の名前 → 使わないほうがいい場面 → Claude Code への頼み方、の順で説明します。
+こうした「AI に書かせると普通に出てくるけれど、知っておくと避けられる書き方」を、YouTube チャンネル「[AIに任せる前に知るUnity](https://www.youtube.com/@unity_before_ai)」で 1 本 90〜150 秒の動画にしています。問題のあるコード → 何が起きるか（実測）→ その書き方の名前 → 使わないほうがいい場面 → Claude Code への頼み方、の順で説明します（始めた理由と作り方は「[YouTube で「AIに任せる前に知るUnity」を始めました](/articles/unity-before-ai-youtube/)」に書きました）。
 
 第 1 回は、弾を毎回 `Instantiate` して `Destroy` する書き方と、オブジェクトプールの比較です。この記事の NonAlloc と同じく、GC アロケーションを減らす話です。
 
