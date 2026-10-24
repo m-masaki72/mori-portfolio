@@ -8,7 +8,7 @@
 ## コンテンツ拡充（再申請に向けて。詳細はローカルの `CONTENT_PLAN.md`）
 - [ ] 記事を週3本ペースで公開（ネタ帳は `CONTENT_PLAN.md`）
 - [ ] gcp-vm-egress-404-gzip に Standard ティアの結果を追記（2026-10-19 以降、GCP コンソールの SKU 別レポートで Carrier Peering の課金が消えたか確認）
-- [ ] Moeter の掲載画像（「AI性癖診断」の文字入り）を差し替えるか判断
+- [x] Moeter の掲載画像から「性癖」の文言を外した（10-25。生成元は moeter の front/scripts/ogp-card.html、ポートフォリオ用だけ差し替え）
 
 ## インデックス対策（10-20 フェーズ1・GitHub 側のリンク整備は完了）
 - [ ] 新規記事の公開は週2〜3本までに抑える
