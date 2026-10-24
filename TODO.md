@@ -15,7 +15,6 @@
 - [ ] 重点記事10本を決め、Search Console の URL 検査で1日2〜3本ずつ登録リクエスト
 - [x] Claude Code の設定系記事をまとめる記事を作り、各記事へリンク（10-21 新規記事は作らず、設定ツアーをハブにして設定系15本と相互リンク）
 - [x] 移設した古い記事（Jenkins・Rider・Unity）を今の内容に更新して updatedDate を付ける
-- [ ] Zenn に要約＋本編リンクの記事を通常公開で数本出す
 - [ ] はてなブログにテーマページへのリンク記事を1本置く
 - [x] GitHub プロフィールのピン留めを設定（SANA_8BIT_VST を先頭に）
 - [ ] Search Console で sitemap を再送信し、テーマページ（claude-code・gcp）を登録リクエスト
