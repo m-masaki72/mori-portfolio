@@ -18,7 +18,7 @@ Claude Code の会話ログは、`~/.claude/projects/<プロジェクト>/<セ�
 Error: Permission for this action was denied by the Claude Code auto mode classifier. Reason: [Self-Modification]. ...
 ```
 
-この文言で始まるエラーを探し、`tool_use_id` で元のツール呼び出し（実行しようとしたコマンド）と突き合わせる Python スクリプトを書きました。ログは標準で30日ほどで消えるので、残っていたのは **2026年9月14日〜10月15日の約1か月分** です。
+この文言で始まるエラーを探し、`tool_use_id` で元のツール呼び出し（実行しようとしたコマンド）と突き合わせる Python スクリプトを書きました。手元で同じ集計をしたい人向けに、スクリプトの全文と使い方は [Zenn の記事](https://zenn.dev/masaki_mori72/articles/0b191e77715037) に載せています。ログは標準で30日ほどで消えるので、残っていたのは **2026年9月14日〜10月15日の約1か月分** です。
 
 | 項目 | 件数 |
 |---|---|
