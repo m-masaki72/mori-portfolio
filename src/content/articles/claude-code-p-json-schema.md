@@ -150,6 +150,8 @@ if out.get("subtype") != "success" or data is None:
 - プロンプトは引数ではなく標準入力で渡しています。長いプロンプトや改行を含むプロンプトでも崩れません
 - Windows では `shutil.which("claude")` で `claude.exe` のフルパスを取っています。npm で入れた版は実体が `claude.cmd` で、cmd.exe を経由するため、スキーマに `^` `&` `|` などが入ると引数が崩れることがあります。Windows でバッチに使うなら、`claude.exe` になるネイティブ版のインストーラーで入れるほうが安全です
 
+判定コードの組み立てと、失敗の種類ごとの見分け方は、[Zenn の記事](https://zenn.dev/masaki_mori72/articles/7682a6c0f13528) に詳しくまとめています。
+
 逆に言えば、`structured_output` に値が入っていれば、それはスキーマの検証を通った値です。型や enum を呼び出し側で検証し直す必要はありません。
 
 ただし、検証されるのは **スキーマに書いた制約だけ** です。
