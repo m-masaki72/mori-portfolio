@@ -1,7 +1,8 @@
 ---
 title: "GCP の請求で Networking は ¥0 なのに、VM の通信料がかかっていた（404 の gzip 化と Standard ティア）"
-description: "Cloudflare の裏で WordPress を動かす GCP VM の外向き通信が月約70GB。通信料は Networking ではなく Compute Engine 側に計上されていました。内訳を調べたら4割が圧縮されていない404応答だったので、PHP で gzip 化し、Standard ティアに切り替えた話です。"
+description: "Cloudflare の裏で WordPress を動かす GCP VM の外向き通信が月約70GB。通信料は Networking ではなく Compute Engine 側に計上されていました。内訳を調べたら4割が圧縮されていない404応答だったので、PHP で gzip 化しました。Standard ティアへの切り替えは、Cloudflare 向けの通信には効かなかったという結果も追記しています。"
 pubDate: 2026-10-15
+updatedDate: 2026-10-28
 tags: ["GCP", "WordPress", "Cloudflare", "コスト削減"]
 ---
 GCP の請求をサービス別に見ると、**Networking は ¥0** でした。それなのに、VM の外向き通信料はしっかり請求されていました。
@@ -112,12 +113,28 @@ Standard ティアは、Google のバックボーンではなく一般のイン�
 
 切り替えには注意点が1つあります。**外部 IP アドレスが変わります**。今回は Cloudflare の DNS で A レコードを向けているだけだったので、新しい IP に書き換えて済みました。
 
-> 切り替えは2026-10-15に実施しました。Carrier Peering の課金が実際に消えたかは、数日後の SKU 別レポートで確認して追記します。
+切り替えは2026-10-15に実施しました。
+
+## 結果：Carrier Peering の課金は消えなかった（2026-10-28 追記）
+
+切り替えの前後で、Compute Engine の外向き通信の SKU を比べました。
+
+| 期間 | Carrier Peering | 1日あたり | Standard |
+|---|---|---|---|
+| 9月 | 57.66 GiB / ¥735 | 1.92 GiB / ¥24.5 | — |
+| 10/1〜10/15 | 26.76 GiB / ¥336 | 1.78 GiB / ¥22.4 | 0.05 GiB |
+| 10/16〜10/28（切り替え後） | 16.82 GiB / ¥212 | 1.29 GiB / ¥16.3 | 0.29 GiB / ¥0 |
+
+Standard ティアの SKU（`Network Standard Data Transfer Out to Internet from Iowa`）は新しく現れましたが、13日間で 0.29 GiB だけでした。**Cloudflare 向けの通信は、切り替え後も Carrier Peering として、同じ単価（約¥12.6/GiB）で課金され続けています**。Standard ティアの無料枠に入るのは、Carrier Peering 以外の、一般のインターネット向けの通信だけのようです。
+
+1日あたりの通信量は約3割減りました。ただ、Standard 側にはほとんど流れていないので、これは同じ時期に入れた **404 の gzip 化の効果** と見ています。
+
+Cloudflare のように Google と直接つながっているネットワークが手前にあると、Standard ティアに切り替えても通信料は下がりません。IP アドレスが変わる手間だけがかかりました。
 
 ## まとめ
 
 - VM の外向き通信料は、**Networking ではなく Compute Engine の SKU** として請求される。サービス別の集計だけ見ていると気づかない。
-- 外向き通信の内訳を見ると、意外なものが大きいことがある。今回は **圧縮されていない404応答** が4割を占めていた。
-- Cloudflare の裏にある VM なら、**Standard ティア** の無料枠で外向き通信料をほぼゼロにできる可能性がある（IP は変わる）。
+- 外向き通信の内訳を見ると、意外なものが大きいことがある。今回は **圧縮されていない404応答** が4割を占めていた。gzip 化で外向き通信は約3割減った。
+- Cloudflare の裏にある VM では、**Standard ティアに切り替えても Carrier Peering の課金は消えなかった**。無料枠が効くかは、切り替える前に SKU を確認したほうがいい。
 
 GCP の費用見直し全体の流れは、[Claude Code に GCP の課金を棚卸しさせたら、月1万円が半分になった](/articles/claude-code-gcp-cost-review/) にまとめています。

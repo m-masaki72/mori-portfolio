@@ -2,6 +2,7 @@
 title: "Claude Code に GCP の課金を棚卸しさせたら、月1万円が半分になった（失敗込みの記録）"
 description: "個人開発で使っている GCP の全プロジェクトを、Claude Code と一緒に横断して見直しました。gcloud での調査、ストレージの掃除、通信料の削減、そして CUD の二重契約という失敗まで。AI に任せられたこと・人間がやる必要があったことを整理します。"
 pubDate: 2026-10-15
+updatedDate: 2026-10-28
 tags: ["Claude Code", "GCP", "コスト削減", "個人開発"]
 ---
 個人開発で使っている GCP の費用を、**Claude Code と一緒に** 見直しました。
@@ -28,7 +29,7 @@ tags: ["Claude Code", "GCP", "コスト削減", "個人開発"]
 |---|---|---|
 | Artifact Registry・Cloud Storage のクリーンアップ | 約58GB 削減。その後の再膨張にも対処 | [Artifact Registry が86GBに膨らんだ](/articles/artifact-registry-cleanup-policy/) |
 | 404 応答の gzip 化 | 404 ページが 365KB → 37KB | [Networking は ¥0 なのに、VM の通信料がかかっていた](/articles/gcp-vm-egress-404-gzip/) |
-| VM を Standard ティアに切り替え | 外向き通信の無料枠（月200GiB）に収める | 同上 |
+| VM を Standard ティアに切り替え | 効果なし。Cloudflare 向けは Carrier Peering のまま課金された（10-28 追記） | 同上 |
 | 誤って買った1年 CUD の取り消し | 月 約¥4,000 の固定費を回避 | [CUD を二重に買ってしまった話](/articles/gcp-cud-double-purchase/) |
 | GPU の予算キルスイッチ | 予算の90%で GPU だけを自動停止 | [予算アラートで Cloud Run の GPU だけを自動停止する](/articles/cloud-run-gpu-budget-killswitch/) |
 | 見送った施策の整理 | ダウングレード・リージョン移行・Nearline 化は見送り | [個人開発の GCP で「やらなかった」コスト削減4つ](/articles/gcp-cost-cuts-skipped/) |
