@@ -2,7 +2,7 @@
 title: "Unityメモ 〇〇NonAllocが用意されているもの"
 description: "Unity の Physics（3D）にある NonAlloc 版の関数一覧と、All 版との違い・使い分け。Physics2D の NonAlloc は Unity 6 で非推奨になり、結果の配列や List を渡す通常の関数に置き換わっています。GC アロケーションを減らすためのメモです。"
 pubDate: 2025-03-03
-updatedDate: 2026-10-24
+updatedDate: 2026-10-30
 tags: ["Unity", "C#"]
 originalUrl: "https://mementomori7272.hatenablog.com/entry/2025/03/03/004039"
 ---
@@ -171,6 +171,10 @@ public class Raycast2DExample : MonoBehaviour
 第 1 回は、弾を毎回 `Instantiate` して `Destroy` する書き方と、オブジェクトプールの比較です。この記事の NonAlloc と同じく、GC アロケーションを減らす話です。
 
 [弾を毎回Instantiate→Destroyでいい？ 測って決めるオブジェクトプール【Unity #01】](https://www.youtube.com/watch?v=tTrdyZvxj_Y)
+
+第 7 回は、探索の結果を毎回 `new List` で返す書き方と、結果を受け取る `List` を引数でもらう書き方、`ListPool` で借りる書き方の比較です。Physics2D の置き換え先と同じ「結果の入れ物を呼び出し側が持つ」形で、1 フレームの GC Alloc が 42.8KB から 0KB になりました。容量を指定して `new` すると、かえって 394.1KB に増えます。
+
+[敵を探す関数、毎回Listを作ってない？ 結果を受け取る List と ListPool、容量指定の落とし穴【Unity #07】](https://www.youtube.com/watch?v=3pqm4_215Vg)
 
 ## 参考リンク
 
