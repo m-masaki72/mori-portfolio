@@ -2,6 +2,7 @@
 title: "GameSynthが起動しない際の対応方法: A problem with your license has been encountered: code 204"
 description: "効果音生成ツール GameSynth が「A problem with your license has been encountered: code 204」で起動しないときの対処。原因は JetBrains dotPeek でした。"
 pubDate: 2025-02-25
+noindex: true
 tags: ["GameSynth", "サウンド"]
 originalUrl: "https://mementomori7272.hatenablog.com/entry/2025/02/25/120408"
 ---

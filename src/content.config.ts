@@ -39,6 +39,8 @@ const articles = defineCollection({
     originalUrl: z.url().optional(),
     // 非商用ライセンスの素材を載せる記事など、このページだけ AdSense を出さない
     noAds: z.boolean().default(false),
+    // テーマ外の短い移設記事など、ページは残すが検索には出さない（sitemap からも外す）
+    noindex: z.boolean().default(false),
   }),
 });
 

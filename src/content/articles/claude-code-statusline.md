@@ -1,14 +1,17 @@
 ---
-title: "私の Claude Code statusline 設定（利用上限・コンテキスト・モデルをバーで表示）"
-description: "Claude Code の statusline に、5時間・7日の利用上限の使用率とリセットまでの残り時間、コンテキストの使用率、モデル名を表示しています。Node.js で書いたスクリプトの全文と、表示している項目を選んだ理由を紹介します。"
+title: "私の Claude Code statusline 設定（利用上限・コンテキストをバーで表示。PowerShell だと表示されない理由も）"
+description: "Claude Code の statusline に、5時間・7日の利用上限の使用率とリセットまでの残り時間、コンテキストの使用率、モデル名を表示しています。Node.js で書いたスクリプトの全文と、PowerShell 版では statusline が空白になった原因（起動 1411ms で更新に間に合わずキャンセルされる）をまとめます。"
 pubDate: 2026-10-10
-tags: ["Claude Code", "statusline", "Node.js"]
+updatedDate: 2026-11-18
+tags: ["Claude Code", "statusline", "Node.js", "PowerShell", "Windows"]
 ---
 Claude Code の画面下に出る **statusline** は、自分でスクリプトを書いて中身を変えられます。
 
 わたしは、ここに **利用上限の使用率・コンテキストの使用率・モデル名** を出しています。作業中にいちばん気にする数字を、いつも目に入る場所に置いておくためです。
 
-**環境**：Windows 10 / Node.js / Claude Code
+最初は PowerShell で書いていましたが、**statusline が空白のまま何も表示されない** 状態になり、Node.js に書き直しました。その原因も後半にまとめています。
+
+**環境**：Windows 10 / Git Bash / Node.js / Claude Code
 
 ## 表示はこうなる
 
@@ -145,19 +148,82 @@ process.stdin.on('end', () => {
 
 `rate_limits` が入力に無いときは、5h・7d の表示ごと省くようにしています。JSON が読めなかったときも、空のデータとして最後まで表示できるようにしてあります。
 
-## PowerShell ではなく Node.js で書いている理由
+## PowerShell で書いたら statusline が空白になった
 
-最初は PowerShell で書いていましたが、**pwsh の起動が遅く、statusline が表示されない** ことがありました。statusline のスクリプトは更新のたびに起動されて、終わる前に次の更新が来ると取り消されてしまうためです。
+### 症状
 
-Node.js に書き直したら、実行時間が約1.4秒から約0.14秒になり、表示が安定しました。原因の調べ方と計測結果は、別の記事に詳しく書いています。
+最初は同じ内容を PowerShell で書いて、こう指定していました。
 
-→ [Claude Code の statusLine が表示されない原因は PowerShell の起動遅延](/articles/claude-code-statusline-powershell-slow/)
+```json
+"statusLine": {
+  "type": "command",
+  "command": "/c/Program Files/PowerShell/7/pwsh.exe -NoProfile -File ~/.claude/statusline.ps1"
+}
+```
+
+すると、statusline が **完全に空白** になりました。エラーは一切出ません。
+
+### スクリプトは正しく、遅いだけだった
+
+スクリプトを単体で実行すると、出力は正しく出ます。
+
+```sh
+$ echo '{"model":{"display_name":"Sonnet"},"context_window":{"used_percentage":10}}' \
+  | "/c/Program Files/PowerShell/7/pwsh.exe" -NoProfile -File statusline.ps1
+
+5h:███████░░░ 5% | Context:█░░░░░░░░░ 10% | Model: Sonnet | v1.0
+```
+
+そこで実行時間を測ると、原因はロジックではなく、**プロセスの起動そのもの** にありました。中身は変えずに、ランタイムだけを変えて比べた結果です。
+
+| コマンド | 実行時間 |
+|---|---|
+| `pwsh.exe -Command "1"`（何もしない） | 687ms |
+| `pwsh.exe -File statusline.ps1`（実処理） | 1411ms |
+| `bash -c 'echo hi'`（何もしない） | 65ms |
+| `node -e "console.log(1)"`（何もしない） | 118ms |
+| `node statusline.js`（実処理） | 143ms |
+
+`pwsh.exe` は、何もしないだけで、Node.js の実処理込みより遅いことが分かります。
+
+### 遅いと表示されない仕組み
+
+[公式ドキュメント](https://code.claude.com/docs/en/statusline) のトラブルシューティングに、この挙動が書かれています。
+
+```text
+Your script runs after each new assistant message, after /compact finishes,
+when the permission mode changes, or when vim mode toggles. Updates are
+debounced at 300ms, meaning rapid changes batch together and your script
+runs once things settle. If a new update triggers while your script is
+still running, the in-flight execution is cancelled.
+```
+
+statusline のスクリプトは、新しいメッセージが来るたびなどに起動されます。そして **実行中に次の更新が来ると、その実行はキャンセル** されます。1.4秒かかる PowerShell 版は、出力ができあがる前に毎回キャンセルされていたわけです。
+
+ロジックはそのままで Node.js に移したところ、**1411ms → 143ms** になり、表示が安定しました。上で紹介したスクリプトがその Node.js 版です。
+
+### 同じ症状の報告
+
+「PowerShell の statusline が何も言わずに表示されない」という報告は、ほかにもあります。
+
+- [anthropics/claude-code #30725](https://github.com/anthropics/claude-code/issues/30725)：v2.1.68 にしてから描画されなくなった。bash + python に切り替えて復旧
+- [anthropics/claude-code #6526](https://github.com/anthropics/claude-code/issues/6526)：スクリプトは実行されているのに、画面に反映されない
+- [PowerShell/PowerShell #17734](https://github.com/PowerShell/PowerShell/issues/17734)：PowerShell 7 自体の起動が遅いという Issue。Microsoft の記事には、プロファイルの見直しで 1465ms → 217ms になった例もあります（[Optimizing your $Profile](https://devblogs.microsoft.com/powershell/optimizing-your-profile/)）
+
+hooks でも同じような計測があり（[netnerds.net](https://blog.netnerds.net/2026/02/claude-code-powershell-hooks/)）、`pwsh` は約300〜500ms、`bash` は約10〜50ms だそうです。statusline に限らず、**処理のたびにプロセスを起動する仕組み** では、ロジックが正しいことより先に、起動が更新の間隔より速いことが前提になります。
 
 ## まとめ
 
 - statusline は、標準入力の JSON を読んで文字列を出すだけのスクリプトで自由に作れる
 - 利用上限（5h / 7d）は **使用率とリセットまでの残り時間をセットで** 出すと、作業の順番を決めやすい
 - コンテキストの使用率とモデル名も出しておくと、compact のタイミングやモデルの切り替え忘れに気づける
-- Windows では、起動の速い Node.js で書くのがおすすめ
+- PowerShell 版は起動に 1.4秒かかり、次の更新でキャンセルされて空白になった。Windows でも Node.js で書くのがおすすめ
 
 ほかの設定も含めた全体像は、[私の Claude Code 設定ツアー](/articles/claude-code-settings-tour/) にまとめています。
+
+## 参考文献
+
+- [Customize your status line - Claude Code Docs](https://code.claude.com/docs/en/statusline)
+- [Troubleshoot PowerShell startup issues - Microsoft Learn](https://learn.microsoft.com/en-us/powershell/scripting/dev-cross-plat/performance/startup-performance?view=powershell-7.6)
+- [Optimizing your $Profile - PowerShell Team](https://devblogs.microsoft.com/powershell/optimizing-your-profile/)
+- [Fixing Claude Code's PowerShell Problem with Hooks - netnerds.net](https://blog.netnerds.net/2026/02/claude-code-powershell-hooks/)

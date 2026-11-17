@@ -1,13 +1,13 @@
 ---
-title: "Claude Code でタスクの難しさによってモデルを使い分ける（Haiku / Sonnet / Opus の判断基準）"
-description: "Claude Code で Haiku・Sonnet・Opus をどう使い分けているか、グローバル CLAUDE.md に書いている判断表をそのまま紹介します。Opus 5.5 が速くなりトークン消費も減ったことで、以前よりかなり Opus 寄りに変えました。"
+title: "Claude Code のモデルの使い分けと、バージョンを固定する設定（Haiku / Sonnet / Opus の判断基準）"
+description: "Claude Code で Haiku・Sonnet・Opus をどう使い分けているか、グローバル CLAUDE.md に書いている判断表をそのまま紹介します。後半は、特定のモデルバージョンに固定したいときの指定方法（/model・起動フラグ・環境変数・settings.json の優先順位）と、Default への逃げ道も塞ぐ設定をまとめます。"
 pubDate: 2026-10-10
-updatedDate: 2026-10-17
+updatedDate: 2026-11-18
 tags: ["Claude Code", "Claude"]
 ---
 Claude Code では、Haiku・Sonnet・Opus のどのモデルで作業するかを選べます。
 
-わたしは、どのモデルを使うべきかの判断基準をグローバルの `CLAUDE.md`（ホーム直下の `~/CLAUDE.md`）に書いています。最近その基準を、以前よりかなり **Opus 寄り** に変えました。その中身と理由をまとめます。
+わたしは、どのモデルを使うべきかの判断基準をグローバルの `CLAUDE.md`（ホーム直下の `~/CLAUDE.md`）に書いています。最近その基準を、以前よりかなり **Opus 寄り** に変えました。前半ではその中身と理由を、後半では「特定のバージョンに固定したい」ときの設定をまとめます。
 
 ## 判断表
 
@@ -59,12 +59,85 @@ Claude Code では、Haiku・Sonnet・Opus のどのモデルで作業するか�
 サブエージェント（Explore/Plan/code-reviewer等）のモデルはClaude Code本体のデフォルト判断に委ねる（CLAUDE_CODE_SUBAGENT_MODEL固定は廃止、タスクに応じた自動選択）。
 ```
 
+## 特定のバージョンに固定したいとき
+
+使い分けとは逆に、「新しいモデルが出ても、しばらく今のバージョンで作業したい」という場面もあります。新しいモデルで出力の傾向が変わると困る作業の途中などです。そのときの指定方法をまとめておきます。
+
+> 例として `claude-opus-4-6` と書きますが、固定したい任意のバージョンに読み替えてください。
+
+### エイリアスでは固定にならない
+
+`opus` や `sonnet` のような **エイリアスは「動く参照」** です。新しいモデルが出ると、自動でそちらに切り替わります。バージョンを固定するには、**フルモデル名**（`claude-opus-4-6`）か、後で出てくる `ANTHROPIC_DEFAULT_OPUS_MODEL` などの環境変数を使います。
+
+### 指定方法と優先順位
+
+上にあるものほど優先されます。
+
+| # | 方法 | 書き方 | 効く範囲 |
+|---|---|---|---|
+| 1 | セッション中の `/model` | `/model claude-opus-4-6` | v2.1.153 以降はユーザー設定に保存され、次のセッションの既定にもなる |
+| 2 | 起動フラグ | `claude --model claude-opus-4-6` | そのセッションだけ |
+| 3 | 環境変数 `ANTHROPIC_MODEL` | `export ANTHROPIC_MODEL=claude-opus-4-6` | そのシェルから起動したセッション |
+| 4 | 設定ファイルの `model` | `~/.claude/settings.json` か、プロジェクトの `.claude/settings.json` | ずっと（ただし優先度は一番低い） |
+
+個人で固定したいだけなら、4 の `settings.json` にフルモデル名を書くのが一番簡単です。
+
+```json
+{
+  "model": "claude-opus-4-6"
+}
+```
+
+エイリアスの行き先そのものを変えたい場合は、環境変数で上書きします。`SONNET`・`HAIKU`・`FABLE` 版の変数もあります。
+
+```bash
+export ANTHROPIC_DEFAULT_OPUS_MODEL=claude-opus-4-6
+```
+
+### `model` だけでは「強制」にならない
+
+見落としやすいのがここです。`model` の設定は **最初の選択であって、強制ではありません**。`/model` から Default を選べてしまい、Default はプランの標準モデル（新しい方）になります。
+
+逃げ道まで塞ぎたいなら、3つを組み合わせます。
+
+```json
+{
+  "model": "claude-opus-4-6",
+  "availableModels": ["claude-opus-4-6"],
+  "env": {
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-4-6"
+  }
+}
+```
+
+| 項目 | 役割 |
+|---|---|
+| `model` | 起動したときの最初の選択 |
+| `availableModels` | `/model` で切り替えられるモデルを制限する |
+| `env.ANTHROPIC_DEFAULT_OPUS_MODEL` | Default と `opus` エイリアスの行き先 |
+
+`env` が無いと、Default を選んだときに新しいバージョンが使われて、固定が外れてしまいます。
+
+なお `availableModels` は、複数の階層（ユーザー・プロジェクトなど）に書くと配列がマージされます。チーム全体で厳しく制限したいなら、一番優先される managed（ポリシー）設定に書きます。
+
+### Bedrock・Vertex・Foundry を使う場合
+
+プロバイダーごとにモデル ID が違うので、エイリアスに任せず ID で固定しておくのが安全です。
+
+```bash
+# Bedrock の例
+export ANTHROPIC_DEFAULT_OPUS_MODEL='us.anthropic.claude-opus-4-8'
+```
+
+同じファミリーの複数のバージョンを、それぞれ別のプロバイダー ID に対応させたいときは `modelOverrides` 設定を使います。
+
 ## まとめ
 
 - モデルは **タスクの種類ではなく複雑さ** で選ぶ。判断表を `CLAUDE.md` に書いておく
 - Opus 5.5 が速くなりトークン消費も減ったので、迷ったら Opus にした
 - 指定したモデルが大きくズレているときだけ、Claude に一言言わせる。確認待ちはさせない
+- バージョンを固定するなら、エイリアスではなくフルモデル名を使う。Default への逃げ道まで塞ぐなら `model`・`availableModels`・`env` の3つをセットで書く
 
-モデルの性能や消費量は新しいモデルが出るたびに変わるので、この表もそのたびに見直すつもりです。
+モデルの性能や消費量は新しいモデルが出るたびに変わるので、この表もそのたびに見直すつもりです。仕様も変わりやすいので、固定の設定は [公式ドキュメント](https://code.claude.com/docs/en/model-config) もあわせて確認してください。
 
 ほかの設定も含めた全体像は、[私の Claude Code 設定ツアー](/articles/claude-code-settings-tour/) にまとめています。

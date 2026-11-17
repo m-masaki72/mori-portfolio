@@ -45,7 +45,7 @@ export async function getStaticPaths() {
 }
 
 const { article, newer, older, series, related } = Astro.props;
-const { title, description, pubDate, updatedDate, tags, originalUrl, noAds } = article.data;
+const { title, description, pubDate, updatedDate, tags, originalUrl, noAds, noindex } = article.data;
 
 const { Content } = await render(article);
 
@@ -80,7 +80,7 @@ const jsonLd = [
 ];
 ---
 
-<Layout title={title} description={description} image={ogImage} ogType="article" jsonLd={jsonLd} noAds={noAds}>
+<Layout title={title} description={description} image={ogImage} ogType="article" jsonLd={jsonLd} noAds={noAds} noindex={noindex}>
     <div class="container mx-auto px-6 pt-24 md:pt-28 pb-20">
         <Breadcrumb items={crumbs} />
 

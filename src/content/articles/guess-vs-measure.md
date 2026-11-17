@@ -38,7 +38,7 @@ GCP の請求をサービス別に見ると、Networking は0円でした。と�
 
 ### 4. 「statusLine が表示されないのは、スクリプトのロジックが悪いはず」
 
-Claude Code の statusLine が空白になる原因を、最初はスクリプトの中身に探していました。実行時間を測ると、PowerShell 版は 1411ms。更新の間隔より長く、終わる前に次の更新でキャンセルされていました。ロジックはそのままで Node.js に移すと 143ms になり、表示されるようになりました。（[記事](/articles/claude-code-statusline-powershell-slow/)）
+Claude Code の statusLine が空白になる原因を、最初はスクリプトの中身に探していました。実行時間を測ると、PowerShell 版は 1411ms。更新の間隔より長く、終わる前に次の更新でキャンセルされていました。ロジックはそのままで Node.js に移すと 143ms になり、表示されるようになりました。（[記事](/articles/claude-code-statusline/)）
 
 ## 確かめたつもりだった
 

@@ -22,9 +22,26 @@ const articleDates = new Map(
 );
 const latestArticleDate = [...articleDates.values()].sort().at(-1);
 
+// frontmatter に noindex: true がある記事は sitemap に載せない
+const noindexArticles = new Set(
+  readdirSync(ARTICLES_DIR)
+    .filter((f) => /\.mdx?$/.test(f) && /^noindex:\s*true\s*$/m.test(readFileSync(join(ARTICLES_DIR, f), "utf8")))
+    .map((f) => `${SITE.URL}/articles/${f.replace(/\.mdx?$/, "")}/`),
+);
+
+// 統合して消した記事 → 統合先。はてな・Zenn の移設元リンクや外部の被リンクを切らさない
+const mergedArticles = {
+  "claude-code-statusline-powershell-slow": "claude-code-statusline",
+  "claude-code-pin-model-version": "claude-code-model-selection",
+  "claude-code-deny-env": "claude-code-hooks-block-dangerous-git",
+};
+
 // https://astro.build/config
 export default defineConfig({
   site: SITE.URL,
+  redirects: Object.fromEntries(
+    Object.entries(mergedArticles).map(([from, to]) => [`/articles/${from}/`, `/articles/${to}/`]),
+  ),
   markdown: {
     rehypePlugins: [rehypeImageSize],
   },
@@ -48,6 +65,7 @@ export default defineConfig({
   ],
   integrations: [
     sitemap({
+      filter: (page) => !noindexArticles.has(page),
       serialize(item) {
         // 記事は更新日（なければ公開日）、記事一覧・テーマページは最新記事の日付
         const date =

@@ -2,6 +2,7 @@
 title: "Googleのクロールがfavicon.icoを正しく読み取ってくれなかったときに見直す"
 description: "WordPress サイトの favicon が Google 検索結果に反映されなかったときの調査と対応。リダイレクトの解消、.ico の配置、Cloudflare のキャッシュ削除まで。"
 pubDate: 2025-05-12
+noindex: true
 tags: ["WordPress", "SEO", "Cloudflare"]
 originalUrl: "https://mementomori7272.hatenablog.com/entry/2025/05/12/211634"
 ---

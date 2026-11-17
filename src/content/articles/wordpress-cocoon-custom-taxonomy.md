@@ -2,6 +2,7 @@
 title: "WordPressのCocoonでカスタムタクソノミーを追加する！"
 description: "WordPress テーマ Cocoon の子テーマ functions.php に、タグとは別の分類（カスタムタクソノミー）を追加する手順とコード。"
 pubDate: 2025-05-13
+noindex: true
 tags: ["WordPress"]
 originalUrl: "https://mementomori7272.hatenablog.com/entry/2025/05/13/015348"
 ---

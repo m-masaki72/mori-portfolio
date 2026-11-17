@@ -48,7 +48,7 @@ Claude Code 本体はネイティブ版で入れています。npm 版から移�
 
 ポイントは **gcloud だけは読み取り系のサブコマンドに限っている** ことです。`list`・`describe`・`logging read` は許可していますが、デプロイや削除は毎回確認が入ります。クラウドの変更は取り返しがつかないので、ここは細かく分けています。
 
-拒否リスト（`deny`）には、`.env` と `credentials` フォルダを読む操作を並べています。ただ、Bash コマンドのパターン指定はすり抜けを防ぎきれません。詳しくは [Claude Code に .env を読ませない deny 設定と、その限界](/articles/claude-code-deny-env/) に書きました。
+拒否リスト（`deny`）には、`.env` と `credentials` フォルダを読む操作を並べています。ただ、Bash コマンドのパターン指定はすり抜けを防ぎきれません。詳しくは [Claude Code に危ないことをさせない設定](/articles/claude-code-hooks-block-dangerous-git/) に書きました。
 
 auto mode が実際に何を止めたのかは1か月分を数えました。「今後は確認しない」で増えていく許可ルールの整理も別の記事にしています。
 
@@ -72,7 +72,7 @@ auto mode が実際に何を止めたのかは1か月分を数えました。「
 }
 ```
 
-Claude Code が実行した `git clean` で `.env` が消えたのがきっかけです。`git clean`・force push・`reset --hard` などを止めています。スクリプトの中身は [Claude Code の危険な git 操作を hooks で止める](/articles/claude-code-hooks-block-dangerous-git/) にあります。
+Claude Code が実行した `git clean` で `.env` が消えたのがきっかけです。`git clean`・force push・`reset --hard` などを止めています。スクリプトの中身は [Claude Code に危ないことをさせない設定](/articles/claude-code-hooks-block-dangerous-git/) にあります（上の deny と同じ記事です）。
 
 ### statusline：利用上限とコンテキストを常に見る
 
@@ -82,8 +82,7 @@ Claude Code が実行した `git clean` で `.env` が消えたのがきっか�
 
 5時間・7日の利用上限の使用率、コンテキストの使用率、モデル名をバーで出しています。最初は PowerShell で書いていましたが、起動が遅くて表示が消えるので Node.js に書き直しました。
 
-- [私の Claude Code statusline 設定](/articles/claude-code-statusline/)
-- [Claude Code の statusLine が表示されない原因は PowerShell の起動遅延](/articles/claude-code-statusline-powershell-slow/)
+→ [私の Claude Code statusline 設定（PowerShell だと表示されない理由も）](/articles/claude-code-statusline/)
 
 ### モデルと思考の量
 
@@ -93,7 +92,7 @@ Claude Code が実行した `git clean` で `.env` が消えたのがきっか�
 "alwaysThinkingEnabled": false
 ```
 
-普段は Opus を使い、思考の量（effort）は high にしています。軽い作業では、会話の中でモデルを切り替えます。使い分けの基準は CLAUDE.md に表で書いています（後述）。特定のバージョンに固定したいときの設定は [Claude Code でモデルバージョンを固定する方法まとめ](/articles/claude-code-pin-model-version/) にあります。
+普段は Opus を使い、思考の量（effort）は high にしています。軽い作業では、会話の中でモデルを切り替えます。使い分けの基準は CLAUDE.md に表で書いています（後述）。特定のバージョンに固定したいときの設定は、[モデルの使い分けの記事](/articles/claude-code-model-selection/) の後半にまとめています。
 
 ### 自動 compact を少し遅らせる
 
@@ -144,7 +143,7 @@ Claude Code が実行した `git clean` で `.env` が消えたのがきっか�
 
 **Windows の落とし穴**：Claude Code の Bash ツールは Git Bash なので、Windows ならではの失敗が起きます。同じ失敗を繰り返さないよう、踏んだものを書き足しています。→ [Windows で Claude Code を使うときのハマりどころ](/articles/claude-code-windows-pitfalls/)
 
-**モデルの使い分け**：→ [Claude Code でタスクの難しさによってモデルを使い分ける](/articles/claude-code-model-selection/)
+**モデルの使い分け**：→ [Claude Code のモデルの使い分けと、バージョンを固定する設定](/articles/claude-code-model-selection/)
 
 ちなみに、応答の口調をキャラクターに寄せる指定も入れています。長時間の作業でも、報告を読むのが少し楽しくなります。
 
