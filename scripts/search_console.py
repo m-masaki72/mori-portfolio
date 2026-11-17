@@ -129,6 +129,9 @@ def cmd_sitemaps(sc, site):
 
 
 def main():
+    # Windows ではパイプ先が cp932 になり、grep 等にバイナリ扱いされるので UTF-8 に揃える
+    sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
     ap = argparse.ArgumentParser()
     ap.add_argument("command", choices=["sites", "inspect", "sitemaps", "submit"])
     ap.add_argument("urls", nargs="*")
