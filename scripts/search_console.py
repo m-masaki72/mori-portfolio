@@ -26,6 +26,7 @@ from collections import Counter
 
 import google_auth_oauthlib.flow
 import googleapiclient.discovery
+import googleapiclient.errors
 from google.auth.exceptions import RefreshError
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -100,14 +101,19 @@ def cmd_inspect(sc, site, urls):
     counts = Counter()
     rows = []
     for i, url in enumerate(urls, 1):
-        res = sc.urlInspection().index().inspect(body={"inspectionUrl": url, "siteUrl": site, "languageCode": "ja"}).execute()
-        idx = res["inspectionResult"].get("indexStatusResult", {})
-        state = idx.get("coverageState", "?")
+        req = sc.urlInspection().index().inspect(body={"inspectionUrl": url, "siteUrl": site, "languageCode": "ja"})
+        try:
+            # URL 検査はときどき応答が遅く読み取りタイムアウトになるので、リトライして、だめなら飛ばして続ける
+            res = req.execute(num_retries=3)
+            idx = res["inspectionResult"].get("indexStatusResult", {})
+            state = idx.get("coverageState", "?")
+        except (TimeoutError, OSError, googleapiclient.errors.HttpError) as e:
+            idx, state = {}, f"取得失敗（{type(e).__name__}）"
         counts[state] += 1
         crawled = (idx.get("lastCrawlTime") or "")[:10] or "-"
         rows.append((state, crawled, url.replace(ORIGIN, "")))
-        print(f"\r{i}/{len(urls)}", end="", file=sys.stderr, flush=True)
-    print(file=sys.stderr)
+        if i % 10 == 0:
+            print(f"{i}/{len(urls)}", file=sys.stderr, flush=True)
     for state, crawled, path in sorted(rows):
         print(f"{crawled}\t{state}\t{path}")
     print("\n--- 集計 ---")
