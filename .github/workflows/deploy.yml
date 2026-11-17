@@ -4,6 +4,11 @@ on:
   push:
     branches: [master]
   workflow_dispatch:
+  # 予約公開（publishAt / 未来の pubDate）の記事を出すため、毎日 0:00 と 19:00（日本時間）にビルドし直す。
+  # GitHub の schedule は数分〜数十分遅れることがある
+  schedule:
+    - cron: "0 15 * * *"
+    - cron: "0 10 * * *"
 
 permissions:
   contents: read

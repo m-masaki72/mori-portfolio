@@ -20,7 +20,9 @@ const articleDates = new Map(
     })
     .filter(([, date]) => date),
 );
-const latestArticleDate = [...articleDates.values()].sort().at(-1);
+// 予約中（未来の日付）の記事で一覧の lastmod が未来にならないよう、今日までの日付だけ見る
+const today = new Date(Date.now() + 9 * 60 * 60 * 1000).toISOString().slice(0, 10);
+const latestArticleDate = [...articleDates.values()].filter((d) => d <= today).sort().at(-1);
 
 // frontmatter に noindex: true がある記事は sitemap に載せない
 const noindexArticles = new Set(

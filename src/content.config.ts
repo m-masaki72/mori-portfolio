@@ -41,6 +41,9 @@ const articles = defineCollection({
     noAds: z.boolean().default(false),
     // テーマ外の短い移設記事など、ページは残すが検索には出さない（sitemap からも外す）
     noindex: z.boolean().default(false),
+    // 予約公開の日時（例: 2026-11-20T19:00:00+09:00）。無ければ pubDate の日の 0:00（日本時間）から公開。
+    // 毎日 0:00 と 19:00（日本時間）に Actions がビルドし直すので、そのどちらかの時刻にする
+    publishAt: z.coerce.date().optional(),
   }),
 });
 

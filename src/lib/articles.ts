@@ -3,9 +3,19 @@ import { TOPICS, type Topic } from "@/consts";
 
 export type Article = CollectionEntry<"articles">;
 
-/** 公開日の新しい順で全記事を返す */
+const JST_OFFSET_MS = 9 * 60 * 60 * 1000;
+
+/** 公開される日時。publishAt が無ければ pubDate の日の 0:00（日本時間） */
+export const publishTime = (a: Article): Date =>
+  a.data.publishAt ?? new Date(a.data.pubDate.getTime() - JST_OFFSET_MS);
+
+/** 公開済みか。dev では予約中の記事も確認できるよう全部出す */
+export const isPublished = (a: Article, now = new Date()): boolean =>
+  import.meta.env.DEV || publishTime(a) <= now;
+
+/** 公開済みの記事を公開日の新しい順で返す（予約中の記事はページも一覧も作らない） */
 export async function getArticles(): Promise<Article[]> {
-  const all = await getCollection("articles");
+  const all = (await getCollection("articles")).filter((a) => isPublished(a));
   return all.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 }
 
